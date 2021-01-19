@@ -3,18 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<header th:insert="blocks/header :: header"></header>
+<h1>Добро пожаловать в клинику</h1>
 
-
-<h1>sdbsdfb</h1>
-<!--<div th:each="person : ${people}">-->
-<!--    <a th:href="@{/people/{id}(id=${person.getId()})}"-->
-<!--       th:text="${person.getName() + ', ' + person.getAge()}">user</a>-->
-<!--</div>-->
-<!--<a>Create new person</a>-->
-
-<!--<a href="/people/new">Create new person</a>-->
-
+<div>
+    <img src="mainPhotoClinic.png" width="1024" height="768">
+</div>
+<!--<p th:text="'Hello, ' + ${name} + '!'" />-->
 </body>
 </html>

@@ -11,7 +11,5 @@ public interface DoctorRepository extends JpaRepository<Doctor,Long>, JpaSpecifi
     @Query("select d from Doctor d where d.login like ?1")
     Doctor getByLogin(String login);
 
-    @Query("select d from Doctor d where d.login like ?1")
-    String getPasswordByLogin(String login);
 
 }

@@ -31,14 +31,11 @@ public class DoctorServiceImp implements DoctorService {
 
     @Override
     public Doctor getByLogin(String login) {
-//        Doctor doctor = doctorRepository.find
-        return null;
+        Doctor doctor = doctorRepository.getByLogin(login);
+        return doctor;
     }
 
-    @Override
-    public String getPasswordByLogin(String login) {
-        return null;
-    }
+
 
 //    private final CheckerShipsParameter checkerShipsParameter = new CheckerShipsParameter();
 //

@@ -46,11 +46,13 @@ public class Doctor {
     @Override
     public String toString() {
         return "Doctor{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", specialization='" + specialization + '\'' +
+                ", phone='" + phone + '\'' +
                 '}';
     }
 

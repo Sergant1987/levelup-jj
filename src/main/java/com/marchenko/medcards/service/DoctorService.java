@@ -11,6 +11,5 @@ public interface DoctorService {
 
     Doctor getByLogin(String login);
 
-    String getPasswordByLogin(String login);
 
 }
