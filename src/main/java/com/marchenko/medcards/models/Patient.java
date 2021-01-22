@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Entity
-@Table(name = "patients")
+//@Entity
+//@Table(name = "patients")
 
 @NoArgsConstructor
 @Getter

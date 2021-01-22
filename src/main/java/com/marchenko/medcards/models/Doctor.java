@@ -4,9 +4,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import javax.persistence.*;
-import java.sql.Date;
+
 import java.time.LocalDate;
+
 import java.util.Objects;
 
 @Entity
@@ -15,7 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 
-public class Doctor {
+public class Doctor  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,4 +83,11 @@ public class Doctor {
     public int hashCode() {
         return Objects.hash(login, password, dateOfBirth, name, surname, specialization, phone);
     }
+
+
+    @Transient
+    private Role role=Role.DOCTOR;
+
+
+
 }

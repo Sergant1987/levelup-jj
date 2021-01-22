@@ -3,16 +3,26 @@ package com.marchenko.medcards.service;
 
 import com.marchenko.medcards.models.Doctor;
 import com.marchenko.medcards.repository.DoctorRepository;
+import com.marchenko.medcards.security.SecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 
 @Service
 @Transactional
 public class DoctorServiceImp implements DoctorService {
 
-    private DoctorRepository doctorRepository;
+
+
+
+
+
+
+    private static DoctorRepository doctorRepository;
 
     @Autowired
     public DoctorServiceImp(DoctorRepository doctorRepository) {
@@ -20,18 +30,19 @@ public class DoctorServiceImp implements DoctorService {
     }
 
     @Override
-    public Doctor create(Doctor doctor) {
+    public  Doctor create(Doctor doctor) {
         return doctorRepository.save(doctor);
     }
 
     @Override
-    public Doctor getById(Long id) {
+    public Doctor findById(Long id) {
         return doctorRepository.findById(id).get();
     }
 
     @Override
-    public Doctor getByLogin(String login) {
-        Doctor doctor = doctorRepository.getByLogin(login);
+    public Doctor findByLogin(String login) {
+        Doctor doctor = doctorRepository.findByLogin(login).orElseThrow(() ->
+                new UsernameNotFoundException("User doesn't exists"));
         return doctor;
     }
 

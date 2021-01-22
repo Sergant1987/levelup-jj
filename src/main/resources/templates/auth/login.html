@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <title>LoginDoctor</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-
 </head>
 <body class="text-center">
 
@@ -13,23 +11,25 @@
 
 
 <div class="container mt-3 mb-5">
-    <form action="/doctors/login" method="post">
+    <form class="form-signin" action="/auth/login" method="post">
+
+
         <h1 class="h3 mb-3 fw-normal">Личный кабинет врача</h1>
-        <label for="login" class="visually-hidden">Имя пользователя</label>
-        <input type="text" id="login" name="login" class="form-control" placeholder="Введите имя пользователя" required
-               autofocus>
-        <label for="password" class="visually-hidden">Пароль</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        <p>
+        <label for="username" class="visually-hidden">Имя пользователя</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required
+               autofocus></p>
+      <p>  <label for="password" class="visually-hidden">Пароль</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required></p>
         <!--        <div class="checkbox mb-3">-->
         <!--            <label>-->
         <!--                <input type="checkbox" value="remember-me"> Remember me-->
         <!--            </label>-->
         <!--        </div>-->
 
-        <button class="btn btn-success" type="submit">Войти</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
 
-    </form>
-</div>
+
 
 <h6>
     <a href="/doctors/registration">Регистрация</a>
@@ -38,3 +38,7 @@
 
 </body>
 </html>
+
+
+
+

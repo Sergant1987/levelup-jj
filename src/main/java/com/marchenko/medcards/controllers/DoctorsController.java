@@ -4,6 +4,7 @@ import com.marchenko.medcards.models.Doctor;
 import com.marchenko.medcards.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,22 +23,20 @@ public class DoctorsController {
         this.doctorService = doctorService;
     }
 
-    @GetMapping("/login")
-    public String index() {
 
-        return "/doctors/login";
-    }
 
-    @PostMapping("/login")
-    @ResponseStatus(HttpStatus.OK)
-    public String login(@RequestParam String login,
-                        @RequestParam String password,
-                        Model model) {
+    @GetMapping("")
+    @PreAuthorize("hasAuthority('DOCTOR')")
+    public String login( Model model) {
+//        Doctor doctor = doctorService.findByLogin(login);
 
-        return "/doctors/login";
+//        model.addAttribute("name", doctor.getName());
+        System.out.println("++++++++++++++");
+        return "/doctors/info";
     }
 
     @GetMapping("/registration")
+    @PreAuthorize("hasAuthority('DOCTOR')")
     public String registration() {
 
         return "/doctors/registration";
@@ -45,6 +44,7 @@ public class DoctorsController {
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('DOCTOR')")
     public String postRegistration(@RequestParam String login,
                                    @RequestParam String password,
                                    @RequestParam String name,
@@ -55,17 +55,17 @@ public class DoctorsController {
                                    Model model) {
 
         Doctor doctor = new Doctor(login, password, LocalDate.parse(dateOfBirth),
-                name, surname, specialization,  phone);
+                name, surname, specialization, phone);
         doctorService.create(doctor);
-        return info(doctor.getId(),model);
+        return info(doctor.getId(), model);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String info(@PathVariable(value = "id") long id, Model model) {
-       Doctor doctor= doctorService.getById(id);
+        Doctor doctor = doctorService.findById(id);
         System.out.println(doctor);
-        model.addAttribute("name",doctor.getName());
+        model.addAttribute("name", doctor.getName());
         return "/doctors/info";
     }
 

@@ -7,9 +7,9 @@ public interface DoctorService {
 
     Doctor create(Doctor doctor);
 
-    Doctor getById(Long id);
+    Doctor findById(Long id);
 
-    Doctor getByLogin(String login);
+    Doctor findByLogin(String login);
 
 
 }
