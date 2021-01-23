@@ -17,7 +17,6 @@ public class AuthController {
     @GetMapping("/success")
     public String getSuccessPage() {
 
-        System.out.println("+");
         return "/auth/success";
     }
 

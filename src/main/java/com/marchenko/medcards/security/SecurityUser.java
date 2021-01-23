@@ -1,6 +1,7 @@
 package com.marchenko.medcards.security;
 
 import com.marchenko.medcards.models.Doctor;
+import com.marchenko.medcards.models.User;
 import lombok.Data;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -61,7 +62,6 @@ public class SecurityUser implements UserDetails {
     }
 
     public static UserDetails fromUser(Doctor user) {
-        System.out.println(user);
         return new org.springframework.security.core.userdetails.User(
                 user.getLogin(), user.getPassword(),
                 true,

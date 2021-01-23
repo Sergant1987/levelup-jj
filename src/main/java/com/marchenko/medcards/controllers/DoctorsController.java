@@ -14,6 +14,7 @@ import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/doctors")
+@PreAuthorize("hasAuthority('DOCTOR')")
 public class DoctorsController {
 
     private DoctorService doctorService;
@@ -26,7 +27,7 @@ public class DoctorsController {
 
 
     @GetMapping("")
-    @PreAuthorize("hasAuthority('DOCTOR')")
+
     public String login( Model model) {
 //        Doctor doctor = doctorService.findByLogin(login);
 
@@ -36,7 +37,6 @@ public class DoctorsController {
     }
 
     @GetMapping("/registration")
-    @PreAuthorize("hasAuthority('DOCTOR')")
     public String registration() {
 
         return "/doctors/registration";
@@ -44,7 +44,6 @@ public class DoctorsController {
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('DOCTOR')")
     public String postRegistration(@RequestParam String login,
                                    @RequestParam String password,
                                    @RequestParam String name,

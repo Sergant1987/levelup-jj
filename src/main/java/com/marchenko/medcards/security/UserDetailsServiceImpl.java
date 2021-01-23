@@ -2,7 +2,6 @@ package com.marchenko.medcards.security;
 
 
 import com.marchenko.medcards.models.Doctor;
-import com.marchenko.medcards.repository.DoctorRepository;
 import com.marchenko.medcards.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

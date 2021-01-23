@@ -17,7 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 
-public class Doctor  {
+public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
