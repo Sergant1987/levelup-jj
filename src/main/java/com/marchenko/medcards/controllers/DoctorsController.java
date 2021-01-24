@@ -4,7 +4,10 @@ import com.marchenko.medcards.models.Doctor;
 import com.marchenko.medcards.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,14 +28,17 @@ public class DoctorsController {
     }
 
 
-
     @GetMapping("")
 
-    public String login( Model model) {
-//        Doctor doctor = doctorService.findByLogin(login);
+//    @PostAuthorize("#username")
+    public String main(Model model) {
+
+        System.out.println("doctor=" + SecurityContextHolder.getContext().getAuthentication().getName());
+
+        //        Doctor doctor = doctorService.findByLogin(login);
 
 //        model.addAttribute("name", doctor.getName());
-        System.out.println("++++++++++++++");
+
         return "/doctors/info";
     }
 

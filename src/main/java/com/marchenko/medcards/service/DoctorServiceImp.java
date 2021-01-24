@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class DoctorServiceImp implements DoctorService {
 
-    private static DoctorRepository doctorRepository;
+    private DoctorRepository doctorRepository;
 
     @Autowired
     public DoctorServiceImp(DoctorRepository doctorRepository) {

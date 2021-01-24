@@ -17,7 +17,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 
-public class Doctor {
+public class Doctor implements User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -86,8 +86,6 @@ public class Doctor {
 
 
     @Transient
-    private Role role=Role.DOCTOR;
-
-
+    private final Role role=Role.DOCTOR;
 
 }

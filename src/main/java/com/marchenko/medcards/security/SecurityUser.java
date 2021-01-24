@@ -61,7 +61,9 @@ public class SecurityUser implements UserDetails {
         return isActive;
     }
 
-    public static UserDetails fromUser(Doctor user) {
+    public static UserDetails fromUser(User user) {
+        System.out.println(user.getRole());
+        System.out.println(user.getRole().getAuthorities().toString());
         return new org.springframework.security.core.userdetails.User(
                 user.getLogin(), user.getPassword(),
                 true,

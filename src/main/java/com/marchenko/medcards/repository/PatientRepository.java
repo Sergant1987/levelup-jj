@@ -1,9 +1,14 @@
 package com.marchenko.medcards.repository;
 
 import com.marchenko.medcards.models.Doctor;
+import com.marchenko.medcards.models.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface PatientRepository extends JpaRepository<Doctor,Long>, JpaSpecificationExecutor<Doctor> {
+import java.util.Optional;
 
+
+public interface PatientRepository extends JpaRepository<Patient,Long>, JpaSpecificationExecutor<Doctor> {
+
+    Optional<Patient> findByLogin(String login);
 }
