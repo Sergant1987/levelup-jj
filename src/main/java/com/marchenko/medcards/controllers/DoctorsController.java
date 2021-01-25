@@ -17,7 +17,7 @@ import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/doctors")
-@PreAuthorize("hasAuthority('DOCTOR')")
+
 public class DoctorsController {
 
     private DoctorService doctorService;
@@ -29,17 +29,17 @@ public class DoctorsController {
 
 
     @GetMapping("")
-
+    @PreAuthorize("hasAuthority('DOCTOR')")
 //    @PostAuthorize("#username")
     public String main(Model model) {
 
-        System.out.println("doctor=" + SecurityContextHolder.getContext().getAuthentication().getName());
-
+        String login = SecurityContextHolder.getContext().getAuthentication().getName();
+        Doctor doctor = doctorService.findByLogin(login);
         //        Doctor doctor = doctorService.findByLogin(login);
 
 //        model.addAttribute("name", doctor.getName());
 
-        return "/doctors/info";
+        return "redirect:/doctors/" + doctor.getId();
     }
 
     @GetMapping("/registration")
@@ -67,6 +67,7 @@ public class DoctorsController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('DOCTOR')")
     public String info(@PathVariable(value = "id") long id, Model model) {
         Doctor doctor = doctorService.findById(id);
         System.out.println(doctor);
