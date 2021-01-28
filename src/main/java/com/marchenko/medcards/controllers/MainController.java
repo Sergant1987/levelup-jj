@@ -1,42 +1,46 @@
 package com.marchenko.medcards.controllers;
 
 
-import com.marchenko.medcards.models.Patient;
-
+import com.marchenko.medcards.models.Doctor;
+import com.marchenko.medcards.service.DoctorService;
 import com.marchenko.medcards.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping()
 public class MainController {
 
-  private PatientService patientService;
+    private DoctorService doctorService;
 
     @Autowired
-    public MainController(PatientService patientService) {
-        this.patientService = patientService;
+    public MainController(DoctorService doctorService) {
+        this.doctorService = doctorService;
     }
 
     @GetMapping()
     public String index() {
-//        Patient patient=new Patient();
-//        patient.setLogin("serg");
-//        patient.setPassword("$2y$12$FfkK/7PZgRX.M3MKOzwCKenlbK89rQZdmnc6hHQHFnd8PvaaKkDey");
-//        patient.setSurname("М");
-//        patient.setName("Сергей");
-//        patient.setDateOfBirth(LocalDate.now() );
-//        patient.setPhone("phone");
-//        patient.setAddress("address");
-//
-//        patientService.create(patient);
+
         return "index";
+    }
+
+    @GetMapping("/contacts")
+    public String contacts() {
+
+        return "/contacts/contacts";
+    }
+
+    @GetMapping("/about")
+    public String about(Model model) {
+        List<Doctor> doctors = doctorService.findAll();
+        model.addAttribute("doctors",doctors);
+        return "/about/about";
     }
 
 }

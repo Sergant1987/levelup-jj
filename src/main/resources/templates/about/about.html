@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>about</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-3 mb-5">
+    <div>
+        <h1> About </h1>
+        <div class="container my-5">
+            <div th:each="d : ${doctors}">
+                <h3 th:text="${d.name}+${d.surname}"></h3>
+                <p th:text="${d.specialization}"></p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

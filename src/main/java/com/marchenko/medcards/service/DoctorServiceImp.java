@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import java.util.List;
 
 
 @Service
@@ -38,6 +38,11 @@ public class DoctorServiceImp implements DoctorService {
         Doctor doctor = doctorRepository.findByLogin(login).orElseThrow(() ->
                 new UsernameNotFoundException("User doesn't exists"));
         return doctor;
+    }
+
+    @Override
+    public List<Doctor> findAll() {
+        return doctorRepository.findAll();
     }
 
 }

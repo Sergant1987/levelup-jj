@@ -2,14 +2,13 @@ package com.marchenko.medcards.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,8 +19,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@ConfigurationPropertiesScan("com.marchenko.medcards.config")
+//@ConfigurationPropertiesScan("com.marchenko.medcards.config")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/image/*");
+
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -29,20 +36,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //механизм защиты от csrf угрозы
                 .csrf().disable()
                 .authorizeRequests()
-                // авторизация запроса
-                .antMatchers("/","/about","/contacts").permitAll()
-//                .antMatchers("/doctors/registration","/patients/registration").not().fullyAuthenticated()
+                // страницы исключения для авторизации
+                .antMatchers("/", "/about", "/contacts").permitAll()
+                .antMatchers("/doctors/registration", "/patients/registration", "/auth/registration").not().fullyAuthenticated()
+                //каждый запрос должен быть аутифицирован
                 .anyRequest()
                 .authenticated()
-                // авторизация запроса
-//                .and()
-//                //шаблон урл
-//                .antMatcher("/doctors** ")
-//                //каждый запрос должен быть аутифицирован
-//                .authorizeRequests()
-//                .anyRequest()
-//                //тем кто имеет доступ такой
-//                .hasAuthority("DOCTOR")
                 .and()
                 .formLogin()
                 .loginPage("/auth/login").permitAll()
@@ -55,49 +54,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/auth/login");
 
-//        http.antMatcher("/admin** ")
-//                .authorizeRequests()
-//                .anyRequest()
-//                .hasRole("ADMIN")
-//
-//                .and()
-//                .formLogin()
-//                .loginPage("/loginAdmin")
-//                .loginProcessingUrl("/admin__login")
-//                .failureUrl("/loginAdmin?error=loginError")
-//                .defaultSuccessUrl("/adminPage")
-//
-//                .and()
-//                .logout()
-//                .logoutUrl("/admin__logout")
-//                .logoutSuccessUrl("/protectedLinks")
-//                .deleteCookies("JSESSIONID")
-//
-//                .and()
-//                .exceptionHandling()
-//                .accessDeniedPage("/403")
-//
-//                .and()
-//                .csrf().disable();
+
     }
 
-//    @Bean
-//    @Override
-//    protected UserDetailsService userDetailsService() {
-//        return new InMemoryUserDetailsManager(
-//                User.builder().username("admin")
-//                        // Use without encode first
-//                        .password(passwordEncoder().encode("admin"))
-//                        .roles(Role.ADMIN.name())
-//                        .build(),
-//                User.builder().username("user")
-//                        // Use without encode first
-//                        .password(passwordEncoder().encode("user"))
-//                        .roles(Role.USER.name())
-//                        .build()
-//        );
-//        // Go to UserDetailsServiceImpl - InMemory
-//    }
 
     private final UserDetailsService userDetailsService;
 
@@ -126,7 +85,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         return daoAuthenticationProvider;
     }
-
 
 
 }

@@ -26,12 +26,17 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String getLoginPage() {
+    public String loginPage() {
         return "/auth/login";
     }
 
+    @GetMapping("/registration")
+    public String registration() {
+        return "/auth/registration";
+    }
+
     @GetMapping("/success")
-    public String getSuccessPage() {
+    public String successPage() {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
             Doctor doctor = doctorService.findByLogin(login);
