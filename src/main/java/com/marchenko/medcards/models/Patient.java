@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +15,7 @@ import java.util.Objects;
 
 @NoArgsConstructor
 @Getter
-public class Patient implements User{
+public class Patient extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,24 +25,22 @@ public class Patient implements User{
     private String surname;
 
     @Setter
-    private String login;
-
-    @Setter
-    private String password;
-
-    @Setter
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+
     @Setter
     private String phone;
+
     @Setter
     private String address;
 
+    @OneToMany(mappedBy = "patient")
+    private Collection<Record> records = new ArrayList<>();
+
     public Patient(String name, String surname, String login, String password, LocalDate dateOfBirth, String phone, String address) {
+        super(login, password, Role.PATIENT);
         this.name = name;
         this.surname = surname;
-        this.login = login;
-        this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.phone = phone;
         this.address = address;
@@ -72,7 +72,5 @@ public class Patient implements User{
         return Objects.hash(name, surname, login, password, dateOfBirth, phone, address);
     }
 
-    @Transient
-    private final Role role=Role.PATIENT;
 
 }

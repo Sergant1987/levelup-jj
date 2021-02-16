@@ -4,30 +4,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 import javax.persistence.*;
-
 import java.time.LocalDate;
-
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "doctors")
 
-@NoArgsConstructor
 @Getter
-
-public class Doctor implements User{
+@NoArgsConstructor
+public class Doctor extends User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Setter
-    private String login;
-
-    @Setter
-    private String password;
 
     @Setter
     @Column(name = "date_of_birth")
@@ -45,6 +37,18 @@ public class Doctor implements User{
     @Setter
     private String phone;
 
+    @OneToMany(mappedBy = "doctor")
+    private Collection<Record> records = new ArrayList<>();
+
+    public Doctor(String login, String password, LocalDate dateOfBirth, String name, String surname, String specialization, String phone) {
+        super(login,password,Role.DOCTOR);
+        this.dateOfBirth = dateOfBirth;
+        this.name = name;
+        this.surname = surname;
+        this.specialization = specialization;
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
         return "Doctor{" +
@@ -56,16 +60,6 @@ public class Doctor implements User{
                 ", specialization='" + specialization + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
-    }
-
-    public Doctor(String login, String password, LocalDate dateOfBirth, String name, String surname, String specialization, String phone) {
-        this.login = login;
-        this.password = password;
-        this.dateOfBirth = dateOfBirth;
-        this.name = name;
-        this.surname = surname;
-        this.specialization = specialization;
-        this.phone = phone;
     }
 
     @Override
@@ -83,9 +77,5 @@ public class Doctor implements User{
     public int hashCode() {
         return Objects.hash(login, password, dateOfBirth, name, surname, specialization, phone);
     }
-
-
-    @Transient
-    private final Role role=Role.DOCTOR;
 
 }

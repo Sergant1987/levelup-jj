@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.Optional;
 
 
-public interface PatientRepository extends JpaRepository<Patient,Long>, JpaSpecificationExecutor<Doctor> {
+public interface PatientRepository extends JpaRepository<Patient,Long>, JpaSpecificationExecutor<Patient> {
 
     Optional<Patient> findByLogin(String login);
 }
