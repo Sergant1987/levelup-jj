@@ -38,14 +38,16 @@ public class AuthController {
     @GetMapping("/success")
     public String successPage() {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        try {
-            Doctor doctor = doctorService.findByLogin(login);
+
+        Doctor doctor = doctorService.findByLogin(login);
+        Patient patient = patientService.findByLogin(login);
+        if (doctor != null) {
             return "redirect:/doctors/";
-        }catch (UsernameNotFoundException e){}
-            try {
-            Patient patient = patientService.findByLogin(login);
+        }
+
+        if (patient != null) {
             return "redirect:/patients/";
-        }catch (UsernameNotFoundException e){}
+        }
 
         return "redirect:/";
     }

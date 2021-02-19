@@ -38,9 +38,10 @@ public class DoctorsController {
     @PreAuthorize("hasAuthority('DOCTOR')")
 //    @PostAuthorize("#username")
     public String main(Model model) {
-
+        System.out.println("++++");
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         Doctor doctor = doctorService.findByLogin(login);
+//        System.out.println(doctor);
         //        Doctor doctor = doctorService.findByLogin(login);
 
 //        model.addAttribute("name", doctor.getName());
@@ -76,16 +77,12 @@ public class DoctorsController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('DOCTOR')")
     public String info(@PathVariable(value = "id") long id, Model model) {
-        Doctor doctor=null;
-        try {
-            doctor = doctorService.findById(id);
-            if (!hasAccessRight(doctor)) {
-                return "redirect:/doctors/"+ doctorService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
-            }
-        } catch (NoSuchElementException e) {
-          return "redirect:/doctors/"+ doctorService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
-        }
+        Doctor doctor = null;
 
+        doctor = doctorService.findById(id);
+        if (!hasAccessRight(doctor)) {
+            return "redirect:/doctors/" + doctorService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        }
 
         model.addAttribute("name", doctor.getName());
         return "/doctors/info";
@@ -94,11 +91,9 @@ public class DoctorsController {
     private boolean hasAccessRight(User user) {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         User authenticationUser;
-        try {
+
             authenticationUser = doctorService.findByLogin(login);
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+       if(authenticationUser==null){return false;}
 
         if (authenticationUser.getLogin().equals(user.getLogin())) {
             return true;
@@ -106,7 +101,6 @@ public class DoctorsController {
             return false;
         }
     }
-
 
 
 }

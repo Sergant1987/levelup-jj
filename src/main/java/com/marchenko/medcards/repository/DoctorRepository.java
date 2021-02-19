@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface DoctorRepository extends JpaRepository<Doctor,Long>, JpaSpecificationExecutor<Doctor> {
 
-
-    Optional<Doctor> findByLogin(String login);
+//    Optional<Doctor> findByLoginasd(String login);
+    Doctor findByLogin(String login);
 
 }

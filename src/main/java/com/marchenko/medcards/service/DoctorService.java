@@ -15,5 +15,6 @@ public interface DoctorService {
 
     List<Doctor> findAll();
 
+    boolean existsById(Long id);
 
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 public class DoctorServiceImp implements DoctorService {
 
-    private DoctorRepository doctorRepository;
+    private final DoctorRepository doctorRepository;
 
     @Autowired
     public DoctorServiceImp(DoctorRepository doctorRepository) {
@@ -35,14 +35,21 @@ public class DoctorServiceImp implements DoctorService {
 
     @Override
     public Doctor findByLogin(String login) {
-        Doctor doctor = doctorRepository.findByLogin(login).orElseThrow(() ->
-                new UsernameNotFoundException("User doesn't exists"));
+
+//        Doctor doctor = doctorRepository.findByLogin(login).orElseThrow(() ->
+//                new UsernameNotFoundException("User doesn't exists"));
+        Doctor doctor = doctorRepository.findByLogin(login);
         return doctor;
     }
 
     @Override
     public List<Doctor> findAll() {
         return doctorRepository.findAll();
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return doctorRepository.existsById(id);
     }
 
 }

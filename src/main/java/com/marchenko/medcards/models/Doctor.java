@@ -14,7 +14,7 @@ import java.util.Objects;
 @Table(name = "doctors")
 
 @Getter
-@NoArgsConstructor
+
 public class Doctor extends User{
 
     @Id
@@ -47,6 +47,10 @@ public class Doctor extends User{
         this.surname = surname;
         this.specialization = specialization;
         this.phone = phone;
+    }
+
+    public Doctor() {
+        role=Role.DOCTOR;
     }
 
     @Override

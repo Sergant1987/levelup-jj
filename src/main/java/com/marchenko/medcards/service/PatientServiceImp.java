@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PatientServiceImp implements PatientService {
 
-    private PatientRepository patientRepository;
+    private final PatientRepository patientRepository;
 
     @Autowired
     public PatientServiceImp(PatientRepository patientRepository) {
@@ -31,8 +31,9 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public Patient findByLogin(String login) {
-        Patient patient = patientRepository.findByLogin(login).orElseThrow(() ->
-                new UsernameNotFoundException("User doesn't exists"));
+        Patient patient = patientRepository.findByLogin(login);
+//        Patient patient = patientRepository.findByLogin(login).orElseThrow(() ->
+//                new UsernameNotFoundException("User doesn't exists"));
         return patient;
     }
 }

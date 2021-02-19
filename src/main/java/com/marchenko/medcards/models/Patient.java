@@ -13,7 +13,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "patients")
 
-@NoArgsConstructor
 @Getter
 public class Patient extends User {
     @Id
@@ -46,6 +45,9 @@ public class Patient extends User {
         this.address = address;
     }
 
+    public Patient() {
+        role=Role.PATIENT;
+    }
     @Override
     public String toString() {
         return "Patient{" +
@@ -64,7 +66,10 @@ public class Patient extends User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Patient patient = (Patient) o;
-        return Objects.equals(name, patient.name) && Objects.equals(surname, patient.surname) && Objects.equals(login, patient.login) && Objects.equals(password, patient.password) && Objects.equals(dateOfBirth, patient.dateOfBirth) && Objects.equals(phone, patient.phone) && Objects.equals(address, patient.address);
+        return Objects.equals(name, patient.name) && Objects.equals(surname, patient.surname)
+                && Objects.equals(login, patient.login) && Objects.equals(password, patient.password)
+                && Objects.equals(dateOfBirth, patient.dateOfBirth) && Objects.equals(phone, patient.phone)
+                && Objects.equals(address, patient.address);
     }
 
     @Override

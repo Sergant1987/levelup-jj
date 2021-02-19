@@ -11,8 +11,7 @@ import java.util.Collections;
 
 @SpringBootApplication
 public class MedcardsApplication {
-    @Autowired
-   static DoctorRepository doctorRepository;
+
 
     public static void main(String[] args) {
         SpringApplication.run(MedcardsApplication.class, args);

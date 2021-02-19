@@ -3,6 +3,7 @@ package com.marchenko.medcards.security;
 
 import com.marchenko.medcards.models.Doctor;
 import com.marchenko.medcards.models.Patient;
+import com.marchenko.medcards.models.User;
 import com.marchenko.medcards.service.DoctorService;
 import com.marchenko.medcards.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-       try {
-           Doctor user = doctorService.findByLogin(login);
-           return SecurityUser.fromUser(user);
-       } catch (UsernameNotFoundException usernameNotFoundException){
-           Patient user = patientService.findByLogin(login);
-           return SecurityUser.fromUser(user);
-       }
+        User user = doctorService.findByLogin(login);
+            if (user == null) {
+            user = patientService.findByLogin(login);
+        }
+          if (user == null) {
+            throw new UsernameNotFoundException("Нет такого пользователя");
+        }
+               return SecurityUser.fromUser(user);
 
     }
+
 }
