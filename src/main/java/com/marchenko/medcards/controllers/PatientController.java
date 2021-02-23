@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/patients")
@@ -21,13 +22,15 @@ import java.time.LocalDate;
 public class PatientController {
 
     private PatientService patientService;
+    private DoctorService doctorService;
 
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public PatientController(PatientService patientService, PasswordEncoder passwordEncoder) {
+    public PatientController(PatientService patientService, DoctorService doctorService, PasswordEncoder passwordEncoder) {
         this.patientService = patientService;
         this.passwordEncoder = passwordEncoder;
+        this.doctorService = doctorService;
     }
 
 
@@ -76,6 +79,33 @@ public class PatientController {
         model.addAttribute("name", patient.getName());
         model.addAttribute("id", patient.getId());
         return "/patients/info";
+    }
+
+    @GetMapping("/{id}/record")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('PATIENT')")
+    public String record(@PathVariable(value = "id") long id, Model model) {
+
+        Set<String> specializations = doctorService.getAllSpecialization();
+        System.out.println(specializations);
+        model.addAttribute("specializations", specializations);
+        model.addAttribute("doctorName", "");
+
+        return "/patients/createRecord";
+    }
+
+    @PostMapping("/{id}/record")
+    @ResponseStatus(HttpStatus.OK)
+    public String findDoctors(
+            @PathVariable(value = "id") long id,
+            @RequestParam(value = "specializations") String specialization,
+            @RequestParam String doctorName,
+            Model model) {
+
+
+        System.out.println(specialization + "  " + doctorName);
+        System.out.println(doctorName);
+        return "/patients/createRecord";
     }
 
 

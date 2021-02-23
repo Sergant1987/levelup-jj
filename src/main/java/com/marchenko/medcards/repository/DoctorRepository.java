@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
+import java.util.Set;
 
 public interface DoctorRepository extends JpaRepository<Doctor,Long>, JpaSpecificationExecutor<Doctor> {
 
-//    Optional<Doctor> findByLoginasd(String login);
+
     Doctor findByLogin(String login);
+
+    @Query("select distinct d.specialization from Doctor d")
+    Set<String> getAllSpecialization();
 
 }

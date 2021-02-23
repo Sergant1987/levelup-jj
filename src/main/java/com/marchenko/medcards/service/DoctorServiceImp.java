@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -35,9 +36,6 @@ public class DoctorServiceImp implements DoctorService {
 
     @Override
     public Doctor findByLogin(String login) {
-
-//        Doctor doctor = doctorRepository.findByLogin(login).orElseThrow(() ->
-//                new UsernameNotFoundException("User doesn't exists"));
         Doctor doctor = doctorRepository.findByLogin(login);
         return doctor;
     }
@@ -50,6 +48,11 @@ public class DoctorServiceImp implements DoctorService {
     @Override
     public boolean existsById(Long id) {
         return doctorRepository.existsById(id);
+    }
+
+    @Override
+    public Set<String> getAllSpecialization() {
+        return doctorRepository.getAllSpecialization();
     }
 
 }

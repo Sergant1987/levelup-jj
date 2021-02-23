@@ -4,6 +4,7 @@ package com.marchenko.medcards.service;
 import com.marchenko.medcards.models.Doctor;
 
 import java.util.List;
+import java.util.Set;
 
 public interface DoctorService {
 
@@ -16,5 +17,7 @@ public interface DoctorService {
     List<Doctor> findAll();
 
     boolean existsById(Long id);
+
+    Set<String> getAllSpecialization();
 
 }
