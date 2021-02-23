@@ -36,13 +36,14 @@ public class Patient extends User {
     @OneToMany(mappedBy = "patient")
     private Collection<Record> records = new ArrayList<>();
 
-    public Patient(String name, String surname, String login, String password, LocalDate dateOfBirth, String phone, String address) {
+    public Patient(String login, String password,String name, String surname,  LocalDate dateOfBirth, String phone, String address) {
         super(login, password, Role.PATIENT);
         this.name = name;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
         this.phone = phone;
         this.address = address;
+
     }
 
     public Patient() {

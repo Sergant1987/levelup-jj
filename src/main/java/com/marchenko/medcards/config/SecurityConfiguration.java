@@ -19,7 +19,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-//@ConfigurationPropertiesScan("com.marchenko.medcards.config")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 
@@ -53,7 +52,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/auth/login");
-
 
     }
 

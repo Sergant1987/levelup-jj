@@ -22,19 +22,23 @@ public class Doctor extends User{
     private Long id;
 
     @Setter
-    @Column(name = "date_of_birth")
+    @Column(name = "date_of_birth",nullable = false)
     private LocalDate dateOfBirth;
 
     @Setter
+    @Column(nullable = false)
     private String name;
 
     @Setter
+    @Column(nullable = false)
     private String surname;
 
     @Setter
+    @Column(nullable = false)
     private String specialization;
 
     @Setter
+    @Column(nullable = false)
     private String phone;
 
     @OneToMany(mappedBy = "doctor")

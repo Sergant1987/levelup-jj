@@ -26,6 +26,7 @@ public class Record {
     @JoinColumn(name = "doctor_id")
     @ManyToOne
     private Doctor doctor;
+
     @Setter
     @Column(name = "date_record")
     private LocalDateTime dateRecord;

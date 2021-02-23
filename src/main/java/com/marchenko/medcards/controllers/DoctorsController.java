@@ -26,19 +26,21 @@ public class DoctorsController {
 
     private DoctorService doctorService;
 
-    @Autowired
-    public DoctorsController(DoctorService doctorService) {
-        this.doctorService = doctorService;
-    }
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public DoctorsController(DoctorService doctorService, PasswordEncoder passwordEncoder) {
+        this.doctorService = doctorService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('DOCTOR')")
-//    @PostAuthorize("#username")
+
     public String main(Model model) {
-        System.out.println("++++");
+
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         Doctor doctor = doctorService.findByLogin(login);
 //        System.out.println(doctor);
@@ -85,6 +87,8 @@ public class DoctorsController {
         }
 
         model.addAttribute("name", doctor.getName());
+        System.out.println(doctor.getId());
+        model.addAttribute("id", doctor.getId());
         return "/doctors/info";
     }
 
@@ -101,6 +105,8 @@ public class DoctorsController {
             return false;
         }
     }
+
+
 
 
 }
