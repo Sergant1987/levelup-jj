@@ -85,10 +85,9 @@ public class PatientController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PATIENT')")
     public String record(@PathVariable(value = "id") long id, Model model) {
-
         Set<String> specializations = doctorService.getAllSpecialization();
-        System.out.println(specializations);
         model.addAttribute("specializations", specializations);
+
         model.addAttribute("doctorName", "");
 
         return "/patients/createRecord";
@@ -98,13 +97,12 @@ public class PatientController {
     @ResponseStatus(HttpStatus.OK)
     public String findDoctors(
             @PathVariable(value = "id") long id,
-            @RequestParam(value = "specializations") String specialization,
+            @RequestParam String specialization,
             @RequestParam String doctorName,
             Model model) {
 
-
         System.out.println(specialization + "  " + doctorName);
-        System.out.println(doctorName);
+
         return "/patients/createRecord";
     }
 

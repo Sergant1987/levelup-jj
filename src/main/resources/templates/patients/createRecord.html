@@ -18,6 +18,19 @@
     <form method="post">
         <h1 class="h3 mb-3 fw-normal">Личный кабинет Пациента</h1>
 
+
+        <div class="form-group">
+            <select th:field="*{specializations}">
+                <option
+                        th:each="specialization : ${specializations}"
+                        th:value="${specialization}"
+                        th:text="${specialization}">specialization
+                </option>
+            </select>
+        </div>
+
+        <br>
+
         <label for="doctorName" class="visually-hidden">Имя пользователя
             <input type="text" id="doctorName" name="doctorName" th:value="${doctorName}" class="form-control"
                    placeholder="Имя врача" required
@@ -26,17 +39,7 @@
 
         <br>
 
-        <div class="form-group">
-        <select   th:field="*{specializations}">
-            <option
-                    th:each="specialization : ${specializations}"
-                    th:value="${specialization}"
-                    th:text="${specialization}">specialization</option>
-        </select>
-        </div>
-        <br>
-
-        <button class="btn btn-success" type="submit">Найти</button>
+        <button class="btn btn-success" type="submit">Найти врача</button>
     </form>
 </div>
 </body>
