@@ -18,13 +18,14 @@
     <form method="post">
         <h1 class="h3 mb-3 fw-normal">Личный кабинет Пациента</h1>
 
-
         <div class="form-group">
-            <select th:field="*{specializations}">
+            <select th:field="*{specializations}" >
                 <option
                         th:each="specialization : ${specializations}"
+
                         th:value="${specialization}"
-                        th:text="${specialization}">specialization
+                        th:text="${specialization}">
+                    specialization
                 </option>
             </select>
         </div>

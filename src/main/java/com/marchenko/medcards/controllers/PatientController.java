@@ -97,12 +97,10 @@ public class PatientController {
     @ResponseStatus(HttpStatus.OK)
     public String findDoctors(
             @PathVariable(value = "id") long id,
-            @RequestParam String specialization,
+           @RequestParam String specialization,
             @RequestParam String doctorName,
             Model model) {
-
-        System.out.println(specialization + "  " + doctorName);
-
+        System.out.println(specialization);
         return "/patients/createRecord";
     }
 
