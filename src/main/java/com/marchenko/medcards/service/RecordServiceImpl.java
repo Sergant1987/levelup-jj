@@ -2,7 +2,7 @@ package com.marchenko.medcards.service;
 
 import com.marchenko.medcards.models.Doctor;
 import com.marchenko.medcards.models.Patient;
-import com.marchenko.medcards.models.Record;
+import com.marchenko.medcards.models.Reservation;
 import com.marchenko.medcards.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,18 +19,18 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public Record create(Patient patient, Doctor doctor, LocalDateTime date) {
-        Record record = new Record(patient, doctor, date);
-        return recordRepository.save(record);
+    public Reservation create(Patient patient, Doctor doctor, LocalDateTime date) {
+        Reservation reservation = new Reservation(patient, doctor, date);
+        return recordRepository.save(reservation);
     }
 
     @Override
-    public List<Record> findRecordsByDoctorAndDate(Doctor doctor, LocalDateTime date) {
+    public List<Reservation> findRecordsByDoctorAndDate(Doctor doctor, LocalDateTime date) {
         return null;
     }
 
     @Override
-    public List<Record> findRecordsByPatient(Patient patient) {
+    public List<Reservation> findRecordsByPatient(Patient patient) {
         return null;
     }
 }

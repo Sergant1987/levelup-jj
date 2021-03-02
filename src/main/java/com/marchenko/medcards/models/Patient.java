@@ -1,7 +1,6 @@
 package com.marchenko.medcards.models;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -34,7 +33,7 @@ public class Patient extends User {
     private String address;
 
     @OneToMany(mappedBy = "patient")
-    private Collection<Record> records = new ArrayList<>();
+    private Collection<Reservation> reservations = new ArrayList<>();
 
     public Patient(String login, String password,String name, String surname,  LocalDate dateOfBirth, String phone, String address) {
         super(login, password, Role.PATIENT);

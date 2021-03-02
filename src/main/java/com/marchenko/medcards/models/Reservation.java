@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "records")
+@Table(name = "reservations")
 @NoArgsConstructor
 @Getter
-public class Record {
+public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,10 +29,10 @@ public class Record {
     private Doctor doctor;
 
     @Setter
-    @Column(name = "date_record")
-    private LocalDateTime dateRecord;
+    @Column(name = "date_reservation")
+    private LocalDate dateRecord;
 
-    public Record(Patient patient, Doctor doctorId, LocalDateTime dateRecord) {
+    public Reservation(Patient patient, Doctor doctorId, LocalDate dateRecord) {
         this.patient = patient;
         this.doctor = doctorId;
         this.dateRecord = dateRecord;
