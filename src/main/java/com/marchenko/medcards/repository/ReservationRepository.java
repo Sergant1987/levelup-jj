@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface RecordRepository extends JpaRepository<Reservation, Long>, JpaSpecificationExecutor<Reservation> {
+public interface ReservationRepository extends JpaRepository<Reservation, Long>, JpaSpecificationExecutor<Reservation> {
 
     @Query("from Reservation r where r.doctor=:doctor and r.dateRecord=:date")
     List<Reservation> findRecordsByDoctorAndDate(@Param("doctor") Doctor doctor, @Param("date") LocalDateTime date);

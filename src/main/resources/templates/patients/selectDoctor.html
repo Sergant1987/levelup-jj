@@ -44,12 +44,17 @@
 </div>
 <br>
 <div class="container my-5">
-    <div th:each="d : ${doctors}">
+    <table>
+        <tbody>
+        <tr th:each="d : ${doctors}">
+            <td>th:text="${d.specialization}</td>
+            <td>th:text="${d.name}</td>
+            <td>th:text="${d.surname}</td>
+        </tr>
+        </tbody>
 
-        <h3 th:text="${d.name}+${d.surname}"></h3>
-        <p th:text="${d.specialization}"></p>
+    </table>
 
-    </div>
 </div>
 
 </body>

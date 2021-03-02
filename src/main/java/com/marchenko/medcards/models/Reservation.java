@@ -32,9 +32,15 @@ public class Reservation {
     @Column(name = "date_reservation")
     private LocalDate dateRecord;
 
-    public Reservation(Patient patient, Doctor doctorId, LocalDate dateRecord) {
+    @Setter
+    @Column(name = "time_reservation")
+    @Enumerated(EnumType.STRING)
+    private TimeReservation time;
+
+    public Reservation(Patient patient, Doctor doctorId, LocalDate dateRecord, TimeReservation time) {
         this.patient = patient;
         this.doctor = doctorId;
         this.dateRecord = dateRecord;
+        this.time = time;
     }
 }
