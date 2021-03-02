@@ -19,13 +19,13 @@
         <h1 class="h3 mb-3 fw-normal">Личный кабинет Пациента</h1>
 
         <div class="form-group">
-            <select th:field="*{specializations}" >
+            <select th:name="specialization" >
+
                 <option
                         th:each="specialization : ${specializations}"
-
                         th:value="${specialization}"
                         th:text="${specialization}">
-                    specialization
+
                 </option>
             </select>
         </div>
@@ -34,14 +34,23 @@
 
         <label for="doctorName" class="visually-hidden">Имя пользователя
             <input type="text" id="doctorName" name="doctorName" th:value="${doctorName}" class="form-control"
-                   placeholder="Имя врача" required
+                   placeholder="Имя врача"
                    autofocus>
         </label>
 
         <br>
-
         <button class="btn btn-success" type="submit">Найти врача</button>
     </form>
 </div>
+<br>
+<div class="container my-5">
+    <div th:each="d : ${doctors}">
+
+        <h3 th:text="${d.name}+${d.surname}"></h3>
+        <p th:text="${d.specialization}"></p>
+
+    </div>
+</div>
+
 </body>
 </html>

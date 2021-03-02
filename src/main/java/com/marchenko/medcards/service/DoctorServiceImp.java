@@ -5,7 +5,6 @@ import com.marchenko.medcards.models.Doctor;
 import com.marchenko.medcards.repository.DoctorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,6 +52,21 @@ public class DoctorServiceImp implements DoctorService {
     @Override
     public Set<String> getAllSpecialization() {
         return doctorRepository.getAllSpecialization();
+    }
+
+    @Override
+    public Set<Doctor> getDoctorsBySpecialization(String specialization) {
+        return doctorRepository.getDoctorsBySpecialization(specialization);
+    }
+
+    @Override
+    public Set<Doctor> getDoctorsBySurname(String surname) {
+        return doctorRepository.getDoctorsBySurname(surname);
+    }
+
+    @Override
+    public Set<Doctor> getDoctorsBySpecializationAndName(String specialization, String surname) {
+        return doctorRepository.getDoctorsBySpecializationAndSurname(specialization,surname);
     }
 
 }

@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Controller
@@ -36,7 +38,7 @@ public class PatientController {
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String main(Model model) {
+    public String index(Model model) {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         Patient patient = patientService.findByLogin(login);
 
@@ -67,43 +69,64 @@ public class PatientController {
                         phone, address);
 
         patientService.create(patient);
-        return "redirect:/doctors/" + patient.getId();
+        return "redirect:/patients/" + patient.getId();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String info(@PathVariable(value = "id") long id, Model model) {
+    public String patientMenu(@PathVariable(value = "id") long id, Model model) {
         Patient patient = patientService.findById(id);
 
         model.addAttribute("name", patient.getName());
         model.addAttribute("id", patient.getId());
-        return "/patients/info";
+        return "/patients/patientMenu";
     }
 
-    @GetMapping("/{id}/record")
+    @GetMapping("/{id}/reservations")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String record(@PathVariable(value = "id") long id, Model model) {
-        Set<String> specializations = doctorService.getAllSpecialization();
-        model.addAttribute("specializations", specializations);
-
+    public String findDoctors(@PathVariable(value = "id") long id, Model model) {
         model.addAttribute("doctorName", "");
-
-        return "/patients/createRecord";
+        model.addAttribute("doctors", Collections.emptySet());
+        return "/patients/selectDoctor";
     }
 
-    @PostMapping("/{id}/record")
+    @PostMapping("/{id}/reservations")
     @ResponseStatus(HttpStatus.OK)
     public String findDoctors(
             @PathVariable(value = "id") long id,
-           @RequestParam String specialization,
-            @RequestParam String doctorName,
+            @RequestParam(required = false) String specialization,
+            @RequestParam(required = false) String doctorName,
             Model model) {
-        System.out.println(specialization);
-        return "/patients/createRecord";
+        model.addAttribute("doctorName", "");
+        model.addAttribute("doctors", findDoctors(specialization, doctorName));
+
+        return "/patients/selectDoctor";
     }
 
+    @ModelAttribute("specializations")
+    public Set<String> getSpecializations() {
+        Set<String> resultWithFirstEmpty=new LinkedHashSet<>();
+        resultWithFirstEmpty.add("");
+        resultWithFirstEmpty.addAll(doctorService.getAllSpecialization());
+        return resultWithFirstEmpty;
+    }
+
+    private Set<Doctor> findDoctors(String specialization, String doctorName) {
+        if (specialization == null && doctorName == null || specialization.isBlank() && doctorName.isBlank()) {
+            return doctorService.getDoctorsBySpecializationAndName(specialization, doctorName);
+        }
+
+        if (specialization == null || specialization.isBlank()) {
+            return doctorService.getDoctorsBySurname(doctorName);
+        }
+
+        if (doctorName == null || doctorName.isBlank()) {
+            return doctorService.getDoctorsBySpecialization(specialization);
+        }
+        return doctorService.getDoctorsBySpecializationAndName(specialization, doctorName);
+    }
 
 
 }
