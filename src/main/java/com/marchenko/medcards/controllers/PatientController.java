@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -35,26 +36,22 @@ public class PatientController {
         this.doctorService = doctorService;
     }
 
-
     @GetMapping("")
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String index(Model model) {
+    public RedirectView index(Model model) {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         Patient patient = patientService.findByLogin(login);
-
-        return "redirect:/patients/" + patient.getId();
-
+        return new RedirectView("/patients/" + patient.getId());
     }
 
     @GetMapping("/registration")
     public String registration() {
-
         return "/patients/registration";
     }
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.OK)
-    public String postRegistration(
+    public RedirectView postRegistration(
             @RequestParam String name,
             @RequestParam String surname,
             @RequestParam String dateOfBirth,
@@ -69,7 +66,7 @@ public class PatientController {
                         phone, address);
 
         patientService.create(patient);
-        return "redirect:/patients/" + patient.getId();
+        return new RedirectView("/patients/" + patient.getId());
     }
 
     @GetMapping("/{id}")
@@ -87,7 +84,7 @@ public class PatientController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PATIENT')")
     public String findDoctors(@PathVariable(value = "id") long id, Model model) {
-        model.addAttribute("doctorName", "");
+        model.addAttribute("doctorSurname", "");
         model.addAttribute("doctors", Collections.emptySet());
         return "/patients/selectDoctor";
     }
@@ -97,17 +94,27 @@ public class PatientController {
     public String findDoctors(
             @PathVariable(value = "id") long id,
             @RequestParam(required = false) String specialization,
-            @RequestParam(required = false) String doctorName,
+            @RequestParam(required = false) String doctorSurname,
             Model model) {
-        model.addAttribute("doctorName", "");
-        model.addAttribute("doctors", findDoctors(specialization, doctorName));
+        model.addAttribute("doctorSurname", doctorSurname);
+        model.addAttribute("doctors", findDoctors(specialization, doctorSurname));
 
         return "/patients/selectDoctor";
     }
 
+//    @PostMapping("/{id}/reservations")
+//    @ResponseStatus(HttpStatus.OK)
+//    public RedirectView selectDoctor(
+//            @PathVariable(value = "id") long id,
+//            @RequestParam String doctorId,
+//            Model model) {
+//        System.out.println(doctorId);
+//        return new RedirectView("/patients/{id}/reservations/" + doctorId);
+//    }
+
     @ModelAttribute("specializations")
     public Set<String> getSpecializations() {
-        Set<String> resultWithFirstEmpty=new LinkedHashSet<>();
+        Set<String> resultWithFirstEmpty = new LinkedHashSet<>();
         resultWithFirstEmpty.add("");
         resultWithFirstEmpty.addAll(doctorService.getAllSpecialization());
         return resultWithFirstEmpty;

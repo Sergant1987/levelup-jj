@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.Collections;
 
 
 @Controller
@@ -36,20 +39,19 @@ public class AuthController {
     }
 
     @GetMapping("/success")
-    public String successPage() {
+    public RedirectView successPage() {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
-
         Doctor doctor = doctorService.findByLogin(login);
         Patient patient = patientService.findByLogin(login);
         if (doctor != null) {
-            return "redirect:/doctors/";
+            return new RedirectView("/doctors/");
         }
 
         if (patient != null) {
-            return "redirect:/patients/";
+            return new RedirectView("/patients/");
         }
 
-        return "redirect:/";
+        return new RedirectView("/");
     }
 
 

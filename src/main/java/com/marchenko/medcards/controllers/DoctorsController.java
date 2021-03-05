@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
@@ -39,7 +40,7 @@ public class DoctorsController {
     @GetMapping("")
     @PreAuthorize("hasAuthority('DOCTOR')")
 
-    public String main(Model model) {
+    public RedirectView main(Model model) {
 
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         Doctor doctor = doctorService.findByLogin(login);
@@ -48,7 +49,7 @@ public class DoctorsController {
 
 //        model.addAttribute("name", doctor.getName());
 
-        return "redirect:/doctors/" + doctor.getId();
+        return new RedirectView("/doctors/" + doctor.getId());
     }
 
     @GetMapping("/registration")
@@ -59,19 +60,19 @@ public class DoctorsController {
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.OK)
-    public String postRegistration(@RequestParam String login,
-                                   @RequestParam String password,
-                                   @RequestParam String name,
-                                   @RequestParam String surname,
-                                   @RequestParam String dateOfBirth,
-                                   @RequestParam String specialization,
-                                   @RequestParam String phone,
-                                   Model model) {
+    public RedirectView postRegistration(@RequestParam String login,
+                                         @RequestParam String password,
+                                         @RequestParam String name,
+                                         @RequestParam String surname,
+                                         @RequestParam String dateOfBirth,
+                                         @RequestParam String specialization,
+                                         @RequestParam String phone,
+                                         Model model) {
 
         Doctor doctor = new Doctor(login, passwordEncoder.encode(password), LocalDate.parse(dateOfBirth),
                 name, surname, specialization, phone);
         doctorService.create(doctor);
-        return "redirect:/doctors/" + doctor.getId();
+        return new RedirectView("/doctors/" + doctor.getId());
     }
 
 
