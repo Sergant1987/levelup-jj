@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AppointmentByPatient</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+
+<div th:if="${appointments.isEmpty()}">
+    <p>Посещений нет</p>
+</div>
+<div class="container my-5">
+    <form method="post">
+        <div class="container my-5">
+            <div th:each="appointment : ${appointments}">
+                <h3 th:text="${appointment.appointmentId.dateOfAppointment}"></h3>
+                <p th:text="${appointment.doctor.surname}"></p>
+                <p th:text="${appointment.diagnosis}"></p>
+                <button class="btn btn-success" type="submit" th:name="date"
+                        th:value="${appointment.appointmentId.dateOfAppointment}">Открыть
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

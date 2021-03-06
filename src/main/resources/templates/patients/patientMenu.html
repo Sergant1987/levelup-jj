@@ -13,7 +13,7 @@
 
      <a class="p-2 text-dark" title="Записаться к врачу" th:href="@{'/patients/'+${id}+'/reservations'}">Записаться к врачу</a>
      <a class="p-2 text-dark" title="Посмотреть все записи" th:href="@{'/patients/'+${id}+'/all_reservations'}">Посмотреть все записи к врачу</a>
-     <a class="p-2 text-dark" title="Посмотреть посещения" href="">Посмотреть посещения</a>
+     <a class="p-2 text-dark" title="Посмотреть посещения врачей" th:href="@{'/patients/'+${id}+'/appointments'}">Посмотреть посещения</a>
  </div>
 </div>
 

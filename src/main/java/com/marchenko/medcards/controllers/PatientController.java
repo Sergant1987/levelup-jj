@@ -1,9 +1,7 @@
 package com.marchenko.medcards.controllers;
 
-import com.marchenko.medcards.models.Doctor;
-import com.marchenko.medcards.models.Patient;
-import com.marchenko.medcards.models.Reservation;
-import com.marchenko.medcards.models.TimeReservation;
+import com.marchenko.medcards.models.*;
+import com.marchenko.medcards.service.AppointmentService;
 import com.marchenko.medcards.service.DoctorService;
 import com.marchenko.medcards.service.PatientService;
 import com.marchenko.medcards.service.ReservationService;
@@ -33,15 +31,19 @@ public class PatientController {
     private final PatientService patientService;
     private final DoctorService doctorService;
     private final ReservationService reservationService;
+    private final AppointmentService appointmentService;
 
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public PatientController(PatientService patientService, DoctorService doctorService, PasswordEncoder passwordEncoder, ReservationService reservationService) {
+    public PatientController(PatientService patientService, DoctorService doctorService,
+                             PasswordEncoder passwordEncoder, ReservationService reservationService,
+                             AppointmentService appointmentService ) {
         this.patientService = patientService;
         this.passwordEncoder = passwordEncoder;
         this.doctorService = doctorService;
         this.reservationService = reservationService;
+        this.appointmentService = appointmentService;
     }
 
     @GetMapping("")
@@ -147,12 +149,24 @@ public class PatientController {
 
     @GetMapping("/{id}/all_reservations")
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String s(
+    public String viewAllReservations(
             @PathVariable(value = "id") Long id,
             Model model) {
         List<Reservation> reservations = reservationService.findByPatientAndDateAfterNow(id);
         model.addAttribute("reservations", reservations);
         return "/patients/reservationsByPatient";
+    }
+
+
+    //TODO приделать сортировку
+    @GetMapping("/{id}/appointments")
+    @PreAuthorize("hasAuthority('PATIENT')")
+    public String viewAllAppointments(
+            @PathVariable(value = "id") Long id,
+            Model model) {
+        List<Appointment> appointments = appointmentService.findAllByPatient(id);
+        model.addAttribute("appointments", appointments);
+        return "/patients/appointmentsByPatient";
     }
 
     @ModelAttribute("specializations")
