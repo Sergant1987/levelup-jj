@@ -15,9 +15,10 @@ import javax.persistence.Transient;
 @MappedSuperclass
 public class User {
 
-    @Column(unique = true)
+    @Column(nullable = false,unique = true)
     protected String login;
 
+    @Column(nullable = false)
     protected String password;
 
     @Transient

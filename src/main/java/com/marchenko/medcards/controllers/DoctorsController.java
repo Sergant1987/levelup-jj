@@ -4,12 +4,8 @@ import com.marchenko.medcards.models.Doctor;
 import com.marchenko.medcards.models.User;
 import com.marchenko.medcards.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
-import java.util.NoSuchElementException;
 
 
 @Controller
@@ -67,7 +62,7 @@ public class DoctorsController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('DOCTOR')")
-    public String info(@PathVariable(value = "id") long id, Model model) {
+    public String viewDoctorMenu(@PathVariable(value = "id") Long id, Model model) {
         Doctor doctor = doctorService.findById(id);
         if (!hasAccessRight(doctor)) {
             return "redirect:/doctors/" + doctorService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -75,7 +70,7 @@ public class DoctorsController {
         model.addAttribute("name", doctor.getName());
         System.out.println(doctor.getId());
         model.addAttribute("id", doctor.getId());
-        return "/doctors/info";
+        return "doctorMenu";
     }
 
     private boolean hasAccessRight(User user) {

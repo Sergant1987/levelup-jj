@@ -17,19 +17,25 @@ public class Patient extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Setter
+    @Column(nullable = false)
     private String name;
+
     @Setter
+    @Column(nullable = false)
     private String surname;
 
     @Setter
-    @Column(name = "date_of_birth")
+    @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
     @Setter
+    @Column(nullable = false, unique = true)
     private String phone;
 
     @Setter
+    @Column(nullable = false)
     private String address;
 
     @OneToMany(mappedBy = "patient")

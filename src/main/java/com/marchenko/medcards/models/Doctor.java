@@ -37,7 +37,7 @@ public class Doctor extends User{
     private String specialization;
 
     @Setter
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phone;
 
     @OneToMany(mappedBy = "doctor")
