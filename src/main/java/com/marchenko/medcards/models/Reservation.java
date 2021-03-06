@@ -7,7 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "reservations")
@@ -30,17 +30,27 @@ public class Reservation {
 
     @Setter
     @Column(name = "date_reservation")
-    private LocalDate dateRecord;
+    private LocalDate date;
 
     @Setter
     @Column(name = "time_reservation")
     @Enumerated(EnumType.STRING)
     private TimeReservation time;
 
-    public Reservation(Patient patient, Doctor doctorId, LocalDate dateRecord, TimeReservation time) {
+    public Reservation(Patient patient, Doctor doctorId, LocalDate date, TimeReservation time) {
         this.patient = patient;
         this.doctor = doctorId;
-        this.dateRecord = dateRecord;
+        this.date= date;
         this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "patient=" + patient.getId() +
+                ", doctor=" + doctor.getId() +
+                ", date=" + date +
+                ", time=" + time +
+                '}';
     }
 }

@@ -19,13 +19,11 @@
         <h1 class="h3 mb-3 fw-normal">Личный кабинет Пациента</h1>
 
         <div class="form-group">
-            <select th:name="specialization" >
-
+            <select th:name="specialization">
                 <option
                         th:each="specialization : ${specializations}"
                         th:value="${specialization}"
                         th:text="${specialization}">
-
                 </option>
             </select>
         </div>
@@ -45,17 +43,19 @@
 <br>
 <div class="container my-5">
     <form method="post">
-    <table class="table">
-        <tbody>
-        <tr th:each="d : ${doctors}">
-            <td th:text="${d.specialization}">Специализация</td>
-            <td th:text="${d.name}">Имя</td>
-            <td th:text="${d.surname}">Фамилия</td>
-           <td><button class="btn btn-success" type="submit" th:name="doctorId" th:value="${d.id}">Выбрать врача</button></td>
-        </tr>
-        </tbody>
-
-    </table>
+        <table class="table">
+            <tbody>
+            <tr th:each="d : ${doctors}">
+                <td th:text="${d.specialization}">Специализация</td>
+                <td th:text="${d.name}">Имя</td>
+                <td th:text="${d.surname}">Фамилия</td>
+                <td>
+                    <button class="btn btn-success" type="submit" th:name="doctorId" th:value="${d.id}">Выбрать врача
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </form>
 </div>
 

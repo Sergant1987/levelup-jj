@@ -2,8 +2,11 @@ package com.marchenko.medcards.controllers;
 
 import com.marchenko.medcards.models.Doctor;
 import com.marchenko.medcards.models.Patient;
+import com.marchenko.medcards.models.Reservation;
+import com.marchenko.medcards.models.TimeReservation;
 import com.marchenko.medcards.service.DoctorService;
 import com.marchenko.medcards.service.PatientService;
+import com.marchenko.medcards.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +21,9 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/patients")
@@ -27,14 +32,16 @@ public class PatientController {
 
     private PatientService patientService;
     private DoctorService doctorService;
+    private ReservationService reservationService;
 
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public PatientController(PatientService patientService, DoctorService doctorService, PasswordEncoder passwordEncoder) {
+    public PatientController(PatientService patientService, DoctorService doctorService, PasswordEncoder passwordEncoder, ReservationService reservationService) {
         this.patientService = patientService;
         this.passwordEncoder = passwordEncoder;
         this.doctorService = doctorService;
+        this.reservationService = reservationService;
     }
 
     @GetMapping("")
@@ -71,27 +78,26 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String patientMenu(@PathVariable(value = "id") Long id, Model model) {
+    public String viewPatientMenu(@PathVariable(value = "id") Long id,
+                              Model model) {
         Patient patient = patientService.findById(id);
-
         model.addAttribute("name", patient.getName());
         model.addAttribute("id", patient.getId());
         return "/patients/patientMenu";
     }
 
-//    @GetMapping("/{id}/reservations")
-//    @ResponseStatus(HttpStatus.OK)
-//    @PreAuthorize("hasAuthority('PATIENT')")
-//    public String findDoctors(@PathVariable(value = "id") long id, Model model) {
-//        model.addAttribute("doctorSurname", "");
-//        model.addAttribute("doctors", Collections.emptySet());
-//        return "/patients/selectDoctor";
-//    }
+    @PostMapping("/{id}/reservations")
+    @PreAuthorize("hasAuthority('PATIENT')")
+    public ModelAndView selectDoctor(
+            @PathVariable(value = "id") Long id,
+            @RequestParam Long doctorId,
+            Model model) {
+        String redirect = String.format("/patients/%d/reservations/%d", id, doctorId);
+        return new ModelAndView(new RedirectView(redirect));
+    }
 
     @GetMapping("/{id}/reservations")
-    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PATIENT')")
     public String findDoctors(
             @PathVariable(value = "id") Long id,
@@ -100,31 +106,39 @@ public class PatientController {
             Model model) {
         model.addAttribute("doctorSurname", doctorSurname);
         model.addAttribute("doctors", findDoctors(specialization, doctorSurname));
-
         return "/patients/selectDoctor";
     }
 
-    @PostMapping ("/{id}/reservations")
-    @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasAuthority('PATIENT')")
-    public ModelAndView selectDoctor(
-            @PathVariable(value = "id") Long id,
-            @RequestParam String doctorId,
-            Model model) {
-        System.out.println(doctorId);
-        System.out.println("/patients/"+id+"/reservations/" + doctorId);
-        return new ModelAndView("redirect:/patients/"+id+"/reservations/" + doctorId);
-    }
 
     @GetMapping("/{id}/reservations/{doctorId}")
-    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String date(
+    public String selectDate(
             @PathVariable(value = "id") Long id,
             @PathVariable(value = "doctorId") Long doctorId,
+            @RequestParam(required = false) String dateOfReservation,
             Model model) {
-        System.out.println("sdkvjos");
+        if (dateOfReservation != null) {
+            model.addAttribute("dateOfReservation", dateOfReservation);
+            List<Reservation> reservations = reservationService.findRecordsByDoctorAndDate(doctorId, LocalDate.parse(dateOfReservation));
+            List<TimeReservation> noReservationTime = TimeReservation.findNotReservationTime(reservations.stream().map(Reservation::getTime).collect(Collectors.toList()));
+            model.addAttribute("noReservationTime", noReservationTime);
+        }
         return "/patients/selectDate";
+    }
+
+    @PostMapping("/{id}/reservations/{doctorId}")
+    @PreAuthorize("hasAuthority('PATIENT')")
+    public ModelAndView selectTimeAndPersistReservation(
+            @PathVariable(value = "id") Long id,
+            @PathVariable(value = "doctorId") Long doctorId,
+            @RequestParam String dateOfReservation,
+            @RequestParam String time,
+            Model model) {
+        Doctor doctor = doctorService.findById(doctorId);
+        Patient patient = patientService.findById(id);
+        Reservation reservation = reservationService.create(patient, doctor, LocalDate.parse(dateOfReservation), TimeReservation.getByValue(time));
+        System.out.println(reservation);
+        return new ModelAndView(new RedirectView(String.format("/patients/%d", id)));
     }
 
 

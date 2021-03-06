@@ -6,11 +6,14 @@ import com.marchenko.medcards.models.Reservation;
 import com.marchenko.medcards.models.TimeReservation;
 import com.marchenko.medcards.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Service
+@Transactional
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
@@ -27,8 +30,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findRecordsByDoctorAndDate(Doctor doctor, LocalDate date) {
-        return null;
+    public List<Reservation> findRecordsByDoctorAndDate(Long doctorId, LocalDate date) {
+        return reservationRepository.findRecordsByDoctorAndDate(doctorId,date);
     }
 
     @Override

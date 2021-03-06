@@ -12,7 +12,7 @@ public interface ReservationService {
 
   Reservation create (Patient patient, Doctor doctor, LocalDate date, TimeReservation time);
 
-  List<Reservation> findRecordsByDoctorAndDate(Doctor doctor, LocalDate date);
+  List<Reservation> findRecordsByDoctorAndDate(Long doctorId, LocalDate date);
 
   List<Reservation> findRecordsByPatient(Patient patient);
 

@@ -1,5 +1,8 @@
 package com.marchenko.medcards.models;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 public enum TimeReservation {
     EIGHT_ZERO("8-00"),
     EIGHT_HALF("8-30"),
@@ -23,4 +26,26 @@ public enum TimeReservation {
     TimeReservation(String value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    private static List<TimeReservation> getAll(){
+        return new ArrayList<>(Arrays.asList(TimeReservation.values()));
+    }
+
+    public static List<TimeReservation> findNotReservationTime(List<TimeReservation> reservationTime) {
+        List<TimeReservation> allTime = getAll();
+        allTime.removeAll(reservationTime);
+        return allTime;
+    }
+
+    public static TimeReservation getByValue(String selectedValue){
+        System.out.println(selectedValue);
+        return getAll().stream().filter(v->v.value.equals(selectedValue)).findFirst().get();
+    }
+
+
 }

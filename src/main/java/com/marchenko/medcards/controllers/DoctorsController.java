@@ -52,7 +52,6 @@ public class DoctorsController {
     }
 
     @PostMapping("/registration")
-    @ResponseStatus(HttpStatus.OK)
     public RedirectView postRegistration(@RequestParam String login,
                                          @RequestParam String password,
                                          @RequestParam String name,
@@ -70,7 +69,6 @@ public class DoctorsController {
 
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('DOCTOR')")
     public String info(@PathVariable(value = "id") long id, Model model) {
         Doctor doctor = null;
