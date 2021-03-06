@@ -36,10 +36,9 @@ public class DoctorsController {
     }
 
 
-
     @GetMapping("")
     @PreAuthorize("hasAuthority('DOCTOR')")
-    public RedirectView main(Model model) {
+    public RedirectView index(Model model) {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         Doctor doctor = doctorService.findByLogin(login);
         return new RedirectView("/doctors/" + doctor.getId());
@@ -47,7 +46,6 @@ public class DoctorsController {
 
     @GetMapping("/registration")
     public String registration() {
-
         return "/doctors/registration";
     }
 
@@ -60,7 +58,6 @@ public class DoctorsController {
                                          @RequestParam String specialization,
                                          @RequestParam String phone,
                                          Model model) {
-
         Doctor doctor = new Doctor(login, passwordEncoder.encode(password), LocalDate.parse(dateOfBirth),
                 name, surname, specialization, phone);
         doctorService.create(doctor);
@@ -71,13 +68,10 @@ public class DoctorsController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('DOCTOR')")
     public String info(@PathVariable(value = "id") long id, Model model) {
-        Doctor doctor = null;
-
-        doctor = doctorService.findById(id);
+        Doctor doctor = doctorService.findById(id);
         if (!hasAccessRight(doctor)) {
             return "redirect:/doctors/" + doctorService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         }
-
         model.addAttribute("name", doctor.getName());
         System.out.println(doctor.getId());
         model.addAttribute("id", doctor.getId());
@@ -88,8 +82,10 @@ public class DoctorsController {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         User authenticationUser;
 
-            authenticationUser = doctorService.findByLogin(login);
-       if(authenticationUser==null){return false;}
+        authenticationUser = doctorService.findByLogin(login);
+        if (authenticationUser == null) {
+            return false;
+        }
 
         if (authenticationUser.getLogin().equals(user.getLogin())) {
             return true;
@@ -97,8 +93,6 @@ public class DoctorsController {
             return false;
         }
     }
-
-
 
 
 }

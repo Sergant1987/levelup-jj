@@ -18,7 +18,8 @@
     <form method="get">
         <h3 class="h3 mb-3 fw-normal">Выбор даты</h3>
         <label for="dateOfReservation" class="visually-hidden">Дата записи
-            <input type="date" id="dateOfReservation" name="dateOfReservation" th:value="${dateOfReservation}" class="form-control"
+            <input type="date" id="dateOfReservation" name="dateOfReservation" th:value="${dateOfReservation}"
+                   class="form-control"
                    placeholder="Дата записи" required>
         </label>
         <button class="btn btn-success" type="submit">Выбрать дату</button>
@@ -30,9 +31,6 @@
         <table class="table">
             <tbody>
             <tr th:each="time : ${noReservationTime}">
-<!--                <td th:text="${d.specialization}">Специализация</td>-->
-<!--                <td th:text="${d.name}">Имя</td>-->
-<!--                <td th:text="${d.surname}">Фамилия</td>-->
                 <td>
                     <button class="btn btn-success" type="submit" th:text="${time}" th:name="time" th:value="${time}">
                     </button>
