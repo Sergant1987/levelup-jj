@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 @Service
 @Transactional
@@ -30,12 +29,32 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findRecordsByDoctorAndDate(Long doctorId, LocalDate date) {
-        return reservationRepository.findRecordsByDoctorAndDate(doctorId,date);
+    public List<Reservation> findByDoctorAndDate(Long doctorId, LocalDate date) {
+        return reservationRepository.findByDoctorAndDate(doctorId,date);
     }
 
     @Override
-    public List<Reservation> findRecordsByPatient(Patient patient) {
+    public List<Reservation> findByPatient(Patient patient) {
         return null;
+    }
+
+    @Override
+    public List<Reservation> findByDoctorAndAfterDate(Long doctorId, LocalDate date) {
+        return null;
+    }
+
+    @Override
+    public List<Reservation> findByDoctorAndDate(Doctor doctor, LocalDate date) {
+        return reservationRepository.findByDoctorAndDate(doctor,date);
+    }
+
+    @Override
+    public List<Reservation> findByPatientAndDateAfterNow(Patient patient) {
+        return reservationRepository.findByPatientAndDateAfterNow(patient);
+    }
+
+    @Override
+    public List<Reservation> findByPatientAndDateAfterNow(Long patientId) {
+        return reservationRepository.findByPatientAndDateAfterNow(patientId);
     }
 }

@@ -30,11 +30,11 @@ import java.util.stream.Collectors;
 
 public class PatientController {
 
-    private PatientService patientService;
-    private DoctorService doctorService;
-    private ReservationService reservationService;
+    private final PatientService patientService;
+    private final DoctorService doctorService;
+    private final ReservationService reservationService;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public PatientController(PatientService patientService, DoctorService doctorService, PasswordEncoder passwordEncoder, ReservationService reservationService) {
@@ -80,7 +80,7 @@ public class PatientController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('PATIENT')")
     public String viewPatientMenu(@PathVariable(value = "id") Long id,
-                              Model model) {
+                                  Model model) {
         Patient patient = patientService.findById(id);
         model.addAttribute("name", patient.getName());
         model.addAttribute("id", patient.getId());
@@ -119,8 +119,11 @@ public class PatientController {
             Model model) {
         if (dateOfReservation != null) {
             model.addAttribute("dateOfReservation", dateOfReservation);
-            List<Reservation> reservations = reservationService.findRecordsByDoctorAndDate(doctorId, LocalDate.parse(dateOfReservation));
-            List<TimeReservation> noReservationTime = TimeReservation.findNotReservationTime(reservations.stream().map(Reservation::getTime).collect(Collectors.toList()));
+            List<Reservation> reservations =
+                    reservationService.findByDoctorAndDate(doctorId, LocalDate.parse(dateOfReservation));
+            List<TimeReservation> noReservationTime =
+                    TimeReservation.findNotReservationTime(
+                            reservations.stream().map(Reservation::getTime).collect(Collectors.toList()));
             model.addAttribute("noReservationTime", noReservationTime);
         }
         return "/patients/selectDate";
@@ -141,6 +144,16 @@ public class PatientController {
         return new ModelAndView(new RedirectView(String.format("/patients/%d", id)));
     }
 
+
+    @GetMapping("/{id}/all_reservations")
+    @PreAuthorize("hasAuthority('PATIENT')")
+    public String s(
+            @PathVariable(value = "id") Long id,
+            Model model) {
+        List<Reservation> reservations = reservationService.findByPatientAndDateAfterNow(id);
+        model.addAttribute("reservations", reservations);
+        return "/patients/reservationsByPatient";
+    }
 
     @ModelAttribute("specializations")
     public Set<String> getSpecializations() {
