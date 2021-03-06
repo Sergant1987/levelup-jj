@@ -39,16 +39,9 @@ public class DoctorsController {
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('DOCTOR')")
-
     public RedirectView main(Model model) {
-
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         Doctor doctor = doctorService.findByLogin(login);
-//        System.out.println(doctor);
-        //        Doctor doctor = doctorService.findByLogin(login);
-
-//        model.addAttribute("name", doctor.getName());
-
         return new RedirectView("/doctors/" + doctor.getId());
     }
 

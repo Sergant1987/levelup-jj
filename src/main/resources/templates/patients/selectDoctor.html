@@ -47,12 +47,11 @@
     <form method="post">
     <table class="table">
         <tbody>
-
         <tr th:each="d : ${doctors}">
             <td th:text="${d.specialization}">Специализация</td>
             <td th:text="${d.name}">Имя</td>
             <td th:text="${d.surname}">Фамилия</td>
-           <td><button class="btn btn-success" type="submit" th:value="${d}">Выбрать врача</button></td>
+           <td><button class="btn btn-success" type="submit" th:name="doctorId" th:value="${d.id}">Выбрать врача</button></td>
         </tr>
         </tbody>
 

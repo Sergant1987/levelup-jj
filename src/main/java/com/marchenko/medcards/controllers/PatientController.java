@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
@@ -72,7 +73,7 @@ public class PatientController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String patientMenu(@PathVariable(value = "id") long id, Model model) {
+    public String patientMenu(@PathVariable(value = "id") Long id, Model model) {
         Patient patient = patientService.findById(id);
 
         model.addAttribute("name", patient.getName());
@@ -80,19 +81,20 @@ public class PatientController {
         return "/patients/patientMenu";
     }
 
+//    @GetMapping("/{id}/reservations")
+//    @ResponseStatus(HttpStatus.OK)
+//    @PreAuthorize("hasAuthority('PATIENT')")
+//    public String findDoctors(@PathVariable(value = "id") long id, Model model) {
+//        model.addAttribute("doctorSurname", "");
+//        model.addAttribute("doctors", Collections.emptySet());
+//        return "/patients/selectDoctor";
+//    }
+
     @GetMapping("/{id}/reservations")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String findDoctors(@PathVariable(value = "id") long id, Model model) {
-        model.addAttribute("doctorSurname", "");
-        model.addAttribute("doctors", Collections.emptySet());
-        return "/patients/selectDoctor";
-    }
-
-    @PostMapping("/{id}/reservations")
-    @ResponseStatus(HttpStatus.OK)
     public String findDoctors(
-            @PathVariable(value = "id") long id,
+            @PathVariable(value = "id") Long id,
             @RequestParam(required = false) String specialization,
             @RequestParam(required = false) String doctorSurname,
             Model model) {
@@ -102,15 +104,29 @@ public class PatientController {
         return "/patients/selectDoctor";
     }
 
-//    @PostMapping("/{id}/reservations")
-//    @ResponseStatus(HttpStatus.OK)
-//    public RedirectView selectDoctor(
-//            @PathVariable(value = "id") long id,
-//            @RequestParam String doctorId,
-//            Model model) {
-//        System.out.println(doctorId);
-//        return new RedirectView("/patients/{id}/reservations/" + doctorId);
-//    }
+    @PostMapping ("/{id}/reservations")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('PATIENT')")
+    public ModelAndView selectDoctor(
+            @PathVariable(value = "id") Long id,
+            @RequestParam String doctorId,
+            Model model) {
+        System.out.println(doctorId);
+        System.out.println("/patients/"+id+"/reservations/" + doctorId);
+        return new ModelAndView("redirect:/patients/"+id+"/reservations/" + doctorId);
+    }
+
+    @GetMapping("/{id}/reservations/{doctorId}")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('PATIENT')")
+    public String date(
+            @PathVariable(value = "id") Long id,
+            @PathVariable(value = "doctorId") Long doctorId,
+            Model model) {
+        System.out.println("sdkvjos");
+        return "/patients/selectDate";
+    }
+
 
     @ModelAttribute("specializations")
     public Set<String> getSpecializations() {
