@@ -135,14 +135,10 @@ public class DoctorsController {
                                           @RequestParam String diagnosis,
                                           @RequestParam String data,
                                           Model model) {
-        System.out.println(diagnosis);
-        System.out.println(data);
-
-//        Doctor doctor = doctorService.findById(id);
-//        Patient patient = patientService.findById(patientId);
-//        Appointment appointment = new Appointment(patient, LocalDateTime.now(), doctor, diagnosis, data);
-//        appointmentService.create(appointment);
-
+        Doctor doctor = doctorService.findById(id);
+        Patient patient = patientService.findById(patientId);
+        Appointment appointment = new Appointment(patient, LocalDateTime.now(), doctor, diagnosis, data);
+        appointmentService.create(appointment);
         return new ModelAndView(new RedirectView(String.format("/doctors/%d",id)));
 
     }
