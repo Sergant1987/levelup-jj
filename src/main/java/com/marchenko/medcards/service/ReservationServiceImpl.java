@@ -57,4 +57,9 @@ public class ReservationServiceImpl implements ReservationService {
     public List<Reservation> findByPatientAndDateAfterNow(Long patientId) {
         return reservationRepository.findByPatientAndDateAfterNow(patientId);
     }
+
+    @Override
+    public Reservation findById(Long id) {
+        return reservationRepository.findById(id).get();
+    }
 }

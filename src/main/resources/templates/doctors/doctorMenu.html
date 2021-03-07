@@ -12,7 +12,7 @@
     <h1 th:text="'Здравствуйте, '+${name}"> </h1>
 
      <a class="p-2 text-dark" title="Расписание" th:href="@{'/doctors/'+${id}+'/schedule'}">Просмотреть расписание приемов</a>
-     <a class="p-2 text-dark" title="Ввести информацию о приеме" href="">Ввести информацию о приеме</a>
+     <a class="p-2 text-dark" title="Ввести информацию о приеме для пациента" th:href="@{'/doctors/'+${id}+'/appointments'}">Ввести информацию о приеме для пациента</a>
  </div>
 </div>
 

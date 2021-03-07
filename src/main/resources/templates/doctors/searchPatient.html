@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SearchPatient</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 <body>
+<div class="container mt-3 mb-5">
+    <form method="get">
+        <h1 class="h3 mb-3 fw-normal">Личный кабинет Пациента</h1>
+        <label for="doctorSurname" class="visually-hidden">Имя пользователя
+            <input type="text" id="doctorSurname" name="doctorSurname" th:value="${doctorSurname}" class="form-control"
+                   placeholder="Имя врача"
+                   autofocus>
+        </label>
 
+        <br>
+        <button class="btn btn-success" type="submit">Найти врача</button>
+    </form>
+</div>
 </body>
 </html>

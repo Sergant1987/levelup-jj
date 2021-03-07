@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 @Embeddable
 @NoArgsConstructor
 @Data
@@ -24,6 +25,11 @@ public class AppointmentId implements Serializable {
 
     @Setter
     @ManyToOne
-    @JoinColumn(name = "patient_id",nullable = false)
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
+
+    public AppointmentId(Patient patient, LocalDateTime dateOfAppointment) {
+        this.dateOfAppointment = dateOfAppointment;
+        this.patient = patient;
+    }
 }

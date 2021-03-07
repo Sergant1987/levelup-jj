@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Schedule</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<header th:insert="blocks/header :: header"></header>
 
+<h1 class="h3 mb-3 fw-normal">Расписание</h1>-->
+<div class="container mt-3 mb-5">
+    <form method="get">
+        <h3 class="h3 mb-3 fw-normal">Выбор даты</h3>
+        <label for="date" class="visually-hidden">Дата записи
+            <input type="date" id="date" name="date" th:value="${date}"
+                   class="form-control"
+                   placeholder="Дата" required>
+        </label>
+        <button class="btn btn-success" type="submit">Выбрать дату</button>
+    </form>
+</div>
+
+<div class="container my-5">
+    <form method="post">
+        <table class="table">
+            <tbody>
+            <tr th:each="r : ${reservations}">
+                <td th:text="${r.date}">Дата</td>
+                <td th:text="${r.time}">Время</td>
+                <td th:text="${r.patient.surname}">Фамилия пациента</td>
+                <td th:text="${r.patient.name}">Имя пациента</td>
+                <td th:text="${r.patient.phone}">Телефон пациента</td>
+                <td>
+                    <button class="btn btn-success" type="submit" th:name="reservationId" th:value="${r.id}">Выбрать врача
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
 </body>
 </html>

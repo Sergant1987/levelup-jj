@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -31,4 +32,10 @@ public class Appointment {
     @Setter
     private String dateAppointment;
 
+    public Appointment(Patient patient, LocalDateTime dateOfAppointment, Doctor doctor, String diagnosis, String dateAppointment) {
+        this.appointmentId = new AppointmentId(patient,dateOfAppointment);
+        this.doctor = doctor;
+        this.diagnosis = diagnosis;
+        this.dateAppointment = dateAppointment;
+    }
 }
