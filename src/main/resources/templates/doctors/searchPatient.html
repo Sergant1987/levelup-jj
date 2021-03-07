@@ -5,19 +5,56 @@
     <title>SearchPatient</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- jQuery Mask Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 </head>
 <body>
 <div class="container mt-3 mb-5">
     <form method="get">
-        <h1 class="h3 mb-3 fw-normal">Личный кабинет Пациента</h1>
-        <label for="doctorSurname" class="visually-hidden">Имя пользователя
-            <input type="text" id="doctorSurname" name="doctorSurname" th:value="${doctorSurname}" class="form-control"
-                   placeholder="Имя врача"
-                   autofocus>
+        <h1 class="h3 mb-3 fw-normal">Поиск пациента</h1>
+        <label for="name" class="visually-hidden">Имя пациента
+            <input type="text" id="name" name="name" th:value="${name}" class="form-control"
+                   placeholder="Имя пациента">
+        </label>
+        <br>
+        <label for="surname" class="visually-hidden">Фамилия пациента
+            <input type="text" id="surname" name="surname" th:value="${surname}" class="form-control"
+                   placeholder="Имя пациента">
+        </label>
+        <br>
+        <label for="phone" class="visually-hidden">Телефон пациенат
+            <input type="text" id="phone" name="phone" th:value="${phone}" class="form-control"
+                   placeholder="Телефон пациента">
+            <script>
+                $(function () {
+                    $('#phone').mask('+7(000)000-00-00');
+                });
+            </script>
+
         </label>
 
         <br>
-        <button class="btn btn-success" type="submit">Найти врача</button>
+        <button class="btn btn-success" type="submit">Поиск</button>
+    </form>
+</div>
+
+<div class="container my-5">
+    <form method="post">
+        <table class="table">
+            <tbody>
+            <tr th:each="p : ${patients}">
+                <td th:text="${p.name}">Имя</td>
+                <td th:text="${p.surname}">Фамилия</td>
+                <td th:text="${p.address}">Адрес</td>
+                <td th:text="${p.phone}">Телефон</td>
+                <td>
+                    <button class="btn btn-success" type="submit" th:name="patientId" th:value="${p.id}">Выбрать
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </form>
 </div>
 </body>

@@ -4,9 +4,13 @@ package com.marchenko.medcards.service;
 import com.marchenko.medcards.models.Patient;
 import com.marchenko.medcards.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @Transactional
@@ -32,8 +36,15 @@ public class PatientServiceImp implements PatientService {
     @Override
     public Patient findByLogin(String login) {
         Patient patient = patientRepository.findByLogin(login);
-//        Patient patient = patientRepository.findByLogin(login).orElseThrow(() ->
-//                new UsernameNotFoundException("User doesn't exists"));
         return patient;
+    }
+
+    @Override
+    public List<Patient> findByNameOrSurnameOrPhone(String name, String surname, String phone) {
+        if (name == null && surname == null && phone == null) {
+            return Collections.EMPTY_LIST;
+        }
+        Specification<Patient> specification = Specification.where(new FilterPatient().getSpecificationPatient(name, surname, phone));
+        return patientRepository.findAll(specification);
     }
 }

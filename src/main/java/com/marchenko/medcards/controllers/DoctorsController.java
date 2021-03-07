@@ -114,7 +114,20 @@ public class DoctorsController {
                                     @RequestParam(required = false) String surname,
                                     @RequestParam(required = false) String phone,
                                     Model model) {
-        return null;
+        model.addAttribute("name",name);
+        model.addAttribute("surname",surname);
+        model.addAttribute("phone",phone);
+        System.out.println(patientService.findByNameOrSurnameOrPhone(name, surname, phone));
+        model.addAttribute("patients", patientService.findByNameOrSurnameOrPhone(name, surname, phone));
+        return new ModelAndView("/doctors/searchPatient");
+    }
+
+    @PostMapping("/{id}/appointments")
+    @PreAuthorize("hasAuthority('DOCTOR')")
+    public ModelAndView selectPatient(@PathVariable("id") Long id,
+                                      @RequestParam Long patientId,
+                                      Model model) {
+        return new ModelAndView(new RedirectView(String.format("/doctors/%d/appointments/%d",id,patientId)));
     }
 
 
@@ -123,8 +136,8 @@ public class DoctorsController {
     public ModelAndView viewFormCreateAppointment(@PathVariable("id") Long id,
                                                   @PathVariable("patient_id") Long patientId,
                                                   Model model) {
-        model.addAttribute("diagnosis","");
-        model.addAttribute("data","");
+        model.addAttribute("diagnosis", "");
+        model.addAttribute("data", "");
         return new ModelAndView("/doctors/createAppointment");
     }
 
@@ -139,7 +152,7 @@ public class DoctorsController {
         Patient patient = patientService.findById(patientId);
         Appointment appointment = new Appointment(patient, LocalDateTime.now(), doctor, diagnosis, data);
         appointmentService.create(appointment);
-        return new ModelAndView(new RedirectView(String.format("/doctors/%d",id)));
+        return new ModelAndView(new RedirectView(String.format("/doctors/%d", id)));
 
     }
 
