@@ -114,9 +114,9 @@ public class DoctorsController {
                                     @RequestParam(required = false) String surname,
                                     @RequestParam(required = false) String phone,
                                     Model model) {
-        model.addAttribute("name",name);
-        model.addAttribute("surname",surname);
-        model.addAttribute("phone",phone);
+        model.addAttribute("name", name);
+        model.addAttribute("surname", surname);
+        model.addAttribute("phone", phone);
         System.out.println(patientService.findByNameOrSurnameOrPhone(name, surname, phone));
         model.addAttribute("patients", patientService.findByNameOrSurnameOrPhone(name, surname, phone));
         return new ModelAndView("/doctors/searchPatient");
@@ -127,9 +127,8 @@ public class DoctorsController {
     public ModelAndView selectPatient(@PathVariable("id") Long id,
                                       @RequestParam Long patientId,
                                       Model model) {
-        return new ModelAndView(new RedirectView(String.format("/doctors/%d/appointments/%d",id,patientId)));
+        return new ModelAndView(new RedirectView(String.format("/doctors/%d/appointments/%d", id, patientId)));
     }
-
 
     @GetMapping("/{id}/appointments/{patient_id}")
     @PreAuthorize("hasAuthority('DOCTOR')")

@@ -35,16 +35,25 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public Patient findByLogin(String login) {
-        Patient patient = patientRepository.findByLogin(login);
-        return patient;
+        return patientRepository.findByLogin(login);
     }
 
     @Override
     public List<Patient> findByNameOrSurnameOrPhone(String name, String surname, String phone) {
-        if (name == null && surname == null && phone == null) {
+        if (paramIsEmpty(name,surname,phone)) {
             return Collections.EMPTY_LIST;
         }
-        Specification<Patient> specification = Specification.where(new FilterPatient().getSpecificationPatient(name, surname, phone));
+        Specification<Patient> specification =
+                Specification.where(new FilterPatient().getSpecificationPatient(name, surname, phone));
         return patientRepository.findAll(specification);
+    }
+
+    private boolean paramIsEmpty(String name, String surname, String phone) {
+        if (name == null || name.isBlank()
+                && surname == null || surname.isBlank()
+                && phone == null || phone.isBlank()) {
+            return true;
+        }
+        return false;
     }
 }
