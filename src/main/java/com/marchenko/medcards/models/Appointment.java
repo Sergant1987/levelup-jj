@@ -30,12 +30,12 @@ public class Appointment {
 
     @Column(name = "data_appointment", nullable = false, length = 10000)
     @Setter
-    private String dateAppointment;
+    private String dataAppointment;
 
-    public Appointment(Patient patient, LocalDateTime dateOfAppointment, Doctor doctor, String diagnosis, String dateAppointment) {
+    public Appointment(Patient patient, LocalDateTime dateOfAppointment, Doctor doctor, String diagnosis, String dataAppointment) {
         this.appointmentId = new AppointmentId(patient,dateOfAppointment);
         this.doctor = doctor;
         this.diagnosis = diagnosis;
-        this.dateAppointment = dateAppointment;
+        this.dataAppointment = dataAppointment;
     }
 }
