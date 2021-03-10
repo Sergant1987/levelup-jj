@@ -51,9 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/auth/login");
-
     }
-
 
     private final UserDetailsService userDetailsService;
 
@@ -73,7 +71,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
-
     @Bean
     protected DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -81,6 +78,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         return daoAuthenticationProvider;
     }
-
 
 }

@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/patients")
-
 public class PatientController {
 
     private final PatientService patientService;
