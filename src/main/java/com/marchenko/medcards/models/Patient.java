@@ -16,7 +16,9 @@ import java.util.Objects;
 public class Patient extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter
     private Long id;
+
 
     @Setter
     @Column(nullable = false)

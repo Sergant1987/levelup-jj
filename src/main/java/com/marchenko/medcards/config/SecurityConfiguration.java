@@ -16,9 +16,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+//TODO security off
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
@@ -27,30 +28,39 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     }
 
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//
+//        http
+//                //механизм защиты от csrf угрозы
+//                .csrf().disable()
+//                .authorizeRequests()
+//                // страницы исключения для авторизации
+//                .antMatchers("/", "/about", "/contacts").permitAll()
+//                .antMatchers("/doctors/registration", "/patients/registration", "/auth/registration").not().fullyAuthenticated()
+//                //каждый запрос должен быть аутифицирован
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/auth/login").permitAll()
+//                .defaultSuccessUrl("/auth/success")
+//                .and()
+//                .logout()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
+//                .invalidateHttpSession(true)
+//                .clearAuthentication(true)
+//                .deleteCookies("JSESSIONID")
+//                .logoutSuccessUrl("/auth/login");
+//    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
                 //механизм защиты от csrf угрозы
                 .csrf().disable()
-                .authorizeRequests()
-                // страницы исключения для авторизации
-                .antMatchers("/", "/about", "/contacts").permitAll()
-                .antMatchers("/doctors/registration", "/patients/registration", "/auth/registration").not().fullyAuthenticated()
-                //каждый запрос должен быть аутифицирован
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/auth/login").permitAll()
-                .defaultSuccessUrl("/auth/success")
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/auth/login");
+                .authorizeRequests().antMatchers("/**").permitAll();
+
     }
 
     private final UserDetailsService userDetailsService;

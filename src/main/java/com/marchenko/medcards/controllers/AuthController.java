@@ -50,7 +50,6 @@ public class AuthController {
         if (patient != null) {
             return new RedirectView("/patients/");
         }
-
         return new RedirectView("/");
     }
 

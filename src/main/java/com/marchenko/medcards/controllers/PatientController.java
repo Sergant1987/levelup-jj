@@ -48,8 +48,10 @@ public class PatientController {
     @GetMapping("")
     @PreAuthorize("hasAuthority('PATIENT')")
     public RedirectView index(Model model) {
-        String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        Patient patient = patientService.findByLogin(login);
+        //TODO security off
+//        String login = SecurityContextHolder.getContext().getAuthentication().getName();
+//        Patient patient = patientService.findByLogin(login);
+        Patient patient = patientService.findById(1L);
         return new RedirectView("/patients/" + patient.getId());
     }
 

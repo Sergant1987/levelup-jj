@@ -173,5 +173,19 @@ appointments.add(appointment3);
 appointments.add(appointment4);
     }
 
+    public static List<Doctor> getDoctors() {
+        return doctors;
+    }
 
+    public static List<Patient> getPatients() {
+        return patients;
+    }
+
+    public static List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public static List<Appointment> getAppointments() {
+        return appointments;
+    }
 }
