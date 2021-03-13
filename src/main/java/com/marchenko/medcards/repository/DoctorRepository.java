@@ -15,13 +15,13 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long>, JpaSpecif
     Doctor findByLogin(String login);
 
     @Query("select distinct d.specialization from Doctor d")
-    Set<String> getAllSpecialization();
+    Set<String> findAllSpecialization();
 
-    Set<Doctor> getDoctorsBySpecialization(String specialization);
+    Set<Doctor>findDoctorsBySpecialization(String specialization);
 
     @Query("from Doctor d where d.surname like :surname")
-    Set<Doctor> getDoctorsBySurname(String surname);
+    Set<Doctor> findDoctorsBySurname(String surname);
 
     @Query("from Doctor d where d.surname like :surname and d.specialization= :specialization")
-    Set<Doctor> getDoctorsBySpecializationAndSurname(String specialization, String surname);
+    Set<Doctor> findDoctorsBySpecializationAndSurname(String specialization, String surname);
 }

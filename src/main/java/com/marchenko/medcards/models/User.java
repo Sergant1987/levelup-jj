@@ -13,7 +13,7 @@ import javax.persistence.Transient;
 @Data
 @NoArgsConstructor
 @MappedSuperclass
-public class User {
+public abstract class User {
 
     @Column(nullable = false,unique = true)
     protected String login;

@@ -41,15 +41,24 @@ public class Doctor extends User{
     private String phone;
 
     @OneToMany(mappedBy = "doctor")
-    private Collection<Reservation> reservations = new ArrayList<>();
+    private final Collection<Reservation> reservations = new ArrayList<>();
 
-    public Doctor(String login, String password, LocalDate dateOfBirth, String name, String surname, String specialization, String phone) {
+    public Doctor(String login, String password,  String name, String surname, LocalDate dateOfBirth, String specialization, String phone) {
         super(login,password,Role.DOCTOR);
         this.dateOfBirth = dateOfBirth;
         this.name = name;
         this.surname = surname;
         this.specialization = specialization;
         this.phone = phone;
+    }
+
+    public Doctor(DoctorForm form, String specialization){
+        super(form.getLogin(), form.getPassword(), Role.DOCTOR);
+        this.dateOfBirth = form.getDateOfBirth();
+        this.name = form.getName();
+        this.surname = form.getSurname();
+        this.specialization = specialization;
+        this.phone = form.getPhone();
     }
 
     public Doctor() {

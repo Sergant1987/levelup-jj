@@ -51,22 +51,22 @@ public class DoctorServiceImp implements DoctorService {
 
     @Override
     public Set<String> getAllSpecialization() {
-        return doctorRepository.getAllSpecialization();
+        return doctorRepository.findAllSpecialization();
     }
 
     @Override
     public Set<Doctor> getDoctorsBySpecialization(String specialization) {
-        return doctorRepository.getDoctorsBySpecialization(specialization);
+        return doctorRepository.findDoctorsBySpecialization(specialization);
     }
 
     @Override
     public Set<Doctor> getDoctorsBySurname(String surname) {
-        return doctorRepository.getDoctorsBySurname(surname);
+        return doctorRepository.findDoctorsBySurname(surname);
     }
 
     @Override
     public Set<Doctor> getDoctorsBySpecializationAndName(String specialization, String surname) {
-        return doctorRepository.getDoctorsBySpecializationAndSurname(specialization,surname);
+        return doctorRepository.findDoctorsBySpecializationAndSurname(specialization,surname);
     }
 
 }

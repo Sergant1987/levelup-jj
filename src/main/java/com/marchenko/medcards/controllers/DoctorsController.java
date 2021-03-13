@@ -68,8 +68,8 @@ public class DoctorsController {
                                          @RequestParam String specialization,
                                          @RequestParam String phone,
                                          Model model) {
-        Doctor doctor = new Doctor(login, passwordEncoder.encode(password), LocalDate.parse(dateOfBirth),
-                name, surname, specialization, phone);
+        Doctor doctor = new Doctor(login, passwordEncoder.encode(password),
+                name, surname, LocalDate.parse(dateOfBirth), specialization, phone);
         doctorService.create(doctor);
         return new RedirectView(String.format("/doctors/%d", doctor.getId()));
     }

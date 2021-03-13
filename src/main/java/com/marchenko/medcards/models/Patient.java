@@ -41,7 +41,7 @@ public class Patient extends User {
     private String address;
 
     @OneToMany(mappedBy = "patient")
-    private Collection<Reservation> reservations = new ArrayList<>();
+    private final Collection<Reservation> reservations = new ArrayList<>();
 
     public Patient(String login, String password,String name, String surname,  LocalDate dateOfBirth, String phone, String address) {
         super(login, password, Role.PATIENT);
@@ -51,6 +51,15 @@ public class Patient extends User {
         this.phone = phone;
         this.address = address;
 
+    }
+
+    public Patient(PatientForm form, String address){
+        super(form.getLogin(), form.getPassword(), Role.DOCTOR);
+        this.dateOfBirth = form.getDateOfBirth();
+        this.name = form.getName();
+        this.surname = form.getSurname();
+        this.address = address;
+        this.phone = form.getPhone();
     }
 
     public Patient() {
