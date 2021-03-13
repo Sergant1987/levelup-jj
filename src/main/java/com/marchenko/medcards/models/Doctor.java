@@ -52,12 +52,12 @@ public class Doctor extends User{
         this.phone = phone;
     }
 
-    public Doctor(DoctorForm form, String specialization){
+    public Doctor(DoctorForm form){
         super(form.getLogin(), form.getPassword(), Role.DOCTOR);
         this.dateOfBirth = form.getDateOfBirth();
         this.name = form.getName();
         this.surname = form.getSurname();
-        this.specialization = specialization;
+        this.specialization = form.getSpecialization();
         this.phone = form.getPhone();
     }
 

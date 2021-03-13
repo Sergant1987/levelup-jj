@@ -2,6 +2,7 @@ package com.marchenko.medcards.service;
 
 
 import com.marchenko.medcards.models.Doctor;
+import com.marchenko.medcards.models.DoctorForm;
 import com.marchenko.medcards.repository.DoctorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,49 +25,43 @@ public class DoctorServiceImp implements DoctorService {
     }
 
     @Override
-    public  Doctor create(Doctor doctor) {
-        return doctorRepository.save(doctor);
+    public Doctor create(DoctorForm form) {
+        return doctorRepository.save(new Doctor(form));
     }
 
     @Override
-    public Doctor findById(Long id) {
+    public Doctor findDoctorById(Long id) {
         return doctorRepository.findById(id).get();
     }
 
     @Override
-    public Doctor findByLogin(String login) {
-        Doctor doctor = doctorRepository.findByLogin(login);
-        return doctor;
+    public Doctor findDoctorByLogin(String login) {
+        return doctorRepository.findByLogin(login);
     }
 
     @Override
-    public List<Doctor> findAll() {
+    public List<Doctor> findAllDoctors() {
         return doctorRepository.findAll();
     }
 
     @Override
-    public boolean existsById(Long id) {
-        return doctorRepository.existsById(id);
-    }
-
-    @Override
-    public Set<String> getAllSpecialization() {
+    public Set<String> findAllSpecialization() {
         return doctorRepository.findAllSpecialization();
     }
 
     @Override
-    public Set<Doctor> getDoctorsBySpecialization(String specialization) {
+    public Set<Doctor> findDoctorsBySpecialization(String specialization) {
         return doctorRepository.findDoctorsBySpecialization(specialization);
     }
 
     @Override
-    public Set<Doctor> getDoctorsBySurname(String surname) {
+    public Set<Doctor> findDoctorsBySurname(String surname) {
         return doctorRepository.findDoctorsBySurname(surname);
     }
 
     @Override
-    public Set<Doctor> getDoctorsBySpecializationAndName(String specialization, String surname) {
-        return doctorRepository.findDoctorsBySpecializationAndSurname(specialization,surname);
+    public Set<Doctor> findDoctorsBySpecializationAndName(String specialization, String surname) {
+        return doctorRepository.findDoctorsBySpecializationAndSurname(specialization, surname);
     }
 
 }

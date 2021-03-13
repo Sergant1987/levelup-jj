@@ -9,6 +9,5 @@ import java.util.Optional;
 
 
 public interface PatientRepository extends JpaRepository<Patient,Long>, JpaSpecificationExecutor<Patient> {
-
-    Patient findByLogin(String login);
+    Patient findPatientByLogin(String login);
 }

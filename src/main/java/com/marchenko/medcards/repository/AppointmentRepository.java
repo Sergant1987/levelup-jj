@@ -12,10 +12,7 @@ import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, AppointmentId>, JpaSpecificationExecutor<Appointment> {
 
-    @Query("from Appointment a where a.appointmentId.patient=:patient")
-    List<Appointment> findAllByPatient(Patient patient);
-
     @Query("from Appointment a where a.appointmentId.patient.id=:patientId")
-    List<Appointment> findAllByPatient(Long patientId);
+    List<Appointment> findAppointmentByPatientId(Long patientId);
 
 }

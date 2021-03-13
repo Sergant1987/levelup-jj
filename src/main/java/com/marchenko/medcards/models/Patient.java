@@ -2,6 +2,7 @@ package com.marchenko.medcards.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,7 +19,6 @@ public class Patient extends User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter
     private Long id;
-
 
     @Setter
     @Column(nullable = false)
@@ -53,12 +53,12 @@ public class Patient extends User {
 
     }
 
-    public Patient(PatientForm form, String address){
-        super(form.getLogin(), form.getPassword(), Role.DOCTOR);
+    public Patient(PatientForm form){
+        super(form.getLogin(), form.getPassword(), Role.PATIENT);
         this.dateOfBirth = form.getDateOfBirth();
         this.name = form.getName();
         this.surname = form.getSurname();
-        this.address = address;
+        this.address = form.getAddress();
         this.phone = form.getPhone();
     }
 

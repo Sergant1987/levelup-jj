@@ -6,13 +6,10 @@ import com.marchenko.medcards.service.DoctorService;
 import com.marchenko.medcards.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
-
-import java.util.Collections;
 
 
 @Controller
@@ -41,8 +38,8 @@ public class AuthController {
     @GetMapping("/success")
     public RedirectView successPage() {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        Doctor doctor = doctorService.findByLogin(login);
-        Patient patient = patientService.findByLogin(login);
+        Doctor doctor = doctorService.findDoctorByLogin(login);
+        Patient patient = patientService.findPatientByLogin(login);
         if (doctor != null) {
             return new RedirectView("/doctors/");
         }

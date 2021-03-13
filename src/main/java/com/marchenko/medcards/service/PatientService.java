@@ -2,15 +2,16 @@ package com.marchenko.medcards.service;
 
 
 import com.marchenko.medcards.models.Patient;
+import com.marchenko.medcards.models.PatientForm;
 
 import java.util.List;
 
 public interface PatientService {
-    Patient create(Patient doctor);
+    Patient create(PatientForm form);
 
-    Patient findById(Long id);
+    Patient findPatientById(Long id);
 
-    Patient findByLogin(String login);
+    Patient findPatientByLogin(String login);
 
-    List<Patient> findByNameOrSurnameOrPhone(String name, String surname, String phone);
+    List<Patient> findPatientsByNameAndSurnameAndPhone(String name, String surname, String phone);
 }

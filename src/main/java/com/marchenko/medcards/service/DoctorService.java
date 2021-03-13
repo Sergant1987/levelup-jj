@@ -2,29 +2,27 @@ package com.marchenko.medcards.service;
 
 
 import com.marchenko.medcards.models.Doctor;
-import org.springframework.data.jpa.repository.Query;
+import com.marchenko.medcards.models.DoctorForm;
 
 import java.util.List;
 import java.util.Set;
 
 public interface DoctorService {
 
-    Doctor create(Doctor doctor);
+    Doctor create(DoctorForm form);
 
-    Doctor findById(Long id);
+    Doctor findDoctorById(Long id);
 
-    Doctor findByLogin(String login);
+    Doctor findDoctorByLogin(String login);
 
-    List<Doctor> findAll();
+    List<Doctor> findAllDoctors();
 
-    boolean existsById(Long id);
+    Set<String> findAllSpecialization();
 
-    Set<String> getAllSpecialization();
+    Set<Doctor> findDoctorsBySpecialization(String specialization);
 
-    Set<Doctor> getDoctorsBySpecialization(String specialization);
+    Set<Doctor> findDoctorsBySurname(String surname);
 
-    Set<Doctor> getDoctorsBySurname(String surname);
-
-    Set<Doctor> getDoctorsBySpecializationAndName(String specialization, String surname);
+    Set<Doctor> findDoctorsBySpecializationAndName(String specialization, String surname);
 
 }
