@@ -14,14 +14,14 @@ import java.util.Objects;
 
 @Getter
 
-public class Doctor extends User{
+public class Doctor extends User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
-    @Column(name = "date_of_birth",nullable = false)
+    @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
     @Setter
@@ -43,8 +43,8 @@ public class Doctor extends User{
     @OneToMany(mappedBy = "doctor")
     private final Collection<Reservation> reservations = new ArrayList<>();
 
-    public Doctor(String login, String password,  String name, String surname, LocalDate dateOfBirth, String specialization, String phone) {
-        super(login,password,Role.DOCTOR);
+    public Doctor(String login, String password, String name, String surname, LocalDate dateOfBirth, String specialization, String phone) {
+        super(login, password, Role.DOCTOR);
         this.dateOfBirth = dateOfBirth;
         this.name = name;
         this.surname = surname;
@@ -52,17 +52,21 @@ public class Doctor extends User{
         this.phone = phone;
     }
 
-    public Doctor(DoctorForm form){
+    public Doctor(DoctorForm form) {
         super(form.getLogin(), form.getPassword(), Role.DOCTOR);
-        this.dateOfBirth = form.getDateOfBirth();
+        this.dateOfBirth = LocalDate.parse(form.getDateOfBirth());
         this.name = form.getName();
         this.surname = form.getSurname();
         this.specialization = form.getSpecialization();
         this.phone = form.getPhone();
     }
 
+    public DoctorForm getForm() {
+        return new DoctorForm(login, password, name, surname, dateOfBirth.toString(), phone, specialization);
+    }
+
     public Doctor() {
-        role=Role.DOCTOR;
+        role = Role.DOCTOR;
     }
 
     @Override

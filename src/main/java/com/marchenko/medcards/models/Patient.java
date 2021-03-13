@@ -43,7 +43,7 @@ public class Patient extends User {
     @OneToMany(mappedBy = "patient")
     private final Collection<Reservation> reservations = new ArrayList<>();
 
-    public Patient(String login, String password,String name, String surname,  LocalDate dateOfBirth, String phone, String address) {
+    public Patient(String login, String password, String name, String surname, LocalDate dateOfBirth, String phone, String address) {
         super(login, password, Role.PATIENT);
         this.name = name;
         this.surname = surname;
@@ -53,18 +53,23 @@ public class Patient extends User {
 
     }
 
-    public Patient(PatientForm form){
+    public Patient(PatientForm form) {
         super(form.getLogin(), form.getPassword(), Role.PATIENT);
-        this.dateOfBirth = form.getDateOfBirth();
+        this.dateOfBirth = LocalDate.parse(form.getDateOfBirth());
         this.name = form.getName();
         this.surname = form.getSurname();
         this.address = form.getAddress();
         this.phone = form.getPhone();
     }
 
-    public Patient() {
-        role=Role.PATIENT;
+    public PatientForm getForm() {
+        return new PatientForm(login, password, name, surname, dateOfBirth.toString(), phone, address);
     }
+
+    public Patient() {
+        role = Role.PATIENT;
+    }
+
     @Override
     public String toString() {
         return "Patient{" +

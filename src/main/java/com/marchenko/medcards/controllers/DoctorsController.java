@@ -68,7 +68,7 @@ public class DoctorsController {
                                          @RequestParam String specialization,
                                          @RequestParam String phone,
                                          Model model) {
-        DoctorForm form = new DoctorForm(login, password, name, surname, LocalDate.parse(dateOfBirth), phone, specialization);
+        DoctorForm form = new DoctorForm(login, password, name, surname, dateOfBirth, phone, specialization);
         Doctor doctor=doctorService.create(form);
         return new RedirectView(String.format("/doctors/%d", doctor.getId()));
     }
@@ -94,7 +94,7 @@ public class DoctorsController {
     public ModelAndView viewSchedule(@PathVariable(value = "id") Long id,
                                      @RequestParam(required = false) String date,
                                      Model model) {
-        List<Reservation> reservations = reservationService.findByDoctorAndDate(id, date == null ? LocalDate.now() : LocalDate.parse(date));
+        List<Reservation> reservations = reservationService.findReservationsByDoctorAndDate(id, date == null ? LocalDate.now() : LocalDate.parse(date));
         model.addAttribute("reservations", reservations);
         return new ModelAndView("doctors/schedule");
     }

@@ -17,11 +17,11 @@ public class ContactDataForm {
 
     private String surname;
 
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     private String phone;
 
-    public ContactDataForm(String login, String password, String name, String surname, LocalDate dateOfBirth, String phone) {
+    public ContactDataForm(String login, String password, String name, String surname, String dateOfBirth, String phone) {
         this.login = login;
         this.password = password;
         this.name = name;

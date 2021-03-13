@@ -16,12 +16,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>,
    @Query("from Reservation r where r.doctor.id=:doctor_id and r.date =:date ")
     List<Reservation> findReservationsByDoctorAndDate(@Param("doctor_id") Long doctorId, @Param("date") LocalDate date);
 
-    List<Reservation> findReservationsByDoctorAndDate(Doctor doctor, LocalDate date);
-
-//    @Query("from Reservation r where r.doctor.id=:doctor_id and r.date >=:date ")
-//    List<Reservation> findReservationsByDoctorIdAndDateIsAfter(@Param("doctor_id") Long doctorId, @Param("date") LocalDate date);
-  List<Reservation> findReservationsByDoctorIdAndDateIsAfter(Long doctorId, LocalDate date);
-
     @Query("from Reservation r where r.patient.id=:patientId and r.date>current_date ")
     List<Reservation> findByPatientIdAndDateAfterNow(@Param("patientId") Long patientId);
 }

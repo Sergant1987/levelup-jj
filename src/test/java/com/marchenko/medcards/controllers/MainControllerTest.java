@@ -49,7 +49,7 @@ public class MainControllerTest {
     @Test
     public void about() throws Exception {
         List<Doctor> expectDoctors = new ArrayList<>();
-        Mockito.when(doctorService.findAll()).thenReturn(expectDoctors);
+        Mockito.when(doctorService.findAllDoctors()).thenReturn(expectDoctors);
 
         mvc.perform(MockMvcRequestBuilders.get("/about"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

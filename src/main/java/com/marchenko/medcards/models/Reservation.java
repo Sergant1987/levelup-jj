@@ -44,6 +44,13 @@ public class Reservation {
         this.time = time;
     }
 
+    public Reservation(Patient patient, Doctor doctorId, ReservationForm form) {
+        this.patient = patient;
+        this.doctor = doctorId;
+        this.date= LocalDate.parse(form.getDate());
+        this.time = TimeReservation.getByValue(form.getTime());
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +

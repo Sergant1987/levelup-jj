@@ -69,7 +69,8 @@ public class PatientController {
             @RequestParam String phone,
             @RequestParam String address,
             Model model) {
-        PatientForm form = new PatientForm(login, password, name, surname, LocalDate.parse(dateOfBirth), phone, address);
+        PatientForm form = new PatientForm(login, password, name, surname, dateOfBirth, phone, address);
+        form.setPassword(passwordEncoder.encode(form.getPassword()));
         Patient patient = patientService.create(form);
         return new RedirectView("/patients/" + patient.getId());
     }
@@ -117,7 +118,7 @@ public class PatientController {
         if (dateOfReservation != null) {
             model.addAttribute("dateOfReservation", dateOfReservation);
             List<Reservation> reservations =
-                    reservationService.findByDoctorAndDate(doctorId, LocalDate.parse(dateOfReservation));
+                    reservationService.findReservationsByDoctorAndDate(doctorId, LocalDate.parse(dateOfReservation));
             List<TimeReservation> noReservationTime =
                     TimeReservation.findNotReservationTime(
                             reservations.stream().map(Reservation::getTime).collect(Collectors.toList()));
@@ -136,8 +137,8 @@ public class PatientController {
             Model model) {
         Doctor doctor = doctorService.findDoctorById(doctorId);
         Patient patient = patientService.findPatientById(id);
-        Reservation reservation = reservationService.create(patient, doctor, LocalDate.parse(dateOfReservation), TimeReservation.getByValue(time));
-        System.out.println(reservation);
+        ReservationForm reservationForm = new ReservationForm(dateOfReservation, time);
+        Reservation reservation = reservationService.create(patient, doctor, reservationForm);
         return new ModelAndView(new RedirectView(String.format("/patients/%d", id)));
     }
 
@@ -147,7 +148,7 @@ public class PatientController {
     public String viewAllReservations(
             @PathVariable(value = "id") Long id,
             Model model) {
-        List<Reservation> reservations = reservationService.findByPatientAndDateAfterNow(id);
+        List<Reservation> reservations = reservationService.findReservationsByPatientAndDateAfterNow(id);
         model.addAttribute("reservations", reservations);
         return "/patients/reservationsByPatient";
     }

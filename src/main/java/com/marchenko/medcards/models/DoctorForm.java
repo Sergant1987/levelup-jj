@@ -15,7 +15,7 @@ public class DoctorForm extends ContactDataForm{
 
     private String specialization;
 
-    public DoctorForm(String login, String password, String name, String surname, LocalDate dateOfBirth, String phone, String specialization) {
+    public DoctorForm(String login, String password, String name, String surname, String dateOfBirth, String phone, String specialization) {
         super(login, password, name, surname, dateOfBirth, phone);
         this.specialization = specialization;
     }

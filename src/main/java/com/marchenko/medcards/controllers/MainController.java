@@ -36,7 +36,7 @@ public class MainController {
 
     @GetMapping("/about")
     public String about(Model model) {
-        List<Doctor> doctors = doctorService.findAll();
+        List<Doctor> doctors = doctorService.findAllDoctors();
         model.addAttribute("doctors",doctors);
         return "/about/about";
     }
