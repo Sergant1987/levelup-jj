@@ -50,11 +50,8 @@ public class PatientServiceImp implements PatientService {
     }
 
     private boolean paramIsEmpty(String name, String surname, String phone) {
-        if (name == null || name.isBlank()
-                && surname == null || surname.isBlank()
-                && phone == null || phone.isBlank()) {
-            return true;
-        }
-        return false;
+        return (name == null || name.isBlank())
+                && (surname == null || surname.isBlank())
+                && (phone == null || phone.isBlank());
     }
 }

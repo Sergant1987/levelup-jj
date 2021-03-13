@@ -19,17 +19,14 @@ public class FilterPatient {
             public Predicate toPredicate(Root<Patient> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new LinkedList<>();
                 if (name != null&&!name.isBlank()) {
-                    System.out.println("1");
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("name"), name)));
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("name"), "%"+name+"%")));
                 }
                 if (surname != null&&!surname.isBlank()) {
-                    System.out.println("1");
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("surname"), surname)));
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("surname"), "%"+surname+"%")));
                 }
                 if (phone != null&&!phone.isBlank()) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("phone"), phone)));
                 }
-                System.out.println(predicates.size());
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
         };

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
 public class PatientForm extends ContactDataForm {
 
     private String address;

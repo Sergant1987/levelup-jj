@@ -1,8 +1,10 @@
 package com.marchenko.medcards.models;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class AppointmentForm {
 
     private String diagnosis;

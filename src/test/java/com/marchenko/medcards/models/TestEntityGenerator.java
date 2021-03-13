@@ -56,10 +56,31 @@ public final class TestEntityGenerator {
                 "окулист",
                 "+7-999-555-12-31"
         );
+        Doctor doctor5 = new Doctor("loginDoctor5",
+                "passwordDoctor5",
+                "nameDoctor2",
+                "surnameDoctor5",
+                LocalDate.of(1962, 1, 8),
+                "хирург",
+                "+7-999-555-65-11"
+        );
+
+        Doctor doctor6 = new Doctor("loginDoctor6",
+                "passwordDoctor6",
+                "nameDoctor6",
+                "surnameDoctor4",
+                LocalDate.of(1951, 2, 1),
+                "окулист",
+                "+7-999-555-12-41"
+        );
+
+
         doctors.add(doctor1);
         doctors.add(doctor2);
         doctors.add(doctor3);
         doctors.add(doctor4);
+        doctors.add(doctor5);
+        doctors.add(doctor6);
 
     }
 
@@ -99,10 +120,31 @@ public final class TestEntityGenerator {
                 "+7-9555-999-66-77",
                 "addressPatient4"
         );
+
+        Patient patient5 = new Patient("loginPatient5"
+                , "passwordPatient5"
+                , "namePatient1",
+                "surnamePatient5"
+                , LocalDate.of(1938, 2, 1),
+                "+7-9555-999-12-34",
+                "addressPatient5"
+        );
+
+        Patient patient6 = new Patient("loginPatient6"
+                , "passwordPatient6"
+                , "namePatient6",
+                "surnamePatient2"
+                , LocalDate.of(1987, 7, 3),
+                "+7-9555-999-32-15",
+                "addressPatient6"
+        );
+
         patients.add(patient1);
         patients.add(patient2);
         patients.add(patient3);
         patients.add(patient4);
+        patients.add(patient5);
+        patients.add(patient6);
     }
 
     private static void createReservations() {
