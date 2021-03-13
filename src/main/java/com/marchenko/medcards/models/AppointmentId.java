@@ -18,9 +18,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 public class AppointmentId implements Serializable {
 
-
     @Setter
-    @Column(name = "date_of_appointment", nullable = false)
     private LocalDateTime dateOfAppointment;
 
     @Setter
@@ -32,4 +30,13 @@ public class AppointmentId implements Serializable {
         this.dateOfAppointment = dateOfAppointment;
         this.patient = patient;
     }
+
+    @Override
+    public String toString() {
+        return "AppointmentId{" +
+                "dateOfAppointment=" + dateOfAppointment +
+                ", patient=" + patient.getId() +
+                '}';
+    }
 }
+

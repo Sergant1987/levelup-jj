@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 @Entity
@@ -37,16 +38,16 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private TimeReservation time;
 
-    public Reservation(Patient patient, Doctor doctorId, LocalDate date, TimeReservation time) {
+    public Reservation(Patient patient, Doctor doctor, LocalDate date, TimeReservation time) {
         this.patient = patient;
-        this.doctor = doctorId;
+        this.doctor = doctor;
         this.date= date;
         this.time = time;
     }
 
-    public Reservation(Patient patient, Doctor doctorId, ReservationForm form) {
+    public Reservation(Patient patient, Doctor doctor, ReservationForm form) {
         this.patient = patient;
-        this.doctor = doctorId;
+        this.doctor = doctor;
         this.date= LocalDate.parse(form.getDate());
         this.time = TimeReservation.getByValue(form.getTime());
     }
@@ -59,5 +60,18 @@ public class Reservation {
                 ", date=" + date +
                 ", time=" + time +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return Objects.equals(patient, that.patient) && Objects.equals(doctor, that.doctor) && Objects.equals(date, that.date) && time == that.time;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(patient, doctor, date, time);
     }
 }
