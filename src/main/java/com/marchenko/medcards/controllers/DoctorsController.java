@@ -50,7 +50,7 @@ public class DoctorsController {
         //TODO security off
 //        String login = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Doctor doctor = doctorService.findByLogin(login);
-      Doctor doctor = doctorService.findById(17L);
+        Doctor doctor = doctorService.findDoctorById(17L);
         return new RedirectView(String.format("/doctors/%d", doctor.getId()));
     }
 
@@ -68,9 +68,8 @@ public class DoctorsController {
                                          @RequestParam String specialization,
                                          @RequestParam String phone,
                                          Model model) {
-        Doctor doctor = new Doctor(login, passwordEncoder.encode(password),
-                name, surname, LocalDate.parse(dateOfBirth), specialization, phone);
-        doctorService.create(doctor);
+        DoctorForm form = new DoctorForm(login, password, name, surname, LocalDate.parse(dateOfBirth), phone, specialization);
+        Doctor doctor=doctorService.create(form);
         return new RedirectView(String.format("/doctors/%d", doctor.getId()));
     }
 
@@ -78,11 +77,11 @@ public class DoctorsController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('DOCTOR')")
     public ModelAndView viewDoctorMenu(@PathVariable(value = "id") Long id, Model model) {
-        Doctor doctor = doctorService.findById(id);
+        Doctor doctor = doctorService.findDoctorById(id);
         if (!hasAccessRight(doctor)) {
             return new ModelAndView(
                     new RedirectView(
-                            String.format("/doctors/%d", doctorService.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId())));
+                            String.format("/doctors/%d", doctorService.findDoctorByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId())));
         }
         model.addAttribute("name", doctor.getName());
         System.out.println(doctor.getId());
@@ -119,8 +118,7 @@ public class DoctorsController {
         model.addAttribute("name", name);
         model.addAttribute("surname", surname);
         model.addAttribute("phone", phone);
-        System.out.println(patientService.findByNameOrSurnameOrPhone(name, surname, phone));
-        model.addAttribute("patients", patientService.findByNameOrSurnameOrPhone(name, surname, phone));
+        model.addAttribute("patients", patientService.findPatientsByNameAndSurnameAndPhone(name, surname, phone));
         return new ModelAndView("/doctors/searchPatient");
     }
 
@@ -149,10 +147,10 @@ public class DoctorsController {
                                           @RequestParam String diagnosis,
                                           @RequestParam String data,
                                           Model model) {
-        Doctor doctor = doctorService.findById(id);
-        Patient patient = patientService.findById(patientId);
-        Appointment appointment = new Appointment(patient, LocalDateTime.now(), doctor, diagnosis, data);
-        appointmentService.create(appointment);
+        Doctor doctor = doctorService.findDoctorById(id);
+        Patient patient = patientService.findPatientById(patientId);
+        AppointmentForm form = new AppointmentForm(diagnosis, data);
+        Appointment appointment=appointmentService.create(patient,LocalDateTime.now() ,doctor,form);
         return new ModelAndView(new RedirectView(String.format("/doctors/%d", id)));
 
     }
@@ -161,7 +159,7 @@ public class DoctorsController {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
         User authenticationUser;
 
-        authenticationUser = doctorService.findByLogin(login);
+        authenticationUser = doctorService.findDoctorByLogin(login);
         if (authenticationUser == null) {
             return false;
         }

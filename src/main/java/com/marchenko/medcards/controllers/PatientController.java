@@ -8,7 +8,6 @@ import com.marchenko.medcards.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +35,7 @@ public class PatientController {
     @Autowired
     public PatientController(PatientService patientService, DoctorService doctorService,
                              PasswordEncoder passwordEncoder, ReservationService reservationService,
-                             AppointmentService appointmentService ) {
+                             AppointmentService appointmentService) {
         this.patientService = patientService;
         this.passwordEncoder = passwordEncoder;
         this.doctorService = doctorService;
@@ -51,7 +49,7 @@ public class PatientController {
         //TODO security off
 //        String login = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Patient patient = patientService.findByLogin(login);
-        Patient patient = patientService.findById(1L);
+        Patient patient = patientService.findPatientById(1L);
         return new RedirectView("/patients/" + patient.getId());
     }
 
@@ -71,12 +69,8 @@ public class PatientController {
             @RequestParam String phone,
             @RequestParam String address,
             Model model) {
-        Patient patient =
-                new Patient(login, passwordEncoder.encode(password),
-                        name, surname, LocalDate.parse(dateOfBirth),
-                        phone, address);
-
-        patientService.create(patient);
+        PatientForm form = new PatientForm(login, password, name, surname, LocalDate.parse(dateOfBirth), phone, address);
+        Patient patient = patientService.create(form);
         return new RedirectView("/patients/" + patient.getId());
     }
 
@@ -84,7 +78,7 @@ public class PatientController {
     @PreAuthorize("hasAuthority('PATIENT')")
     public String viewPatientMenu(@PathVariable(value = "id") Long id,
                                   Model model) {
-        Patient patient = patientService.findById(id);
+        Patient patient = patientService.findPatientById(id);
         model.addAttribute("name", patient.getName());
         model.addAttribute("id", patient.getId());
         return "/patients/patientMenu";
@@ -140,8 +134,8 @@ public class PatientController {
             @RequestParam String dateOfReservation,
             @RequestParam String time,
             Model model) {
-        Doctor doctor = doctorService.findById(doctorId);
-        Patient patient = patientService.findById(id);
+        Doctor doctor = doctorService.findDoctorById(doctorId);
+        Patient patient = patientService.findPatientById(id);
         Reservation reservation = reservationService.create(patient, doctor, LocalDate.parse(dateOfReservation), TimeReservation.getByValue(time));
         System.out.println(reservation);
         return new ModelAndView(new RedirectView(String.format("/patients/%d", id)));
@@ -165,7 +159,7 @@ public class PatientController {
     public String viewAllAppointments(
             @PathVariable(value = "id") Long id,
             Model model) {
-        List<Appointment> appointments = appointmentService.findAllByPatient(id);
+        List<Appointment> appointments = appointmentService.findAppointmentsByPatient(id);
         model.addAttribute("appointments", appointments);
         return "/patients/appointmentsByPatient";
     }
@@ -174,23 +168,23 @@ public class PatientController {
     public Set<String> getSpecializations() {
         Set<String> resultWithFirstEmpty = new LinkedHashSet<>();
         resultWithFirstEmpty.add("");
-        resultWithFirstEmpty.addAll(doctorService.getAllSpecialization());
+        resultWithFirstEmpty.addAll(doctorService.findAllSpecialization());
         return resultWithFirstEmpty;
     }
 
     private Set<Doctor> findDoctors(String specialization, String doctorName) {
         if (specialization == null && doctorName == null || specialization.isBlank() && doctorName.isBlank()) {
-            return doctorService.getDoctorsBySpecializationAndName(specialization, doctorName);
+            return doctorService.findDoctorsBySpecializationAndName(specialization, doctorName);
         }
 
         if (specialization == null || specialization.isBlank()) {
-            return doctorService.getDoctorsBySurname(doctorName);
+            return doctorService.findDoctorsBySurname(doctorName);
         }
 
         if (doctorName == null || doctorName.isBlank()) {
-            return doctorService.getDoctorsBySpecialization(specialization);
+            return doctorService.findDoctorsBySpecialization(specialization);
         }
-        return doctorService.getDoctorsBySpecializationAndName(specialization, doctorName);
+        return doctorService.findDoctorsBySpecializationAndName(specialization, doctorName);
     }
 
 

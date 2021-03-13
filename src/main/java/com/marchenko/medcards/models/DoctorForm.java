@@ -9,7 +9,6 @@ import javax.persistence.Embeddable;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
 
-@NoArgsConstructor
 @Data
 public class DoctorForm extends ContactDataForm{
 

@@ -38,4 +38,11 @@ public class Appointment {
         this.diagnosis = diagnosis;
         this.dataAppointment = dataAppointment;
     }
+
+    public Appointment(Patient patient, LocalDateTime dateOfAppointment, Doctor doctor, AppointmentForm appointmentForm) {
+        this.appointmentId = new AppointmentId(patient,dateOfAppointment);
+        this.doctor = doctor;
+        this.diagnosis = appointmentForm.getDiagnosis();
+        this.dataAppointment = appointmentForm.getDataAppointment();
+    }
 }
