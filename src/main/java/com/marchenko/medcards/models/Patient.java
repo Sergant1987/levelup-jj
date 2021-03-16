@@ -5,6 +5,9 @@ import lombok.Setter;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,22 +25,28 @@ public class Patient extends User {
 
     @Setter
     @Column(nullable = false)
+    @NotBlank
     private String name;
 
     @Setter
     @Column(nullable = false)
+    @NotBlank
     private String surname;
 
     @Setter
     @Column(name = "date_of_birth", nullable = false)
+    @Past
     private LocalDate dateOfBirth;
 
     @Setter
     @Column(nullable = false, unique = true)
+    @NotBlank
+//    @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$")
     private String phone;
 
     @Setter
     @Column(nullable = false)
+    @NotBlank
     private String address;
 
     @OneToMany(mappedBy = "patient")

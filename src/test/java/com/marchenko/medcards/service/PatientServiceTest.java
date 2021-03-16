@@ -28,11 +28,6 @@ public class PatientServiceTest {
     @Autowired
     PatientService patientService;
 
-//    @Before
-//    public void deleteData() {
-//        patientRepository.deleteAll();
-//    }
-
     @Test
     public void createWithValidParam() {
         List<Patient> patients = TestEntityGenerator.getPatients();
@@ -72,9 +67,6 @@ public class PatientServiceTest {
         patientActual = patientService.findPatientByLogin(patientExpect.getLogin());
         assertEquals(patientExpect, patientActual);
     }
-
-    @Autowired
-    private PatientRepository patientRepository;
 
     @Test
     public void findByNameOrSurnameOrPhone() {

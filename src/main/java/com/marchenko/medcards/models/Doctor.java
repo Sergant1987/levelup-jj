@@ -2,8 +2,10 @@ package com.marchenko.medcards.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,26 +20,32 @@ public class Doctor extends User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter
     private Long id;
 
     @Setter
     @Column(name = "date_of_birth", nullable = false)
+    @NotBlank
     private LocalDate dateOfBirth;
 
     @Setter
     @Column(nullable = false)
+    @NotBlank
     private String name;
 
     @Setter
     @Column(nullable = false)
+    @NotBlank
     private String surname;
 
     @Setter
     @Column(nullable = false)
+    @NotBlank
     private String specialization;
 
     @Setter
     @Column(nullable = false, unique = true)
+    @NotBlank
     private String phone;
 
     @OneToMany(mappedBy = "doctor")

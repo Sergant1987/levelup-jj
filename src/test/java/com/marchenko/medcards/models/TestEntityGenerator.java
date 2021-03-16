@@ -70,7 +70,7 @@ public final class TestEntityGenerator {
                 "nameDoctor6",
                 "surnameDoctor4",
                 LocalDate.of(1951, 2, 1),
-                "окулист",
+                "терапевт",
                 "+7-999-555-12-41"
         );
 

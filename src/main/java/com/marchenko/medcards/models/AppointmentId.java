@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 public class AppointmentId implements Serializable {
 
     @Setter
+
     private LocalDateTime dateOfAppointment;
 
     @Setter

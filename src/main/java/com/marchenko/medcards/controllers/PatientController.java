@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -54,24 +55,29 @@ public class PatientController {
     }
 
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(
+            @ModelAttribute("patientForm")  PatientForm patientForm
+    ) {
         return "/patients/registration";
     }
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.OK)
     public RedirectView postRegistration(
-            @RequestParam String name,
-            @RequestParam String surname,
-            @RequestParam String dateOfBirth,
-            @RequestParam String login,
-            @RequestParam String password,
-            @RequestParam String phone,
-            @RequestParam String address,
-            Model model) {
-        PatientForm form = new PatientForm(login, password, name, surname, dateOfBirth, phone, address);
-        form.setPassword(passwordEncoder.encode(form.getPassword()));
-        Patient patient = patientService.create(form);
+         @Valid @ModelAttribute("patientForm") PatientForm patientForm,
+            Model model ) {
+    //            @RequestParam String name,
+//            @RequestParam String surname,
+//            @RequestParam String dateOfBirth,
+//            @RequestParam String login,
+//            @RequestParam String password,
+//            @RequestParam String phone,
+//            @RequestParam String address,
+
+//        PatientForm form = new PatientForm(login, password, name, surname, dateOfBirth, phone, address);
+        System.out.println(patientForm.getLogin());
+        patientForm.setPassword(passwordEncoder.encode(patientForm.getPassword()));
+        Patient patient = patientService.create(patientForm);
         return new RedirectView("/patients/" + patient.getId());
     }
 

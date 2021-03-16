@@ -14,49 +14,49 @@
 <header th:insert="blocks/header :: header"></header>
 <H1>Регистрация</H1>
 <div class="container mt-3 mb-5">
-    <form method="post">
+    <form method="post" th:object="${patientForm}">
         <h1 class="h3 mb-3 fw-normal">Личный кабинет Пациента</h1>
 
         <label for="login" class="visually-hidden">Имя пользователя
-            <input type="text" id="login" name="login" th:value="${login}" class="form-control"
+            <input type="text" id="login" name="login" th:fields="*{login}" class="form-control"
                    placeholder="Имя пользователя" required
                    autofocus>
         </label>
         <br>
 
         <label for="password" class="visually-hidden">Пароль
-            <input type="password" id="password" name="password" th:value="${password}" class="form-control"
+            <input type="password" id="password" name="password" th:fields="*{password}" class="form-control"
                    placeholder="Пароль" required>
         </label>
         <br>
 
         <label for="name" class="visually-hidden">Имя
-            <input type="text" id="name" name="name" th:value="${name}" class="form-control"
+            <input type="text" id="name" name="name" th:fields="*{name}" class="form-control"
                    placeholder="Имя" required>
         </label>
         <br>
 
         <label for="surname" class="visually-hidden">Фамилия
-            <input type="text" id="surname" name="surname" th:value="${surname}" class="form-control"
+            <input type="text" id="surname" name="surname" th:fields="*{surname}" class="form-control"
                    placeholder="Фамилия" required>
         </label>
         <br>
 
         <label for="dateOfBirth" class="visually-hidden">Дата рождения
-            <input type="date" id="dateOfBirth" name="dateOfBirth" th:value="${dateOfBirth}" class="form-control"
+            <input type="date" id="dateOfBirth" name="dateOfBirth" th:fields="*{dateOfBirth}" class="form-control"
                    placeholder="Дата рождения" required>
         </label>
         <br>
 
         <label for="address" class="visually-hidden">Специализация
-            <input type="text" id="address" name="address" th:value="${address}" class="form-control"
+            <input type="text" id="address" name="address" th:fields="*{address}" class="form-control"
                    placeholder="Адрес" required>
 
         </label>
         <br>
 
         <label for="phone" class="visually-hidden">Телефон
-            <input type="text" id="phone" name="phone" th:value="${phone}" class="form-control"
+            <input type="text" id="phone" name="phone" th:fields="*{phone}" class="form-control"
                    placeholder="Телефон" required>
             <script>
                 $(function() {

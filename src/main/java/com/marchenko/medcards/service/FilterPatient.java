@@ -4,10 +4,8 @@ import com.marchenko.medcards.models.Patient;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import java.beans.Expression;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,10 +17,10 @@ public class FilterPatient {
             public Predicate toPredicate(Root<Patient> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new LinkedList<>();
                 if (name != null&&!name.isBlank()) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("name"), "%"+name+"%")));
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")),"%"+name.toLowerCase()+"%")));
                 }
                 if (surname != null&&!surname.isBlank()) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(root.get("surname"), "%"+surname+"%")));
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.like(criteriaBuilder.lower(root.get("surname")), "%"+surname.toLowerCase()+"%")));
                 }
                 if (phone != null&&!phone.isBlank()) {
                     predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("phone"), phone)));
