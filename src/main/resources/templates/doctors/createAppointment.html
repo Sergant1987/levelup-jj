@@ -9,16 +9,16 @@
 <header th:insert="blocks/header :: header"></header>
 <h1>Создание записи посещения</h1>
 <div class="container mt-3 mb-5">
-    <form method="post">
+    <form method="post" th:object="${appointmentForm}">
         <h1 class="h3 mb-3 fw-normal">Личный кабинет врача</h1>
 
         <label for="diagnosis" class="visually-hidden">Диагноз
-            <input type="text" id="diagnosis" name="diagnosis" th:value="${diagnosis}" class="form-control"
+            <input type="text" id="diagnosis" name="diagnosis" th:field="*{diagnosis}" class="form-control"
                    placeholder="Диагноз" required
                    autofocus>
         </label>
         <br>
-        <textarea name="data" rows="20" cols="80"  th:value="${data}"
+        <textarea name="data" rows="20" cols="80"  th:field="*{data}"
                   placeholder="Данные и рекомендации" required>
         </textarea>
 <!--        <label for="data" class="visually-hidden">Данные и рекомендации-->

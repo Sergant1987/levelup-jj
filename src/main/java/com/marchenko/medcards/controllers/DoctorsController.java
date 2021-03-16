@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,21 +56,14 @@ public class DoctorsController {
     }
 
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(@ModelAttribute("doctorForm") DoctorForm doctorForm) {
         return "/doctors/registration";
     }
 
     @PostMapping("/registration")
-    public RedirectView postRegistration(@RequestParam String login,
-                                         @RequestParam String password,
-                                         @RequestParam String name,
-                                         @RequestParam String surname,
-                                         @RequestParam String dateOfBirth,
-                                         @RequestParam String specialization,
-                                         @RequestParam String phone,
+    public RedirectView postRegistration(@Valid @ModelAttribute("doctorForm")DoctorForm doctorForm,
                                          Model model) {
-        DoctorForm form = new DoctorForm(login, password, name, surname, dateOfBirth, phone, specialization);
-        Doctor doctor=doctorService.create(form);
+        Doctor doctor=doctorService.create(doctorForm);
         return new RedirectView(String.format("/doctors/%d", doctor.getId()));
     }
 
@@ -134,6 +128,7 @@ public class DoctorsController {
     @PreAuthorize("hasAuthority('DOCTOR')")
     public ModelAndView viewFormCreateAppointment(@PathVariable("id") Long id,
                                                   @PathVariable("patient_id") Long patientId,
+                                                  @ModelAttribute("appointmentForm") AppointmentForm appointmentForm,
                                                   Model model) {
         model.addAttribute("diagnosis", "");
         model.addAttribute("data", "");
@@ -144,13 +139,11 @@ public class DoctorsController {
     @PreAuthorize("hasAuthority('DOCTOR')")
     public ModelAndView createAppointment(@PathVariable("id") Long id,
                                           @PathVariable("patient_id") Long patientId,
-                                          @RequestParam String diagnosis,
-                                          @RequestParam String data,
+                                          @Valid @ModelAttribute("appointmentForm") AppointmentForm appointmentForm,
                                           Model model) {
         Doctor doctor = doctorService.findDoctorById(id);
         Patient patient = patientService.findPatientById(patientId);
-        AppointmentForm form = new AppointmentForm(diagnosis, data);
-        Appointment appointment=appointmentService.create(patient,LocalDateTime.now() ,doctor,form);
+        Appointment appointment=appointmentService.create(patient,LocalDateTime.now() ,doctor,appointmentForm);
         return new ModelAndView(new RedirectView(String.format("/doctors/%d", id)));
 
     }

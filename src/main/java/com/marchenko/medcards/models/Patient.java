@@ -41,7 +41,7 @@ public class Patient extends User {
     @Setter
     @Column(nullable = false, unique = true)
     @NotBlank
-//    @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$")
+    @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$")
     private String phone;
 
     @Setter

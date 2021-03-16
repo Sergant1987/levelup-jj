@@ -1,11 +1,13 @@
 package com.marchenko.medcards.models;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +17,6 @@ import java.util.Objects;
 @Table(name = "doctors")
 
 @Getter
-
 public class Doctor extends User {
 
     @Id
@@ -46,6 +47,7 @@ public class Doctor extends User {
     @Setter
     @Column(nullable = false, unique = true)
     @NotBlank
+    @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$")
     private String phone;
 
     @OneToMany(mappedBy = "doctor")

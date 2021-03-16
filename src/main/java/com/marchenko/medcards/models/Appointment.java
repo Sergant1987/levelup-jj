@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -30,10 +31,12 @@ public class Appointment {
 
     @Column(nullable = false, length = 1000)
     @Setter
+    @NotBlank
     private String diagnosis;
 
     @Column(name = "data_appointment", nullable = false, length = 10000)
     @Setter
+    @NotBlank
     private String dataAppointment;
 
     public Appointment(Patient patient, LocalDateTime dateOfAppointment, Doctor doctor, String diagnosis, String dataAppointment) {

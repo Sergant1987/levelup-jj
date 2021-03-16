@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -19,7 +21,7 @@ import java.time.LocalDateTime;
 public class AppointmentId implements Serializable {
 
     @Setter
-
+    @PastOrPresent
     private LocalDateTime dateOfAppointment;
 
     @Setter
