@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ReservationService {
 
-  Reservation create (Patient patient, Doctor doctor, ReservationForm reservationForm);
+  Reservation create (Patient patient, Doctor doctor, LocalDate date, TimeReservation time);
 
   Reservation findById(Long id);
 

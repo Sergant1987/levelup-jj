@@ -21,8 +21,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation create(Patient patient, Doctor doctor, ReservationForm reservationForm) {
-        Reservation reservation = new Reservation(patient, doctor, reservationForm);
+    public Reservation create(Patient patient, Doctor doctor, LocalDate date, TimeReservation time) {
+        Reservation reservation = new Reservation(patient, doctor, date, time);
         return reservationRepository.save(reservation);
     }
 

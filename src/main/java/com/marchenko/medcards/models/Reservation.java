@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -31,6 +32,7 @@ public class Reservation {
 
     @Setter
     @Column(name = "date_reservation")
+    @Future
     private LocalDate date;
 
     @Setter
@@ -43,13 +45,6 @@ public class Reservation {
         this.doctor = doctor;
         this.date= date;
         this.time = time;
-    }
-
-    public Reservation(Patient patient, Doctor doctor, ReservationForm form) {
-        this.patient = patient;
-        this.doctor = doctor;
-        this.date= LocalDate.parse(form.getDate());
-        this.time = TimeReservation.getByValue(form.getTime());
     }
 
     @Override

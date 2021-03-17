@@ -56,7 +56,7 @@ public class PatientController {
 
     @GetMapping("/registration")
     public String registration(
-            @ModelAttribute("patientForm")  PatientForm patientForm
+            @ModelAttribute("patientForm") PatientForm patientForm
     ) {
         return "/patients/registration";
     }
@@ -64,17 +64,9 @@ public class PatientController {
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.OK)
     public RedirectView postRegistration(
-         @Valid @ModelAttribute("patientForm") PatientForm patientForm,
-            Model model ) {
-    //            @RequestParam String name,
-//            @RequestParam String surname,
-//            @RequestParam String dateOfBirth,
-//            @RequestParam String login,
-//            @RequestParam String password,
-//            @RequestParam String phone,
-//            @RequestParam String address,
+            @Valid @ModelAttribute("patientForm") PatientForm patientForm,
+            Model model) {
 
-//        PatientForm form = new PatientForm(login, password, name, surname, dateOfBirth, phone, address);
         System.out.println(patientForm.getLogin());
         patientForm.setPassword(passwordEncoder.encode(patientForm.getPassword()));
         Patient patient = patientService.create(patientForm);
@@ -143,8 +135,7 @@ public class PatientController {
             Model model) {
         Doctor doctor = doctorService.findDoctorById(doctorId);
         Patient patient = patientService.findPatientById(id);
-        ReservationForm reservationForm = new ReservationForm(dateOfReservation, time);
-        Reservation reservation = reservationService.create(patient, doctor, reservationForm);
+        reservationService.create(patient, doctor, LocalDate.parse(dateOfReservation), TimeReservation.getByValue(time));
         return new ModelAndView(new RedirectView(String.format("/patients/%d", id)));
     }
 
