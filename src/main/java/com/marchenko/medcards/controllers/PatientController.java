@@ -46,7 +46,7 @@ public class PatientController {
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('PATIENT')")
-    public RedirectView index(Model model) {
+    public RedirectView index() {
         //TODO security off
 //        String login = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Patient patient = patientService.findByLogin(login);
@@ -63,11 +63,7 @@ public class PatientController {
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.OK)
-    public RedirectView postRegistration(
-            @Valid @ModelAttribute("patientForm") PatientForm patientForm,
-            Model model) {
-
-        System.out.println(patientForm.getLogin());
+    public RedirectView postRegistration(@Valid @ModelAttribute("patientForm") PatientForm patientForm) {
         patientForm.setPassword(passwordEncoder.encode(patientForm.getPassword()));
         Patient patient = patientService.create(patientForm);
         return new RedirectView("/patients/" + patient.getId());
@@ -87,8 +83,7 @@ public class PatientController {
     @PreAuthorize("hasAuthority('PATIENT')")
     public ModelAndView selectDoctor(
             @PathVariable(value = "id") Long id,
-            @RequestParam Long doctorId,
-            Model model) {
+            @RequestParam Long doctorId) {
         String redirect = String.format("/patients/%d/reservations/%d", id, doctorId);
         return new ModelAndView(new RedirectView(redirect));
     }
@@ -131,8 +126,7 @@ public class PatientController {
             @PathVariable(value = "id") Long id,
             @PathVariable(value = "doctorId") Long doctorId,
             @RequestParam String dateOfReservation,
-            @RequestParam String time,
-            Model model) {
+            @RequestParam String time) {
         Doctor doctor = doctorService.findDoctorById(doctorId);
         Patient patient = patientService.findPatientById(id);
         reservationService.create(patient, doctor, LocalDate.parse(dateOfReservation), TimeReservation.getByValue(time));
@@ -171,7 +165,8 @@ public class PatientController {
     }
 
     private Set<Doctor> findDoctors(String specialization, String doctorName) {
-        if (specialization == null && doctorName == null || specialization.isBlank() && doctorName.isBlank()) {
+
+        if ((specialization == null || specialization.isBlank()) && (doctorName == null  || doctorName.isBlank())) {
             return doctorService.findDoctorsBySpecializationAndName(specialization, doctorName);
         }
 

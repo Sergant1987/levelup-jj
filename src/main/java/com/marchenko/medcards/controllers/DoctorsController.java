@@ -26,12 +26,12 @@ import java.util.List;
 
 public class DoctorsController {
 
-    private DoctorService doctorService;
+    private final DoctorService doctorService;
     private final PatientService patientService;
     private final ReservationService reservationService;
     private final AppointmentService appointmentService;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public DoctorsController(DoctorService doctorService, PatientService patientService,
@@ -47,7 +47,7 @@ public class DoctorsController {
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('DOCTOR')")
-    public RedirectView index(Model model) {
+    public RedirectView index() {
         //TODO security off
 //        String login = SecurityContextHolder.getContext().getAuthentication().getName();
 //        Doctor doctor = doctorService.findByLogin(login);
@@ -61,9 +61,9 @@ public class DoctorsController {
     }
 
     @PostMapping("/registration")
-    public RedirectView postRegistration(@Valid @ModelAttribute("doctorForm")DoctorForm doctorForm,
-                                         Model model) {
-        Doctor doctor=doctorService.create(doctorForm);
+    public RedirectView postRegistration(@Valid @ModelAttribute("doctorForm") DoctorForm doctorForm) {
+        doctorForm.setPassword(passwordEncoder.encode(doctorForm.getPassword()));
+        Doctor doctor = doctorService.create(doctorForm);
         return new RedirectView(String.format("/doctors/%d", doctor.getId()));
     }
 
@@ -96,8 +96,7 @@ public class DoctorsController {
     @PostMapping("/{id}/schedule")
     @PreAuthorize("hasAuthority('DOCTOR')")
     public ModelAndView selectReservation(@PathVariable(value = "id") Long id,
-                                          @RequestParam Long reservationId,
-                                          Model model) {
+                                          @RequestParam Long reservationId) {
         Long patientId = reservationService.findById(reservationId).getPatient().getId();
         return new ModelAndView(new RedirectView(String.format("/doctors/%d/appointments/%d", id, patientId)));
     }
@@ -119,8 +118,7 @@ public class DoctorsController {
     @PostMapping("/{id}/appointments")
     @PreAuthorize("hasAuthority('DOCTOR')")
     public ModelAndView selectPatient(@PathVariable("id") Long id,
-                                      @RequestParam Long patientId,
-                                      Model model) {
+                                      @RequestParam Long patientId) {
         return new ModelAndView(new RedirectView(String.format("/doctors/%d/appointments/%d", id, patientId)));
     }
 
@@ -139,29 +137,20 @@ public class DoctorsController {
     @PreAuthorize("hasAuthority('DOCTOR')")
     public ModelAndView createAppointment(@PathVariable("id") Long id,
                                           @PathVariable("patient_id") Long patientId,
-                                          @Valid @ModelAttribute("appointmentForm") AppointmentForm appointmentForm,
-                                          Model model) {
+                                          @Valid @ModelAttribute("appointmentForm") AppointmentForm appointmentForm) {
         Doctor doctor = doctorService.findDoctorById(id);
         Patient patient = patientService.findPatientById(patientId);
-        Appointment appointment=appointmentService.create(patient,LocalDateTime.now() ,doctor,appointmentForm);
+        appointmentService.create(patient, LocalDateTime.now(), doctor, appointmentForm);
         return new ModelAndView(new RedirectView(String.format("/doctors/%d", id)));
-
     }
 
     private boolean hasAccessRight(User user) {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        User authenticationUser;
-
-        authenticationUser = doctorService.findDoctorByLogin(login);
+        User authenticationUser = doctorService.findDoctorByLogin(login);
         if (authenticationUser == null) {
             return false;
         }
-
-        if (authenticationUser.getLogin().equals(user.getLogin())) {
-            return true;
-        } else {
-            return false;
-        }
+        return authenticationUser.getLogin().equals(user.getLogin());
     }
 
 
