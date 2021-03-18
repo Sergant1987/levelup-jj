@@ -10,6 +10,7 @@ import java.util.Set;
 public interface DoctorService {
 
     Doctor create(DoctorForm form);
+    Doctor create(Doctor doctor);
 
     Doctor findDoctorById(Long id);
 

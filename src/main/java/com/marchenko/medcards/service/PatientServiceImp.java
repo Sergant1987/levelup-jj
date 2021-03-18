@@ -30,6 +30,11 @@ public class PatientServiceImp implements PatientService {
     }
 
     @Override
+    public Patient create(Patient patient) {
+        return patientRepository.save(patient);
+    }
+
+    @Override
     public Patient findPatientById(Long id) {
         return patientRepository.findById(id).get();
     }

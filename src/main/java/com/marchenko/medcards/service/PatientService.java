@@ -9,6 +9,8 @@ import java.util.List;
 public interface PatientService {
     Patient create(PatientForm form);
 
+    Patient create(Patient patient);
+
     Patient findPatientById(Long id);
 
     Patient findPatientByLogin(String login);

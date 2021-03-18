@@ -13,14 +13,14 @@ public final class TestEntityGenerator {
     private final static List<Appointment> appointments = new ArrayList<>();
 
 
-    static {
+    public TestEntityGenerator() {
         createDoctors();
         createPatients();
         createReservations();
         createAppointments();
     }
 
-    private static void createDoctors() {
+    private  void createDoctors() {
         Doctor doctor1 = new Doctor("loginDoctor1",
                 "passwordDoctor1",
                 "nameDoctor1",
@@ -84,13 +84,13 @@ public final class TestEntityGenerator {
 
     }
 
-    private static void createPatients() {
+    private  void createPatients() {
         Patient patient1 = new Patient("loginPatient1"
                 , "passwordPatient1"
                 , "namePatient1",
                 "surnamePatient1"
                 , LocalDate.of(1988, 2, 1),
-                "+7-9555-999-12-31",
+                "+7-955-999-12-31",
                 "addressPatient1"
         );
 
@@ -99,7 +99,7 @@ public final class TestEntityGenerator {
                 , "namePatient2",
                 "surnamePatient2"
                 , LocalDate.of(1980, 7, 3),
-                "+7-9555-999-32-35",
+                "+7-955-999-32-35",
                 "addressPatient2"
         );
 
@@ -108,7 +108,7 @@ public final class TestEntityGenerator {
                 , "namePatient3",
                 "surnamePatient3"
                 , LocalDate.of(1955, 5, 6),
-                "+7-9555-999-22-76",
+                "+7-955-999-22-76",
                 "addressPatient3"
         );
 
@@ -117,7 +117,7 @@ public final class TestEntityGenerator {
                 , "namePatient4",
                 "surnamePatient4"
                 , LocalDate.of(1978, 5, 22),
-                "+7-9555-999-66-77",
+                "+7-955-999-66-77",
                 "addressPatient4"
         );
 
@@ -126,7 +126,7 @@ public final class TestEntityGenerator {
                 , "namePatient1",
                 "surnamePatient5"
                 , LocalDate.of(1938, 2, 1),
-                "+7-9555-999-12-34",
+                "+7-955-999-12-34",
                 "addressPatient5"
         );
 
@@ -135,7 +135,7 @@ public final class TestEntityGenerator {
                 , "namePatient6",
                 "surnamePatient2"
                 , LocalDate.of(1987, 7, 3),
-                "+7-9555-999-32-15",
+                "+7-955-999-32-15",
                 "addressPatient6"
         );
 
@@ -147,11 +147,11 @@ public final class TestEntityGenerator {
         patients.add(patient6);
     }
 
-    private static void createReservations() {
+    private void createReservations() {
         Reservation reservation1 = new Reservation(
                 patients.get(0),
                 doctors.get(0),
-                LocalDate.of(2021, 3, 12),
+                LocalDate.of(2021, 5, 12),
                 TimeReservation.ELEVEN_ZERO);
 
         Reservation reservation2 = new Reservation(
@@ -177,7 +177,10 @@ public final class TestEntityGenerator {
         reservations.add(reservation4);
     }
 
-    private static void createAppointments() {
+    private void createAppointments() {
+        System.out.println(patients.get(0));
+        System.out.println(patients.size());
+
         Appointment appointment1 = new Appointment(
                 patients.get(0),
                 LocalDateTime.of(2021, 3, 12, 11, 22),
@@ -187,7 +190,7 @@ public final class TestEntityGenerator {
         );
 
         Appointment appointment2 = new Appointment(
-                patients.get(0),
+                patients.get(2),
                 LocalDateTime.of(2021, 4, 15, 13, 15),
                 doctors.get(0),
                 "diagnosis2",
@@ -197,13 +200,13 @@ public final class TestEntityGenerator {
         Appointment appointment3 = new Appointment(
                 patients.get(0),
                 LocalDateTime.of(2021, 6, 10, 15, 56),
-                doctors.get(0),
+                doctors.get(1),
                 "diagnosis3",
                 "dataAppointment3"
         );
 
         Appointment appointment4 = new Appointment(
-                patients.get(0),
+                patients.get(1),
                 LocalDateTime.of(2021, 1, 1, 11, 38),
                 doctors.get(0),
                 "diagnosis4",
@@ -215,19 +218,19 @@ public final class TestEntityGenerator {
         appointments.add(appointment4);
     }
 
-    public static List<Doctor> getDoctors() {
+    public List<Doctor> getDoctors() {
         return doctors;
     }
 
-    public static List<Patient> getPatients() {
+    public List<Patient> getPatients() {
         return patients;
     }
 
-    public static List<Reservation> getReservations() {
+    public List<Reservation> getReservations() {
         return reservations;
     }
 
-    public static List<Appointment> getAppointments() {
+    public List<Appointment> getAppointments() {
         return appointments;
     }
 }

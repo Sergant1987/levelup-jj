@@ -29,6 +29,11 @@ public class DoctorServiceImp implements DoctorService {
         return doctorRepository.save(new Doctor(form));
     }
 
+  @Override
+    public Doctor create(Doctor doctor) {
+        return doctorRepository.save(doctor);
+    }
+
     @Override
     public Doctor findDoctorById(Long id) {
         return doctorRepository.findById(id).get();

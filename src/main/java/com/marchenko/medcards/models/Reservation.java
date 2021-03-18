@@ -32,7 +32,6 @@ public class Reservation {
 
     @Setter
     @Column(name = "date_reservation")
-    @Future
     private LocalDate date;
 
     @Setter

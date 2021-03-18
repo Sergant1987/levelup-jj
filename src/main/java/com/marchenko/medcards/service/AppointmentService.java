@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface AppointmentService {
 
-    Appointment create(Patient patient, LocalDateTime now, Doctor doctor, AppointmentForm form);
+    Appointment create(Patient patient, LocalDateTime time, Doctor doctor, AppointmentForm form);
 
     List<Appointment> findAppointmentsByPatient(Long patientId);
 

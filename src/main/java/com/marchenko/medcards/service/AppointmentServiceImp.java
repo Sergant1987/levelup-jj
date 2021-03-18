@@ -24,8 +24,8 @@ public class AppointmentServiceImp implements AppointmentService {
     }
 
     @Override
-    public Appointment create(Patient patient, LocalDateTime now, Doctor doctor, AppointmentForm form) {
-        Appointment appointment = new Appointment(patient, now, doctor, form);
+    public Appointment create(Patient patient, LocalDateTime time, Doctor doctor, AppointmentForm form) {
+        Appointment appointment = new Appointment(patient, time, doctor, form);
         return appointmentRepository.save(appointment);
     }
 

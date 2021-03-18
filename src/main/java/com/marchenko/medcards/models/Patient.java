@@ -6,6 +6,7 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
@@ -36,6 +37,7 @@ public class Patient extends User {
     @Setter
     @Column(name = "date_of_birth", nullable = false)
     @Past
+    @NotNull
     private LocalDate dateOfBirth;
 
     @Setter

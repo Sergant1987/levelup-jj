@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,7 +28,8 @@ public class Doctor extends User {
 
     @Setter
     @Column(name = "date_of_birth", nullable = false)
-    @NotBlank
+    @NotNull
+    @Past
     private LocalDate dateOfBirth;
 
     @Setter

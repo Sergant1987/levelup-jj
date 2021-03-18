@@ -32,7 +32,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PatientControllerTest {
+public class PatientControllerTest{
 
     @Autowired
     private MockMvc mvc;
@@ -48,6 +48,7 @@ public class PatientControllerTest {
     @MockBean
     private PasswordEncoder passwordEncoder;
 
+    private TestEntityGenerator testEntityGenerator=new TestEntityGenerator();
 
     @Test
 
@@ -66,7 +67,7 @@ public class PatientControllerTest {
     @Test
     public void postRegistration() throws Exception {
 
-        Patient patient = TestEntityGenerator.getPatients().get(0);
+        Patient patient = testEntityGenerator.getPatients().get(0);
         patient.setId(1L);
 
         Mockito.when(patientService.create(patient.getForm())).thenReturn(patient);

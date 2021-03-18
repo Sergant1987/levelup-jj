@@ -3,34 +3,20 @@ package com.marchenko.medcards.service;
 import com.marchenko.medcards.models.Patient;
 import com.marchenko.medcards.models.PatientForm;
 import com.marchenko.medcards.models.TestEntityGenerator;
-import com.marchenko.medcards.repository.PatientRepository;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.Verifier;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class PatientServiceTest {
-
-    @Autowired
-    PatientService patientService;
+public class PatientServiceTest extends AbstractServiceTest{
 
     @Test
     public void createWithValidParam() {
-        List<Patient> patients = TestEntityGenerator.getPatients();
+        List<Patient> patients = testEntityGenerator.getPatients();
         Patient patient = patientService.create(patients.get(0).getForm());
         assertEquals(patients.get(0), patient);
         Patient patient1 = patientService.findPatientByLogin(patients.get(0).getLogin());
@@ -52,7 +38,7 @@ public class PatientServiceTest {
 
     @Test
     public void findPatientByIdWithValidParam() {
-        List<Patient> patients = TestEntityGenerator.getPatients();
+        List<Patient> patients = testEntityGenerator.getPatients();
         Patient patientExpect = patientService.create(patients.get(0).getForm());
         Patient patientActual = null;
         patientActual = patientService.findPatientById(patientExpect.getId());
@@ -61,7 +47,7 @@ public class PatientServiceTest {
 
     @Test
     public void findPatientByLoginWithValidParam() {
-        List<Patient> patients = TestEntityGenerator.getPatients();
+        List<Patient> patients = testEntityGenerator.getPatients();
         Patient patientExpect = patientService.create(patients.get(0).getForm());
         Patient patientActual = null;
         patientActual = patientService.findPatientByLogin(patientExpect.getLogin());
@@ -70,7 +56,7 @@ public class PatientServiceTest {
 
     @Test
     public void findByNameOrSurnameOrPhone() {
-        List<Patient> patients = TestEntityGenerator.getPatients();
+        List<Patient> patients = testEntityGenerator.getPatients();
         for (Patient p : patients
         ) {
             patientService.create(p.getForm());
