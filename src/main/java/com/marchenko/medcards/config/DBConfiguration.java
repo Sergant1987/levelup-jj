@@ -24,6 +24,7 @@ public class DBConfiguration {
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSourceForTest());
+        em.setPackagesToScan("com.marchenko.medcards.models");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -45,7 +46,7 @@ public class DBConfiguration {
 
 
     @Bean
-    @Profile("dev")
+    @Profile("prod")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
