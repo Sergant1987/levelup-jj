@@ -1,6 +1,8 @@
 package com.marchenko.medcards.models;
 
 
+import org.springframework.context.annotation.Scope;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

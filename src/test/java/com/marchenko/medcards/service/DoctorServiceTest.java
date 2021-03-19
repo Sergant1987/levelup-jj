@@ -1,26 +1,196 @@
 package com.marchenko.medcards.service;
 
 import com.marchenko.medcards.models.*;
+import com.marchenko.medcards.repository.DoctorRepository;
+import org.checkerframework.checker.units.qual.A;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
 
+@ActiveProfiles("test")
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+public class DoctorServiceTest {
+    @Autowired
+    DoctorRepository dr;
 
-public class DoctorServiceTest extends AbstractServiceTest{
+    @Before
+    public void before() {
+        dr.deleteAll();
+    }
+
+    @Autowired
+    DoctorService doctorService;
+
+
+    //    @Test
+//    public void createWithValidParam() {
+//        List<Doctor> doctors = new TestEntityGenerator().getDoctors();
+//        Doctor doctor = doctorService.create(doctors.get(0).getForm());
+//        assertEquals(doctors.get(0), doctor);
+//        Doctor doctor1 = doctorService.findDoctorByLogin(doctors.get(0).getLogin());
+//        assertEquals(doctors.get(0), doctor1);
+//    }
+//
+//    @Test(expected = NullPointerException.class)
+//    public void createWithNullParam() {
+//        DoctorForm doctorForm = new DoctorForm();
+//        Doctor doctor = new Doctor(doctorForm);
+//    }
+//
+//    @Test(expected = ConstraintViolationException.class)
+//    public void createWithNotValidParam() {
+//        DoctorForm doctorForm = new DoctorForm();
+//        doctorForm.setDateOfBirth(LocalDate.now().toString());
+//        doctorService.create(doctorForm);
+//    }
+//
+//    @Test
+//    public void findDoctorByIdWithValidParam() {
+//        List<Doctor> doctors = new TestEntityGenerator().getDoctors();
+//        Doctor doctorExpect = doctorService.create(doctors.get(0).getForm());
+//        Doctor doctorActual = null;
+//        doctorActual = doctorService.findDoctorById(doctorExpect.getId());
+//        assertEquals(doctorExpect, doctorActual);
+//    }
+//
+//    @Test
+//    public void findDoctorByLogin() {
+//        List<Doctor> doctors = new TestEntityGenerator().getDoctors();
+//        Doctor doctorExpect = doctorService.create(doctors.get(0).getForm());
+//        Doctor doctorActual = null;
+//        doctorActual = doctorService.findDoctorByLogin(doctorExpect.getLogin());
+//        assertEquals(doctorExpect, doctorActual);
+//    }
+//
+//    @Test
+//    public void findAllDoctors() {
+//        List<Doctor> doctors = new TestEntityGenerator().getDoctors();
+//        dr.saveAll(doctors);
+//        List<Doctor> doctorsExpect = doctorService.findAllDoctors();
+//        assertEquals(6, doctorsExpect.size());
+//    }
+//
+//    @Test
+//    public void findAllSpecialization() {
+//        List<Doctor> doctors = new TestEntityGenerator().getDoctors();
+//        dr.saveAll(doctors);
+//        Set<String> specializations=doctorService.findAllSpecialization();
+//        assertEquals(3,specializations.size());
+//    }
+//
+//    @Test
+//    public void findDoctorsBySpecialization() {
+//        List<Doctor> doctors = new TestEntityGenerator().getDoctors();
+//        dr.saveAll(doctors);
+//        Set<Doctor> doctorsExpect=doctorService.findDoctorsBySpecialization("окулист");
+//        assertEquals(2,doctorsExpect.size());
+//        doctorsExpect=doctorService.findDoctorsBySpecialization("хирург");
+//        assertEquals(3,doctorsExpect.size());
+//    }
+//
+//    @Test
+//    public void findDoctorsBySurname() {
+//        List<Doctor> doctors = new TestEntityGenerator().getDoctors();
+//        dr.saveAll(doctors);
+//        Set<Doctor> doctorsExpect=doctorService.findDoctorsBySurname(doctors.get(1).getSurname());
+//        assertEquals(1,doctorsExpect.size());
+//        doctorsExpect=doctorService.findDoctorsBySurname(doctors.get(3).getSurname());
+//        assertEquals(2,doctorsExpect.size());
+//    }
+//
+//    @Test
+//    public void findDoctorsBySpecializationAndName() {
+//        List<Doctor> doctors = new TestEntityGenerator().getDoctors();
+//        dr.saveAll(doctors);
+//        Set<Doctor> doctorsExpect=doctorService.findDoctorsBySpecializationAndSurname(doctors.get(1).getSurname(),doctors.get(1).getSurname());
+//        assertEquals(1,doctorsExpect.size());
+//    }
+    private final static List<Doctor> doctorsList = new ArrayList<>();
+
+    @Before
+    public void createDoctors() {
+        Doctor doctor1 = new Doctor("loginDoctor1",
+                "passwordDoctor1",
+                "nameDoctor1",
+                "surnameDoctor1",
+                LocalDate.of(1965, 3, 21),
+                "хирург",
+                "+7-999-555-21-56"
+        );
+
+        Doctor doctor2 = new Doctor("loginDoctor2",
+                "passwordDoctor2",
+                "nameDoctor2",
+                "surnameDoctor2",
+                LocalDate.of(1966, 7, 7),
+                "хирург",
+                "+7-999-555-65-10"
+        );
+
+        Doctor doctor3 = new Doctor("loginDoctor3",
+                "passwordDoctor3",
+                "nameDoctor3",
+                "surnameDoctor3",
+                LocalDate.of(1978, 4, 1),
+                "окулист",
+                "+7-999-555-77-11"
+        );
+
+        Doctor doctor4 = new Doctor("loginDoctor4",
+                "passwordDoctor4",
+                "nameDoctor4",
+                "surnameDoctor4",
+                LocalDate.of(1981, 2, 1),
+                "окулист",
+                "+7-999-555-12-31"
+        );
+        Doctor doctor5 = new Doctor("loginDoctor5",
+                "passwordDoctor5",
+                "nameDoctor2",
+                "surnameDoctor5",
+                LocalDate.of(1962, 1, 8),
+                "хирург",
+                "+7-999-555-65-11"
+        );
+
+        Doctor doctor6 = new Doctor("loginDoctor6",
+                "passwordDoctor6",
+                "nameDoctor6",
+                "surnameDoctor4",
+                LocalDate.of(1951, 2, 1),
+                "терапевт",
+                "+7-999-555-12-41"
+        );
+
+
+        doctorsList.add(doctor1);
+        doctorsList.add(doctor2);
+        doctorsList.add(doctor3);
+        doctorsList.add(doctor4);
+        doctorsList.add(doctor5);
+        doctorsList.add(doctor6);
+
+    }
 
     @Test
     public void createWithValidParam() {
-        List<Doctor> doctors = testEntityGenerator.getDoctors();
+        List<Doctor> doctors = new ArrayList<>(doctorsList);
+
         Doctor doctor = doctorService.create(doctors.get(0).getForm());
         assertEquals(doctors.get(0), doctor);
         Doctor doctor1 = doctorService.findDoctorByLogin(doctors.get(0).getLogin());
@@ -33,7 +203,7 @@ public class DoctorServiceTest extends AbstractServiceTest{
         Doctor doctor = new Doctor(doctorForm);
     }
 
-    @Test(expected = DataIntegrityViolationException.class)
+    @Test(expected = ConstraintViolationException.class)
     public void createWithNotValidParam() {
         DoctorForm doctorForm = new DoctorForm();
         doctorForm.setDateOfBirth(LocalDate.now().toString());
@@ -42,7 +212,7 @@ public class DoctorServiceTest extends AbstractServiceTest{
 
     @Test
     public void findDoctorByIdWithValidParam() {
-        List<Doctor> doctors = testEntityGenerator.getDoctors();
+        List<Doctor> doctors = new ArrayList<>(doctorsList);
         Doctor doctorExpect = doctorService.create(doctors.get(0).getForm());
         Doctor doctorActual = null;
         doctorActual = doctorService.findDoctorById(doctorExpect.getId());
@@ -51,7 +221,7 @@ public class DoctorServiceTest extends AbstractServiceTest{
 
     @Test
     public void findDoctorByLogin() {
-        List<Doctor> doctors = testEntityGenerator.getDoctors();
+        List<Doctor> doctors = new ArrayList<>(doctorsList);
         Doctor doctorExpect = doctorService.create(doctors.get(0).getForm());
         Doctor doctorActual = null;
         doctorActual = doctorService.findDoctorByLogin(doctorExpect.getLogin());
@@ -60,34 +230,43 @@ public class DoctorServiceTest extends AbstractServiceTest{
 
     @Test
     public void findAllDoctors() {
-        saveDoctorsToDB();
-        List<Doctor> doctors = doctorService.findAllDoctors();
-        assertEquals(6, doctors.size());
+        dr.saveAll(doctorsList);
+        List<Doctor> doctorsExpect = doctorService.findAllDoctors();
+        assertEquals(6, doctorsExpect.size());
     }
 
     @Test
     public void findAllSpecialization() {
-        saveDoctorsToDB();
-        Set<String> specializations=doctorService.findAllSpecialization();
-        assertEquals(3,specializations.size());
+        dr.saveAll(doctorsList);
+        Set<String> specializations = doctorService.findAllSpecialization();
+        assertEquals(3, specializations.size());
     }
 
     @Test
     public void findDoctorsBySpecialization() {
-        saveDoctorsToDB();
-        Set<Doctor> doctors=doctorService.findDoctorsBySpecialization("окулист");
-        assertEquals(2,doctors.size());
-        doctors=doctorService.findDoctorsBySpecialization("хирург");
-        assertEquals(3,doctors.size());
+        dr.saveAll(doctorsList);
+        Set<Doctor> doctorsExpect = doctorService.findDoctorsBySpecialization("окулист");
+        assertEquals(2, doctorsExpect.size());
+        doctorsExpect = doctorService.findDoctorsBySpecialization("хирург");
+        assertEquals(3, doctorsExpect.size());
     }
 
     @Test
     public void findDoctorsBySurname() {
-
+        List<Doctor> doctors = new ArrayList<>(doctorsList);
+        dr.saveAll(doctors);
+        Set<Doctor> doctorsExpect = doctorService.findDoctorsBySurname(doctors.get(1).getSurname());
+        assertEquals(1, doctorsExpect.size());
+        doctorsExpect = doctorService.findDoctorsBySurname(doctors.get(3).getSurname());
+        assertEquals(2, doctorsExpect.size());
     }
 
     @Test
     public void findDoctorsBySpecializationAndName() {
+        List<Doctor> doctors = new ArrayList<>(doctorsList);
+        dr.saveAll(doctors);
+        Set<Doctor> doctorsExpect = doctorService.findDoctorsBySpecializationAndSurname(doctors.get(1).getSurname(), doctors.get(1).getSurname());
+        assertEquals(1, doctorsExpect.size());
     }
 
 

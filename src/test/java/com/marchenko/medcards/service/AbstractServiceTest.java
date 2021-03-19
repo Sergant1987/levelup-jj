@@ -18,10 +18,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import java.util.List;
-@ActiveProfiles("test")
-@RunWith(SpringJUnit4ClassRunner.class)
+
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@ActiveProfiles("test")
+@RunWith(SpringJUnit4ClassRunner.class)
 public class AbstractServiceTest {
     @Autowired
     protected DoctorService doctorService;
@@ -32,7 +33,7 @@ public class AbstractServiceTest {
     @Autowired
     protected ReservationService reservationService;
 
-    protected TestEntityGenerator testEntityGenerator = new TestEntityGenerator();
+    protected TestEntityGenerator testEntityGenerator;
 
     @Autowired
     DoctorRepository dr;
@@ -45,6 +46,7 @@ public class AbstractServiceTest {
 
     @Before
     public void dropTable() {
+        testEntityGenerator=new TestEntityGenerator();
         dr.deleteAll();
         pr.deleteAll();
         ar.deleteAll();
