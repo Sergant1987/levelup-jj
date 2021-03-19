@@ -65,7 +65,7 @@ public class DoctorServiceImp implements DoctorService {
     }
 
     @Override
-    public Set<Doctor> findDoctorsBySpecializationAndName(String specialization, String surname) {
+    public Set<Doctor> findDoctorsBySpecializationAndSurname(String specialization, String surname) {
         return doctorRepository.findDoctorsBySpecializationAndSurname(specialization, surname);
     }
 

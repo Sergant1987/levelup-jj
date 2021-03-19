@@ -167,7 +167,7 @@ public class PatientController {
     private Set<Doctor> findDoctors(String specialization, String doctorName) {
 
         if ((specialization == null || specialization.isBlank()) && (doctorName == null  || doctorName.isBlank())) {
-            return doctorService.findDoctorsBySpecializationAndName(specialization, doctorName);
+            return doctorService.findDoctorsBySpecializationAndSurname(specialization, doctorName);
         }
 
         if (specialization == null || specialization.isBlank()) {
@@ -177,7 +177,7 @@ public class PatientController {
         if (doctorName == null || doctorName.isBlank()) {
             return doctorService.findDoctorsBySpecialization(specialization);
         }
-        return doctorService.findDoctorsBySpecializationAndName(specialization, doctorName);
+        return doctorService.findDoctorsBySpecializationAndSurname(specialization, doctorName);
     }
 
 

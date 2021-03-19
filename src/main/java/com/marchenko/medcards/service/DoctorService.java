@@ -24,6 +24,6 @@ public interface DoctorService {
 
     Set<Doctor> findDoctorsBySurname(String surname);
 
-    Set<Doctor> findDoctorsBySpecializationAndName(String specialization, String surname);
+    Set<Doctor> findDoctorsBySpecializationAndSurname(String specialization, String surname);
 
 }
