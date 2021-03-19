@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 //TODO security off
@@ -25,7 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         web.ignoring().antMatchers("/image/*");
 
     }
-
+//
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //
@@ -35,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 //                .authorizeRequests()
 //                // страницы исключения для авторизации
 //                .antMatchers("/", "/about", "/contacts").permitAll()
+//                .antMatchers("/**/*.js", "/**/*.css").permitAll()
 //                .antMatchers("/doctors/registration", "/patients/registration", "/auth/registration").not().fullyAuthenticated()
 //                //каждый запрос должен быть аутифицирован
 //                .anyRequest()
@@ -60,6 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .authorizeRequests().antMatchers("/**").permitAll();
 
     }
+
 
     private final UserDetailsService userDetailsService;
 

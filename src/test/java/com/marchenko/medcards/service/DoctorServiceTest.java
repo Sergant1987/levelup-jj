@@ -82,7 +82,6 @@ public class DoctorServiceTest extends AbstractServiceTest{
     }
 
     @Test
-
     public void findDoctorsBySurname() {
 
     }

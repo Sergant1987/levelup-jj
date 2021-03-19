@@ -57,10 +57,11 @@ public class PatientServiceTest extends AbstractServiceTest{
     @Test
     public void findByNameOrSurnameOrPhone() {
         List<Patient> patients = testEntityGenerator.getPatients();
-        for (Patient p : patients
-        ) {
-            patientService.create(p.getForm());
-        }
+        savePatientsToDB();
+//        for (Patient p : patients
+//        ) {
+//            patientService.create(p.getForm());
+//        }
 
         List<Patient> actualPatients = patientService.findPatientsByNameAndSurnameAndPhone(patients.get(0).getName(), patients.get(0).getSurname(), patients.get(0).getPhone());
         assertEquals(1, actualPatients.size());

@@ -1,8 +1,6 @@
 package com.marchenko.medcards.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.*;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -20,9 +18,10 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class DBConfiguration {
 
-    @Profile("dev")
+    @Profile("test")
     @Bean(name="entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryForTest() {
+
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSourceForTest());
 
@@ -32,8 +31,9 @@ public class DBConfiguration {
         return em;
     }
 
-    @Profile("dev")
+@Profile("test")
     @Bean(name = "dataSource")
+
     public DataSource dataSourceForTest() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
@@ -43,8 +43,9 @@ public class DBConfiguration {
         return dataSource;
     }
 
+
     @Bean
-    @Profile("prod")
+    @Profile("dev")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
@@ -55,7 +56,6 @@ public class DBConfiguration {
         return em;
     }
 
-    @Profile("prod")
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
