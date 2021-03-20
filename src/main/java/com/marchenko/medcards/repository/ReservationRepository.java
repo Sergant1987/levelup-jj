@@ -14,8 +14,8 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long>, JpaSpecificationExecutor<Reservation> {
 
    @Query("from Reservation r where r.doctor.id=:doctor_id and r.date =:date ")
-    List<Reservation> findReservationsByDoctorAndDate(@Param("doctor_id") Long doctorId, @Param("date") LocalDate date);
+    List<Reservation> findReservationsByDoctorIdAndDate(@Param("doctor_id") Long doctorId, @Param("date") LocalDate date);
 
-    @Query("from Reservation r where r.patient.id=:patientId and r.date>current_date ")
-    List<Reservation> findByPatientIdAndDateAfterNow(@Param("patientId") Long patientId);
+    @Query("from Reservation r where r.patient.id=:patientId and r.date>=current_date ")
+    List<Reservation> findByPatientIdWhenDateAfterNow(@Param("patientId") Long patientId);
 }

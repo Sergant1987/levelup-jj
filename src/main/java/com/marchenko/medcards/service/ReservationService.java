@@ -13,9 +13,9 @@ public interface ReservationService {
 
   Reservation findById(Long id);
 
-  List<Reservation> findReservationsByDoctorAndDate(Long doctorId, LocalDate date);
+  List<Reservation> findReservationsByDoctorIdAndDate(Long doctorId, LocalDate date);
 
-  List<Reservation> findReservationsByPatientAndDateAfterNow(Long patientId);
+  List<Reservation> findReservationsByPatientIdWhenDateAfterNow(Long patientId);
 
 
 

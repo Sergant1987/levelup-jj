@@ -13,12 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.List;
 
 @Ignore
@@ -28,20 +23,21 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AbstractServiceTest {
 
-    protected TestEntityGenerator testEntityGenerator=new TestEntityGenerator();;
+    protected TestEntityGenerator testEntityGenerator = new TestEntityGenerator();
 
     @Autowired
-    DoctorRepository dr;
+    private DoctorRepository dr;
     @Autowired
-    PatientRepository pr;
+    private PatientRepository pr;
     @Autowired
-    AppointmentRepository ar;
+    private AppointmentRepository ar;
     @Autowired
-    ReservationRepository rr;
+    private ReservationRepository rr;
 
     @Before
     public void refreshData() {
         testEntityGenerator.refresh();
+
     }
 
 
@@ -52,17 +48,17 @@ public class AbstractServiceTest {
 
     protected void savePatientsToDB() {
         List<Patient> patients = testEntityGenerator.getPatients();
-      pr.saveAll(patients);
+        pr.saveAll(patients);
     }
 
     protected void saveAppointmentsToDB() {
         List<Appointment> appointments = testEntityGenerator.getAppointments();
-       ar.saveAll(appointments);
+        ar.saveAll(appointments);
     }
 
     protected void saveReservationsToDB() {
         List<Reservation> reservations = testEntityGenerator.getReservations();
-     rr.saveAll(reservations);
+        rr.saveAll(reservations);
     }
 
     protected void saveToDB() {

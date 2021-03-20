@@ -88,7 +88,7 @@ public class DoctorsController {
     public ModelAndView viewSchedule(@PathVariable(value = "id") Long id,
                                      @RequestParam(required = false) String date,
                                      Model model) {
-        List<Reservation> reservations = reservationService.findReservationsByDoctorAndDate(id, date == null ? LocalDate.now() : LocalDate.parse(date));
+        List<Reservation> reservations = reservationService.findReservationsByDoctorIdAndDate(id, date == null ? LocalDate.now() : LocalDate.parse(date));
         model.addAttribute("reservations", reservations);
         return new ModelAndView("doctors/schedule");
     }

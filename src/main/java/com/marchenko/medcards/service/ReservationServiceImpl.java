@@ -27,13 +27,13 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findReservationsByDoctorAndDate(Long doctorId, LocalDate date) {
-        return reservationRepository.findReservationsByDoctorAndDate(doctorId, date);
+    public List<Reservation> findReservationsByDoctorIdAndDate(Long doctorId, LocalDate date) {
+        return reservationRepository.findReservationsByDoctorIdAndDate(doctorId, date);
     }
 
     @Override
-    public List<Reservation> findReservationsByPatientAndDateAfterNow(Long patientId) {
-        return reservationRepository.findByPatientIdAndDateAfterNow(patientId);
+    public List<Reservation> findReservationsByPatientIdWhenDateAfterNow(Long patientId) {
+        return reservationRepository.findByPatientIdWhenDateAfterNow(patientId);
     }
 
     @Override

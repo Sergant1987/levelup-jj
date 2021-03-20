@@ -1,7 +1,7 @@
-package com.marchenko.medcards.models;
+package com.marchenko.medcards.service;
 
 
-import org.springframework.context.annotation.Scope;
+import com.marchenko.medcards.models.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,11 +19,11 @@ public final class TestEntityGenerator {
         refresh();
     }
 
-    public void refresh(){
-        doctors=new ArrayList<>();
-        patients=new ArrayList<>();
-        reservations=new ArrayList<>();
-        appointments=new ArrayList<>();
+    public void refresh() {
+        doctors = new ArrayList<>();
+        patients = new ArrayList<>();
+        reservations = new ArrayList<>();
+        appointments = new ArrayList<>();
         createDoctors();
         createPatients();
         createReservations();
@@ -161,30 +161,46 @@ public final class TestEntityGenerator {
         Reservation reservation1 = new Reservation(
                 patients.get(0),
                 doctors.get(0),
-                LocalDate.of(2021, 5, 12),
+                LocalDate.of(2023, 5, 12),
                 TimeReservation.ELEVEN_ZERO);
 
         Reservation reservation2 = new Reservation(
                 patients.get(0),
                 doctors.get(0),
-                LocalDate.of(2021, 4, 15),
+                LocalDate.of(2023, 4, 15),
                 TimeReservation.THIRTEEN_ZERO);
 
         Reservation reservation3 = new Reservation(
                 patients.get(1),
                 doctors.get(1),
-                LocalDate.of(2021, 6, 10),
+                LocalDate.of(2023, 6, 10),
                 TimeReservation.FIFTEEN_HALF);
 
         Reservation reservation4 = new Reservation(
                 patients.get(2),
                 doctors.get(2),
-                LocalDate.of(2021, 1, 1),
+                LocalDate.of(2023, 1, 1),
                 TimeReservation.ELEVEN_HALF);
+
+        Reservation reservation5 = new Reservation(
+                patients.get(2),
+                doctors.get(0),
+                LocalDate.of(2023, 5, 12),
+                TimeReservation.TEN_HALF);
+
+        Reservation reservation6 = new Reservation(
+                patients.get(2),
+                doctors.get(3),
+                LocalDate.of(2023, 5, 12),
+                TimeReservation.TEN_HALF);
+
+
         reservations.add(reservation1);
         reservations.add(reservation2);
         reservations.add(reservation3);
         reservations.add(reservation4);
+        reservations.add(reservation5);
+        reservations.add(reservation6);
     }
 
     private void createAppointments() {

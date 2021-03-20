@@ -111,7 +111,7 @@ public class PatientController {
         if (dateOfReservation != null) {
             model.addAttribute("dateOfReservation", dateOfReservation);
             List<Reservation> reservations =
-                    reservationService.findReservationsByDoctorAndDate(doctorId, LocalDate.parse(dateOfReservation));
+                    reservationService.findReservationsByDoctorIdAndDate(doctorId, LocalDate.parse(dateOfReservation));
             List<TimeReservation> noReservationTime =
                     TimeReservation.findNotReservationTime(
                             reservations.stream().map(Reservation::getTime).collect(Collectors.toList()));
@@ -139,7 +139,7 @@ public class PatientController {
     public String viewAllReservations(
             @PathVariable(value = "id") Long id,
             Model model) {
-        List<Reservation> reservations = reservationService.findReservationsByPatientAndDateAfterNow(id);
+        List<Reservation> reservations = reservationService.findReservationsByPatientIdWhenDateAfterNow(id);
         model.addAttribute("reservations", reservations);
         return "/patients/reservationsByPatient";
     }
