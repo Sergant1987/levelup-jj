@@ -19,7 +19,6 @@ public class ContactDataForm {
     @NotBlank
     private String surname;
     @NotBlank
-    @Past
     private String dateOfBirth;
     @NotBlank
     private String phone;

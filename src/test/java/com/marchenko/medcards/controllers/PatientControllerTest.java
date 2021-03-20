@@ -62,6 +62,8 @@ public class PatientControllerTest{
 
         Mockito.when(patientService.create(patient.getForm())).thenReturn(patient);
         mvc.perform(MockMvcRequestBuilders.post("/patients/registration")
+              .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous())
+                .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf())
                 .param("name", patient.getName())
                 .param("surname", patient.getSurname())
                 .param("dateOfBirth", patient.getDateOfBirth().toString())
@@ -76,24 +78,3 @@ public class PatientControllerTest{
 
 }
 
-/*
-    @PostMapping("/registration")
-    @ResponseStatus(HttpStatus.OK)
-    public RedirectView postRegistration(
-            @RequestParam String name,
-            @RequestParam String surname,
-            @RequestParam String dateOfBirth,
-            @RequestParam String login,
-            @RequestParam String password,
-            @RequestParam String phone,
-            @RequestParam String address,
-            Model model) {
-        Patient patient =
-                new Patient(login, passwordEncoder.encode(password),
-                        name, surname, LocalDate.parse(dateOfBirth),
-                        phone, address);
-
-        patientService.create(patient);
-        return new RedirectView("/patients/" + patient.getId());
-    }
-*/

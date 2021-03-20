@@ -26,42 +26,46 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         web.ignoring().antMatchers("/image/*");
 
     }
-//
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+//механизм защиты от csrf угрозы
+//        http
+//                .csrf() .disable();
+
+        http
+                .csrf();
+
+
+        http.authorizeRequests()
+                // страницы исключения для авторизации
+                .antMatchers("/", "/about", "/contacts").permitAll()
+                .antMatchers("/**/*.js", "/**/*.css").permitAll()
+                .antMatchers("/doctors/registration", "/patients/registration", "/auth/registration").not().fullyAuthenticated()
+                //каждый запрос должен быть аутифицирован
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/auth/login").permitAll()
+                .defaultSuccessUrl("/auth/success")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/auth/login");
+    }
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //
 //        http
 //                //механизм защиты от csrf угрозы
 //                .csrf().disable()
-//                .authorizeRequests()
-//                // страницы исключения для авторизации
-//                .antMatchers("/", "/about", "/contacts").permitAll()
-//                .antMatchers("/**/*.js", "/**/*.css").permitAll()
-//                .antMatchers("/doctors/registration", "/patients/registration", "/auth/registration").not().fullyAuthenticated()
-//                //каждый запрос должен быть аутифицирован
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/auth/login").permitAll()
-//                .defaultSuccessUrl("/auth/success")
-//                .and()
-//                .logout()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
-//                .invalidateHttpSession(true)
-//                .clearAuthentication(true)
-//                .deleteCookies("JSESSIONID")
-//                .logoutSuccessUrl("/auth/login");
+//                .authorizeRequests().antMatchers("/**").permitAll();
+//
 //    }
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-        http
-                //механизм защиты от csrf угрозы
-                .csrf().disable()
-                .authorizeRequests().antMatchers("/**").permitAll();
-
-    }
 
 
     private final UserDetailsService userDetailsService;
