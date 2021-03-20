@@ -6,6 +6,7 @@ import com.marchenko.medcards.repository.DoctorRepository;
 import com.marchenko.medcards.repository.PatientRepository;
 import com.marchenko.medcards.repository.ReservationRepository;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,23 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
+@Ignore
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AbstractServiceTest {
-    @Autowired
-    protected DoctorService doctorService;
-    @Autowired
-    protected PatientService patientService;
-    @Autowired
-    protected AppointmentService appointmentService;
-    @Autowired
-    protected ReservationService reservationService;
 
-    protected TestEntityGenerator testEntityGenerator;
+    protected TestEntityGenerator testEntityGenerator=new TestEntityGenerator();;
 
     @Autowired
     DoctorRepository dr;
@@ -45,56 +40,30 @@ public class AbstractServiceTest {
     ReservationRepository rr;
 
     @Before
-    public void dropTable() {
-        testEntityGenerator=new TestEntityGenerator();
-        dr.deleteAll();
-        pr.deleteAll();
-        ar.deleteAll();
-        rr.deleteAll();
+    public void refreshData() {
+        testEntityGenerator.refresh();
     }
 
 
     protected void saveDoctorsToDB() {
         List<Doctor> doctors = testEntityGenerator.getDoctors();
-        for (Doctor d : doctors
-        ) {
-            doctorService.create(d);
-        }
+        dr.saveAll(doctors);
     }
 
     protected void savePatientsToDB() {
         List<Patient> patients = testEntityGenerator.getPatients();
-        for (Patient p : patients
-        ) {
-            patientService.create(p);
-        }
+      pr.saveAll(patients);
     }
 
     protected void saveAppointmentsToDB() {
         List<Appointment> appointments = testEntityGenerator.getAppointments();
-        for (Appointment a : appointments
-        ) {
-            System.out.println(a);
-            appointmentService.create(
-                    a.getAppointmentId().getPatient(),
-                    a.getAppointmentId().getDateOfAppointment(),
-                    a.getDoctor(),
-                    new AppointmentForm(a.getDiagnosis(), a.getDataAppointment()));
-        }
+       ar.saveAll(appointments);
     }
 
     protected void saveReservationsToDB() {
         List<Reservation> reservations = testEntityGenerator.getReservations();
-        for (Reservation r : reservations
-        ) {
-            reservationService.create(r.getPatient(),
-                    r.getDoctor(),
-                    r.getDate(),
-                    r.getTime()
-            );
-        }
+     rr.saveAll(reservations);
     }
-
 
     protected void saveToDB() {
         saveDoctorsToDB();

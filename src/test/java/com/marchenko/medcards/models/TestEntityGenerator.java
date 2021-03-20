@@ -16,9 +16,10 @@ public final class TestEntityGenerator {
 
 
     public TestEntityGenerator() {
+        refresh();
     }
 
-    private void refresh(){
+    public void refresh(){
         doctors=new ArrayList<>();
         patients=new ArrayList<>();
         reservations=new ArrayList<>();
@@ -197,6 +198,7 @@ public final class TestEntityGenerator {
                 "diagnosis1",
                 "dataAppointment1"
         );
+        System.out.println(appointment1);
 
         Appointment appointment2 = new Appointment(
                 patients.get(2),
@@ -228,22 +230,18 @@ public final class TestEntityGenerator {
     }
 
     public List<Doctor> getDoctors() {
-        refresh();
         return doctors;
     }
 
     public List<Patient> getPatients() {
-        refresh();
         return patients;
     }
 
     public List<Reservation> getReservations() {
-        refresh();
         return reservations;
     }
 
     public List<Appointment> getAppointments() {
-        refresh();
         return appointments;
     }
 }
