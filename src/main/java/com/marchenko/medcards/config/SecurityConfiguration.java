@@ -21,10 +21,19 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfiguration {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
+    @Bean
+    protected PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(12);
+    }
 
-/**Старый конфиг с одним страницей логина*/
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/image/*");
+    }
+
+/**Старый конфиг с одной страницей логина*/
 
 
 //    @Override
