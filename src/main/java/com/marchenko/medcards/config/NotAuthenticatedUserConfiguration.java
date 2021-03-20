@@ -23,7 +23,7 @@ public class NotAuthenticatedUserConfiguration extends WebSecurityConfigurerAdap
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 // страницы исключения для авторизации
-                .antMatchers("/", "/about", "/contacts","/doctors/registration", "/patients/registration").permitAll()
+                .antMatchers("/", "/about", "/contacts").permitAll()
                 .antMatchers("/**/*.js", "/**/*.css").permitAll()
 //                .antMatchers().not().fullyAuthenticated()
                 .and().csrf();
