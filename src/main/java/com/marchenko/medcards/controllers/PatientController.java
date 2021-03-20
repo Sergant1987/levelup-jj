@@ -8,6 +8,7 @@ import com.marchenko.medcards.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,21 @@ public class PatientController {
 
     private final PasswordEncoder passwordEncoder;
 
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "/patients/login";
+    }
+
+//    @PostMapping(value = "/login")
+//    public ModelAndView login(
+//            @RequestParam(value = "error", required = false) String error,
+//            @RequestParam(value = "logout", required = false) String logout) {
+//        String login = authentication.getName();
+//        Patient patient = patientService.findPatientByLogin(login);
+//        return new ModelAndView(new RedirectView("/patients/" + patient.getId()));
+//    }
+
     @Autowired
     public PatientController(PatientService patientService, DoctorService doctorService,
                              PasswordEncoder passwordEncoder, ReservationService reservationService,
@@ -46,11 +62,10 @@ public class PatientController {
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('PATIENT')")
-    public RedirectView index() {
+    public RedirectView index(Authentication authentication) {
         //TODO security off
-//        String login = SecurityContextHolder.getContext().getAuthentication().getName();
-//        Patient patient = patientService.findByLogin(login);
-        Patient patient = patientService.findPatientById(1L);
+        String login = authentication.getName();
+        Patient patient = patientService.findPatientByLogin(login);
         return new RedirectView("/patients/" + patient.getId());
     }
 

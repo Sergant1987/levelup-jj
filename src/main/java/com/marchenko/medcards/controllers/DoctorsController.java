@@ -7,6 +7,7 @@ import com.marchenko.medcards.service.PatientService;
 import com.marchenko.medcards.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -44,14 +45,18 @@ public class DoctorsController {
         this.appointmentService = appointmentService;
     }
 
+    @GetMapping("/login")
+    public String loginPage() {
+        return "/doctors/login";
+    }
+
 
     @GetMapping("")
     @PreAuthorize("hasAuthority('DOCTOR')")
-    public RedirectView index() {
+    public RedirectView index(Authentication authentication) {
         //TODO security off
-//        String login = SecurityContextHolder.getContext().getAuthentication().getName();
-//        Doctor doctor = doctorService.findByLogin(login);
-        Doctor doctor = doctorService.findDoctorById(17L);
+        String login = authentication.getName();
+        Doctor doctor = doctorService.findDoctorByLogin(login);
         return new RedirectView(String.format("/doctors/%d", doctor.getId()));
     }
 
