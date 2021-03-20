@@ -9,20 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class TestEntityGenerator {
-    private final static List<Doctor> doctors = new ArrayList<>();
-    private final static List<Patient> patients = new ArrayList<>();
-    private final static List<Reservation> reservations = new ArrayList<>();
-    private final static List<Appointment> appointments = new ArrayList<>();
+    private static List<Doctor> doctors;
+    private static List<Patient> patients;
+    private static List<Reservation> reservations;
+    private volatile static List<Appointment> appointments;
 
 
     public TestEntityGenerator() {
+    }
+
+    private void refresh(){
+        doctors=new ArrayList<>();
+        patients=new ArrayList<>();
+        reservations=new ArrayList<>();
+        appointments=new ArrayList<>();
         createDoctors();
         createPatients();
         createReservations();
         createAppointments();
     }
 
-    private  void createDoctors() {
+    private void createDoctors() {
         Doctor doctor1 = new Doctor("loginDoctor1",
                 "passwordDoctor1",
                 "nameDoctor1",
@@ -86,7 +93,7 @@ public final class TestEntityGenerator {
 
     }
 
-    private  void createPatients() {
+    private void createPatients() {
         Patient patient1 = new Patient("loginPatient1"
                 , "passwordPatient1"
                 , "namePatient1",
@@ -221,18 +228,22 @@ public final class TestEntityGenerator {
     }
 
     public List<Doctor> getDoctors() {
+        refresh();
         return doctors;
     }
 
     public List<Patient> getPatients() {
+        refresh();
         return patients;
     }
 
     public List<Reservation> getReservations() {
+        refresh();
         return reservations;
     }
 
     public List<Appointment> getAppointments() {
+        refresh();
         return appointments;
     }
 }
