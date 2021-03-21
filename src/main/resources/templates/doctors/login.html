@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -22,6 +22,7 @@
         <div><label for="password" class="visually-hidden">Пароль</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
         </div>
+<!--        можно заменить на form:form-->
         <input type="hidden"
                 th:name="${_csrf.parameterName}"
                th:value="${_csrf.token}"

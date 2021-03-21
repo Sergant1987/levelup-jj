@@ -21,10 +21,7 @@
         <textarea name="data" rows="20" cols="80"  th:field="*{data}"
                   placeholder="Данные и рекомендации" required>
         </textarea>
-<!--        <label for="data" class="visually-hidden">Данные и рекомендации-->
-<!--            <input type="textarea" id="data" name="data" th:value="${data}" class="form-control"-->
-<!--                   placeholder="Данные и рекомендации" required>-->
-<!--        </label>-->
+
         <br>
         <input type="hidden"
                th:name="${_csrf.parameterName}"
