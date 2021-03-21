@@ -204,8 +204,6 @@ public final class TestEntityGenerator {
     }
 
     private void createAppointments() {
-        System.out.println(patients.get(0));
-        System.out.println(patients.size());
 
         Appointment appointment1 = new Appointment(
                 patients.get(0),
@@ -214,7 +212,6 @@ public final class TestEntityGenerator {
                 "diagnosis1",
                 "dataAppointment1"
         );
-        System.out.println(appointment1);
 
         Appointment appointment2 = new Appointment(
                 patients.get(2),
