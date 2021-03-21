@@ -72,6 +72,7 @@ public class PatientControllerTest {
                 ))
                 .andExpect(MockMvcResultMatchers.status().is(302))
                 .andExpect(MockMvcResultMatchers.redirectedUrl(String.format("/patients/%d", patientExpect.getId())));
+        Mockito.verify(patientService,Mockito.times(1)).findPatientByLogin(Mockito.anyString());
     }
 
     @Test
@@ -100,6 +101,7 @@ public class PatientControllerTest {
                 .flashAttr("patientForm", patientExpect.getForm()))
                 .andExpect(MockMvcResultMatchers.status().is(302))
                 .andExpect(MockMvcResultMatchers.redirectedUrl(String.format("/patients/%d", patientExpect.getId())));
+        Mockito.verify(patientService,Mockito.times(1)).create(patientExpect.getForm());
     }
 
     @Test
@@ -117,6 +119,7 @@ public class PatientControllerTest {
                 .param("id", patientExpect.getId().toString()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("/patients/patientMenu"));
+        Mockito.verify(patientService,Mockito.times(1)).findPatientById(Mockito.anyLong());
     }
 
     @Test
@@ -150,7 +153,7 @@ public class PatientControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().attribute("doctors", foundDoctors))
                 .andExpect(MockMvcResultMatchers.view().name("/patients/selectDoctor"));
-        Mockito.verify(doctorService,Mockito.times(1)).findDoctorsBySpecializationAndSurname(Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(doctorService,Mockito.times(2)).findDoctorsBySpecializationAndSurname(Mockito.anyString(), Mockito.anyString());
 
         Mockito.when(doctorService.findDoctorsBySurname(Mockito.anyString())).thenReturn(foundDoctors);
 

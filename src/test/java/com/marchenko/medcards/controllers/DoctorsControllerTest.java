@@ -84,7 +84,7 @@ public class DoctorsControllerTest {
         Doctor doctorExpect = testEntityGenerator.getDoctors().get(0);
         doctorExpect.setId(1L);
 
-        Mockito.when(doctorService.create(Mockito.mock(Doctor.class))).thenReturn(doctorExpect);
+        Mockito.when(doctorService.create(doctorExpect.getForm())).thenReturn(doctorExpect);
 
         mvc.perform(MockMvcRequestBuilders.post("/doctors/registration")
                 .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf())
@@ -119,6 +119,25 @@ public class DoctorsControllerTest {
     @Test
     public void selectReservation() {
     }
+
+    /*    @GetMapping("/{id}/schedule")
+    @PreAuthorize("hasAuthority('DOCTOR')")
+    public ModelAndView viewSchedule(@PathVariable(value = "id") Long id,
+                                     @RequestParam(required = false) String date,
+                                     Model model) {
+        List<Reservation> reservations = reservationService.findReservationsByDoctorIdAndDate(id, date == null ? LocalDate.now() : LocalDate.parse(date));
+        model.addAttribute("reservations", reservations);
+        return new ModelAndView("/doctors/schedule");
+    }
+
+    @PostMapping("/{id}/schedule")
+    @PreAuthorize("hasAuthority('DOCTOR')")
+    public RedirectView selectReservation(@PathVariable(value = "id") Long id,
+                                          @RequestParam Long reservationId) {
+        Long patientId = reservationService.findById(reservationId).getPatient().getId();
+        return new RedirectView(String.format("/doctors/%d/appointments/%d", id, patientId));
+    }
+*/
 
     @Test
     public void findPatient() throws Exception {
