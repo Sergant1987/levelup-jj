@@ -57,7 +57,7 @@ public class PatientController {
     public RedirectView index(Authentication authentication) {
         String login = authentication.getName();
         Patient patient = patientService.findPatientByLogin(login);
-        return new RedirectView("/patients/" + patient.getId());
+        return new RedirectView(String.format("/patients/%d", patient.getId()));
     }
 
     @GetMapping("/registration")
@@ -72,7 +72,7 @@ public class PatientController {
     public RedirectView postRegistration(@Valid @ModelAttribute("patientForm") PatientForm patientForm) {
         patientForm.setPassword(passwordEncoder.encode(patientForm.getPassword()));
         Patient patient = patientService.create(patientForm);
-        return new RedirectView("/patients/" + patient.getId());
+        return new RedirectView(String.format("/patients/%d", patient.getId()));
     }
 
     @GetMapping("/{id}")
@@ -90,8 +90,7 @@ public class PatientController {
     public ModelAndView selectDoctor(
             @PathVariable(value = "id") Long id,
             @RequestParam Long doctorId) {
-        String redirect = String.format("/patients/%d/reservations/%d", id, doctorId);
-        return new ModelAndView(new RedirectView(redirect));
+        return new ModelAndView(new RedirectView(String.format("/patients/%d/reservations/%d", id, doctorId)));
     }
 
     @GetMapping("/{id}/reservations")
