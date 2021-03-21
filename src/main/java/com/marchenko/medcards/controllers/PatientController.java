@@ -109,12 +109,12 @@ public class PatientController {
 
     @GetMapping("/{id}/reservations/{doctorId}")
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String selectDate(
+    public ModelAndView selectDate(
             @PathVariable(value = "id") Long id,
             @PathVariable(value = "doctorId") Long doctorId,
             @RequestParam(required = false) String dateOfReservation,
             Model model) {
-        if (dateOfReservation != null) {
+        if (dateOfReservation != null&&!dateOfReservation.isBlank()) {
             model.addAttribute("dateOfReservation", dateOfReservation);
             List<Reservation> reservations =
                     reservationService.findReservationsByDoctorIdAndDate(doctorId, LocalDate.parse(dateOfReservation));
@@ -123,7 +123,7 @@ public class PatientController {
                             reservations.stream().map(Reservation::getTime).collect(Collectors.toList()));
             model.addAttribute("noReservationTime", noReservationTime);
         }
-        return "/patients/selectDate";
+        return new ModelAndView("/patients/selectDate");
     }
 
     @PostMapping("/{id}/reservations/{doctorId}")
