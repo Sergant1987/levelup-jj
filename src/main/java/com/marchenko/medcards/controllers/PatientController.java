@@ -35,10 +35,7 @@ public class PatientController {
     private final PasswordEncoder passwordEncoder;
 
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "/patients/login";
-    }
+
 
 
     @Autowired
@@ -60,6 +57,11 @@ public class PatientController {
         return new RedirectView(String.format("/patients/%d", patient.getId()));
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "/patients/login";
+    }
+
     @GetMapping("/registration")
     public String registration(
             @ModelAttribute("patientForm") PatientForm patientForm
@@ -68,7 +70,6 @@ public class PatientController {
     }
 
     @PostMapping("/registration")
-    @ResponseStatus(HttpStatus.OK)
     public RedirectView postRegistration(@Valid @ModelAttribute("patientForm") PatientForm patientForm) {
         patientForm.setPassword(passwordEncoder.encode(patientForm.getPassword()));
         Patient patient = patientService.create(patientForm);
@@ -77,21 +78,14 @@ public class PatientController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String viewPatientMenu(@PathVariable(value = "id") Long id,
+    public ModelAndView viewPatientMenu(@PathVariable(value = "id") Long id,
                                   Model model) {
         Patient patient = patientService.findPatientById(id);
         model.addAttribute("name", patient.getName());
         model.addAttribute("id", patient.getId());
-        return "/patients/patientMenu";
+        return new ModelAndView("/patients/patientMenu");
     }
 
-    @PostMapping("/{id}/reservations")
-    @PreAuthorize("hasAuthority('PATIENT')")
-    public ModelAndView selectDoctor(
-            @PathVariable(value = "id") Long id,
-            @RequestParam Long doctorId) {
-        return new ModelAndView(new RedirectView(String.format("/patients/%d/reservations/%d", id, doctorId)));
-    }
 
     @GetMapping("/{id}/reservations")
     @PreAuthorize("hasAuthority('PATIENT')")
@@ -105,6 +99,13 @@ public class PatientController {
         return "/patients/selectDoctor";
     }
 
+    @PostMapping("/{id}/reservations")
+    @PreAuthorize("hasAuthority('PATIENT')")
+    public ModelAndView selectDoctor(
+            @PathVariable(value = "id") Long id,
+            @RequestParam Long doctorId) {
+        return new ModelAndView(new RedirectView(String.format("/patients/%d/reservations/%d", id, doctorId)));
+    }
 
     @GetMapping("/{id}/reservations/{doctorId}")
     @PreAuthorize("hasAuthority('PATIENT')")

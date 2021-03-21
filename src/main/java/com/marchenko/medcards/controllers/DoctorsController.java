@@ -78,7 +78,7 @@ public class DoctorsController {
         Doctor doctor = doctorService.findDoctorById(id);
         model.addAttribute("name", doctor.getName());
         model.addAttribute("id", doctor.getId());
-        return new ModelAndView("doctors/doctorMenu");
+        return new ModelAndView("/doctors/doctorMenu");
     }
 
     @GetMapping("/{id}/schedule")
@@ -88,15 +88,15 @@ public class DoctorsController {
                                      Model model) {
         List<Reservation> reservations = reservationService.findReservationsByDoctorIdAndDate(id, date == null ? LocalDate.now() : LocalDate.parse(date));
         model.addAttribute("reservations", reservations);
-        return new ModelAndView("doctors/schedule");
+        return new ModelAndView("/doctors/schedule");
     }
 
     @PostMapping("/{id}/schedule")
     @PreAuthorize("hasAuthority('DOCTOR')")
-    public ModelAndView selectReservation(@PathVariable(value = "id") Long id,
+    public RedirectView selectReservation(@PathVariable(value = "id") Long id,
                                           @RequestParam Long reservationId) {
         Long patientId = reservationService.findById(reservationId).getPatient().getId();
-        return new ModelAndView(new RedirectView(String.format("/doctors/%d/appointments/%d", id, patientId)));
+        return new RedirectView(String.format("/doctors/%d/appointments/%d", id, patientId));
     }
 
     @GetMapping("/{id}/appointments")
@@ -115,9 +115,10 @@ public class DoctorsController {
 
     @PostMapping("/{id}/appointments")
     @PreAuthorize("hasAuthority('DOCTOR')")
-    public ModelAndView selectPatient(@PathVariable("id") Long id,
-                                      @RequestParam Long patientId) {
-        return new ModelAndView(new RedirectView(String.format("/doctors/%d/appointments/%d", id, patientId)));
+    public RedirectView selectPatient(@PathVariable("id") Long id,
+                                      @RequestParam(name = "patientId") String patientId) {
+
+        return new RedirectView(String.format("/doctors/%d/appointments/%d", id, Long.parseLong(patientId)));
     }
 
     @GetMapping("/{id}/appointments/{patient_id}")
@@ -132,13 +133,13 @@ public class DoctorsController {
 
     @PostMapping("/{id}/appointments/{patient_id}")
     @PreAuthorize("hasAuthority('DOCTOR')")
-    public ModelAndView createAppointment(@PathVariable("id") Long id,
-                                          @PathVariable("patient_id") Long patientId,
+    public RedirectView createAppointment(@PathVariable("id") Long id,
+                                          @PathVariable("patient_id") String patientId,
                                           @Valid @ModelAttribute("appointmentForm") AppointmentForm appointmentForm) {
         Doctor doctor = doctorService.findDoctorById(id);
-        Patient patient = patientService.findPatientById(patientId);
+        Patient patient = patientService.findPatientById(Long.parseLong(patientId));
         appointmentService.create(patient, LocalDateTime.now(), doctor, appointmentForm);
-        return new ModelAndView(new RedirectView(String.format("/doctors/%d", id)));
+        return new RedirectView(String.format("/doctors/%d", id));
     }
 
 }
