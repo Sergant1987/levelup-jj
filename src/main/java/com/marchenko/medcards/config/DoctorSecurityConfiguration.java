@@ -15,7 +15,7 @@ public class DoctorSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf()
                 .and()
-                .authorizeRequests().antMatchers("/doctors/registration").permitAll()
+                .authorizeRequests().antMatchers("/doctors/registration").not().fullyAuthenticated()
                 .and()
                 .antMatcher("/doctors/**")
                 .authorizeRequests().anyRequest().hasAnyAuthority("DOCTOR")

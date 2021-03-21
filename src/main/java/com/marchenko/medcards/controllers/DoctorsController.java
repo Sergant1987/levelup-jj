@@ -54,7 +54,6 @@ public class DoctorsController {
     @GetMapping("")
     @PreAuthorize("hasAuthority('DOCTOR')")
     public RedirectView index(Authentication authentication) {
-        //TODO security off
         String login = authentication.getName();
         Doctor doctor = doctorService.findDoctorByLogin(login);
         return new RedirectView(String.format("/doctors/%d", doctor.getId()));

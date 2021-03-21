@@ -40,14 +40,6 @@ public class PatientController {
         return "/patients/login";
     }
 
-//    @PostMapping(value = "/login")
-//    public ModelAndView login(
-//            @RequestParam(value = "error", required = false) String error,
-//            @RequestParam(value = "logout", required = false) String logout) {
-//        String login = authentication.getName();
-//        Patient patient = patientService.findPatientByLogin(login);
-//        return new ModelAndView(new RedirectView("/patients/" + patient.getId()));
-//    }
 
     @Autowired
     public PatientController(PatientService patientService, DoctorService doctorService,
@@ -63,7 +55,6 @@ public class PatientController {
     @GetMapping("")
     @PreAuthorize("hasAuthority('PATIENT')")
     public RedirectView index(Authentication authentication) {
-        //TODO security off
         String login = authentication.getName();
         Patient patient = patientService.findPatientByLogin(login);
         return new RedirectView("/patients/" + patient.getId());
