@@ -101,10 +101,10 @@ public class PatientController {
 
     @PostMapping("/{id}/reservations")
     @PreAuthorize("hasAuthority('PATIENT')")
-    public ModelAndView selectDoctor(
+    public RedirectView selectDoctor(
             @PathVariable(value = "id") Long id,
-            @RequestParam Long doctorId) {
-        return new ModelAndView(new RedirectView(String.format("/patients/%d/reservations/%d", id, doctorId)));
+            @RequestParam("doctorId") String doctorId) {
+        return new RedirectView(String.format("/patients/%d/reservations/%s", id, doctorId));
     }
 
     @GetMapping("/{id}/reservations/{doctorId}")
@@ -128,7 +128,7 @@ public class PatientController {
 
     @PostMapping("/{id}/reservations/{doctorId}")
     @PreAuthorize("hasAuthority('PATIENT')")
-    public ModelAndView selectTimeAndPersistReservation(
+    public RedirectView selectTimeAndPersistReservation(
             @PathVariable(value = "id") Long id,
             @PathVariable(value = "doctorId") Long doctorId,
             @RequestParam String dateOfReservation,
@@ -136,34 +136,35 @@ public class PatientController {
         Doctor doctor = doctorService.findDoctorById(doctorId);
         Patient patient = patientService.findPatientById(id);
         reservationService.create(patient, doctor, LocalDate.parse(dateOfReservation), TimeReservation.getByValue(time));
-        return new ModelAndView(new RedirectView(String.format("/patients/%d", id)));
+        return new RedirectView(String.format("/patients/%d", id));
     }
 
 
     @GetMapping("/{id}/all_reservations")
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String viewAllReservations(
+    public ModelAndView viewAllReservations(
             @PathVariable(value = "id") Long id,
             Model model) {
         List<Reservation> reservations = reservationService.findReservationsByPatientIdWhenDateAfterNow(id);
         model.addAttribute("reservations", reservations);
-        return "/patients/reservationsByPatient";
+        return new ModelAndView("/patients/reservationsByPatient");
     }
 
 
     //TODO приделать сортировку
     @GetMapping("/{id}/appointments")
     @PreAuthorize("hasAuthority('PATIENT')")
-    public String viewAllAppointments(
+    public ModelAndView viewAllAppointments(
             @PathVariable(value = "id") Long id,
             Model model) {
         List<Appointment> appointments = appointmentService.findAppointmentsByPatient(id);
         model.addAttribute("appointments", appointments);
-        return "/patients/appointmentsByPatient";
+        return new ModelAndView("/patients/appointmentsByPatient");
+
     }
 
     @ModelAttribute("specializations")
-    public Set<String> getSpecializations() {
+    Set<String> getSpecializations() {
         Set<String> resultWithFirstEmpty = new LinkedHashSet<>();
         resultWithFirstEmpty.add("");
         resultWithFirstEmpty.addAll(doctorService.findAllSpecialization());
