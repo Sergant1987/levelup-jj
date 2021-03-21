@@ -76,13 +76,7 @@ public class DoctorsController {
     @PreAuthorize("hasAuthority('DOCTOR')")
     public ModelAndView viewDoctorMenu(@PathVariable(value = "id") Long id, Model model) {
         Doctor doctor = doctorService.findDoctorById(id);
-        if (!hasAccessRight(doctor)) {
-            return new ModelAndView(
-                    new RedirectView(
-                            String.format("/doctors/%d", doctorService.findDoctorByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId())));
-        }
         model.addAttribute("name", doctor.getName());
-        System.out.println(doctor.getId());
         model.addAttribute("id", doctor.getId());
         return new ModelAndView("doctors/doctorMenu");
     }
@@ -146,15 +140,5 @@ public class DoctorsController {
         appointmentService.create(patient, LocalDateTime.now(), doctor, appointmentForm);
         return new ModelAndView(new RedirectView(String.format("/doctors/%d", id)));
     }
-
-    private boolean hasAccessRight(User user) {
-        String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        User authenticationUser = doctorService.findDoctorByLogin(login);
-        if (authenticationUser == null) {
-            return false;
-        }
-        return authenticationUser.getLogin().equals(user.getLogin());
-    }
-
 
 }
