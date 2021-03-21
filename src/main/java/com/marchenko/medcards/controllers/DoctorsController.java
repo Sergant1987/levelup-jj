@@ -132,8 +132,7 @@ public class DoctorsController {
                                                   @PathVariable("patient_id") Long patientId,
                                                   @ModelAttribute("appointmentForm") AppointmentForm appointmentForm,
                                                   Model model) {
-        model.addAttribute("diagnosis", "");
-        model.addAttribute("data", "");
+
         return new ModelAndView("/doctors/createAppointment");
     }
 
