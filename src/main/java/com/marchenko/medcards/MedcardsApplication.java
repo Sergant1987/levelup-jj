@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MedcardsApplication {
     public static void main(String[] args) {
         SpringApplication.run(MedcardsApplication.class, args);
-
     }
 
 }
