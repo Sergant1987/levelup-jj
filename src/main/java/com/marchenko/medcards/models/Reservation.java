@@ -1,6 +1,7 @@
 package com.marchenko.medcards.models;
 
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,27 +15,23 @@ import java.util.Objects;
 @Entity
 @Table(name = "reservations")
 @NoArgsConstructor
-@Getter
+@Data
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
     @JoinColumn(name = "patient_id")
     @ManyToOne
     private Patient patient;
 
-    @Setter
     @JoinColumn(name = "doctor_id")
     @ManyToOne
     private Doctor doctor;
 
-    @Setter
     @Column(name = "date_reservation")
     private LocalDate date;
 
-    @Setter
     @Column(name = "time_reservation")
     @Enumerated(EnumType.STRING)
     private TimeReservation time;

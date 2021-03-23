@@ -13,6 +13,7 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Embeddable
 @NoArgsConstructor
@@ -40,6 +41,19 @@ public class AppointmentId implements Serializable {
                 "dateOfAppointment=" + dateOfAppointment +
                 ", patient=" + patient.getId() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AppointmentId that = (AppointmentId) o;
+        return Objects.equals(dateOfAppointment, that.dateOfAppointment) && Objects.equals(patient, that.patient);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dateOfAppointment, patient);
     }
 }
 

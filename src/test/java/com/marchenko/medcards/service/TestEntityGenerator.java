@@ -207,7 +207,7 @@ public final class TestEntityGenerator {
 
         Appointment appointment1 = new Appointment(
                 patients.get(0),
-                LocalDateTime.of(2021, 3, 12, 11, 22),
+                LocalDateTime.of(2021, 10, 12, 11, 22),
                 doctors.get(0),
                 "diagnosis1",
                 "dataAppointment1"

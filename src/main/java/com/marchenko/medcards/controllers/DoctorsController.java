@@ -94,8 +94,8 @@ public class DoctorsController {
     @PostMapping("/{id}/schedule")
     @PreAuthorize("hasAuthority('DOCTOR')")
     public RedirectView selectReservation(@PathVariable(value = "id") Long id,
-                                          @RequestParam Long reservationId) {
-        Long patientId = reservationService.findById(reservationId).getPatient().getId();
+                                          @RequestParam String reservationId) {
+        Long patientId = reservationService.findById(Long.parseLong(reservationId)).getPatient().getId();
         return new RedirectView(String.format("/doctors/%d/appointments/%d", id, patientId));
     }
 
