@@ -18,7 +18,6 @@ import java.util.Objects;
 @Embeddable
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode
 public class AppointmentId implements Serializable {
 
     @Setter
