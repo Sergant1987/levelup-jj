@@ -3,9 +3,9 @@ jdk:
   - oraclejdk11
 addons:
   sonarcloud:
-    organization: "Sergant1987_levelup-jj"
+    organization: "sergant1987"
     token:
-      secure: "552cf00f9a487995223d3bfacf058a02fb948176" # encrypted value of your
+      secure: "2ff04e4f8be0771f68e73c18be08b8ca965e3bd1" # encrypted value of your
 
 services:
   - postgresql
