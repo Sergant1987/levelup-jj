@@ -5,13 +5,13 @@ addons:
   sonarcloud:
     organization: "sergant1987"
     token:
-      secure: "2ff04e4f8be0771f68e73c18be08b8ca965e3bd1" # encrypted value of your
+      secure: "6b91fd88f2726451f6ee25c94ef11bbe71afe6f8" # encrypted value of your
 
 services:
   - postgresql
 before_script:
   - psql -c "CREATE DATABASE medcards;" -U postgres
-  -
+
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=Sergant1987_levelup-jj
