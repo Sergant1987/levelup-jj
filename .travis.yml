@@ -3,7 +3,7 @@ jdk:
   - oraclejdk11
 addons:
   sonarcloud:
-    organization: "sergant1987"
+    organization: "Sergant1987_levelup-jj"
     token:
       secure: "552cf00f9a487995223d3bfacf058a02fb948176" # encrypted value of your
 
@@ -11,8 +11,7 @@ services:
   - postgresql
 before_script:
   - psql -c "CREATE DATABASE medcards;" -U postgres
-#  - psql -c "CREATE USER postgres WITH PASSWORD 'root';" -U postgres
 
 #script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-#  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=Sergant1987_levelup-jj
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=Sergant1987_levelup-jj
