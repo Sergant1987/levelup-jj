@@ -3,13 +3,11 @@ package com.marchenko.medcards.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,6 +22,7 @@ public class Doctor extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter
+    @PositiveOrZero
     private Long id;
 
     @Setter
@@ -33,23 +32,27 @@ public class Doctor extends User {
     private LocalDate dateOfBirth;
 
     @Setter
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     @NotBlank
+    @Length(max = 50)
     private String name;
 
     @Setter
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     @NotBlank
+    @Length(max = 50)
     private String surname;
 
     @Setter
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     @NotBlank
+    @Length(max = 50)
     private String specialization;
 
     @Setter
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 20)
     @NotBlank
+    @Length(min = 10,max = 20)
     @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$")
     private String phone;
 

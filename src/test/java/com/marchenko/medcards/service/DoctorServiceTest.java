@@ -11,7 +11,7 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 
-public class DoctorServiceTest extends AbstractServiceTest{
+public class DoctorServiceTest extends AbstractServiceTest {
 
     @Autowired
    private DoctorService doctorService;

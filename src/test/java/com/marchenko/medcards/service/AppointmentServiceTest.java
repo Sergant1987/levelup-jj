@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import static org.junit.Assert.*;
 
-public class AppointmentServiceTest  extends AbstractServiceTest{
+public class AppointmentServiceTest extends AbstractServiceTest {
     @Autowired
     private AppointmentService appointmentService;
 
