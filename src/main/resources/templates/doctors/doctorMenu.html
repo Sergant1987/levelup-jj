@@ -15,6 +15,12 @@
      <a class="p-2 text-dark" title="Ввести информацию о приеме для пациента" th:href="@{'/doctors/'+${id}+'/appointments'}">Ввести информацию о приеме для пациента</a>
  </div>
 </div>
+<div th:if="${isLoggedIn}">
+    <form action="/doctors/logout" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <input type="submit" value="Logout">
+    </form>
 
+</div>
 </body>
 </html>

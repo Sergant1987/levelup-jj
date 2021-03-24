@@ -142,4 +142,10 @@ public class DoctorsController {
         return new RedirectView(String.format("/doctors/%d", id));
     }
 
+    @ModelAttribute(name = "isLoggedIn")
+    public Boolean isLoggedIn(){
+        return SecurityContextHolder.getContext().getAuthentication()!=null;
+    }
+
+
 }

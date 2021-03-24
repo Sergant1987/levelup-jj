@@ -6,9 +6,9 @@ import com.marchenko.medcards.service.DoctorService;
 import com.marchenko.medcards.service.PatientService;
 import com.marchenko.medcards.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,10 +33,6 @@ public class PatientController {
     private final AppointmentService appointmentService;
 
     private final PasswordEncoder passwordEncoder;
-
-
-
-
 
     @Autowired
     public PatientController(PatientService patientService, DoctorService doctorService,
@@ -185,6 +181,13 @@ public class PatientController {
             return doctorService.findDoctorsBySpecialization(specialization);
         }
         return doctorService.findDoctorsBySpecializationAndSurname(specialization, doctorName);
+    }
+
+
+
+    @ModelAttribute(name = "isLoggedIn")
+    public boolean isLoggedIn(){
+        return SecurityContextHolder.getContext().getAuthentication()!=null;
     }
 
 

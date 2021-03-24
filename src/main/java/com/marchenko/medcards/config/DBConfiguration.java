@@ -14,7 +14,9 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class DBConfiguration {
 
-    @Profile("test")
+
+    @Profile("prod")/**TODO убрать*/
+//    @Profile("test")
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryForTest() {
 
@@ -28,7 +30,7 @@ public class DBConfiguration {
         return em;
     }
 
-    @Profile("test")
+  //  @Profile("test")
     @Bean(name = "dataSource")
     public DataSource dataSourceForTest() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -40,8 +42,8 @@ public class DBConfiguration {
     }
 
 
-    @Bean
-    @Profile("prod")
+//    @Bean
+//    @Profile("prod")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
@@ -52,7 +54,7 @@ public class DBConfiguration {
         return em;
     }
 
-    @Bean
+ //   @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");

@@ -27,7 +27,7 @@ public class PatientSecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .permitAll()
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
+                .logoutUrl("/patients/logout")
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
