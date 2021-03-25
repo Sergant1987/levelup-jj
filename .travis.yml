@@ -4,8 +4,8 @@ jdk:
 addons:
   sonarcloud:
     organization: "sergant1987"
-    token:
-      secure: "fa09445e09d45a6b48c4cb03b4d529cf845fef32" # encrypted value of your token
+    token: "064fdef2ecf2ff2b6967bf54a5ef62da31d50e14" # encrypted value of your token
+
 
 services:
   - postgresql
