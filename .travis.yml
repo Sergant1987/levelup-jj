@@ -5,7 +5,7 @@ addons:
   sonarcloud:
     organization: "sergant1987"
     token:
-      secure: "6b91fd88f2726451f6ee25c94ef11bbe71afe6f8" # encrypted value of your
+      secure: "**************************" # encrypted value of your token
 
 services:
   - postgresql
