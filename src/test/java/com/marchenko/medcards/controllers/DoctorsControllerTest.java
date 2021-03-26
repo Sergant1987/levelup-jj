@@ -180,7 +180,6 @@ public class DoctorsControllerTest {
                         .password(doctor.getPassword())
                         .authorities(doctor.getRole().getAuthorities()))
                 .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf())
-                //TODO КАК передать объект
                 .param("patientId", foundPatient.getId().toString()))
                 .andExpect(MockMvcResultMatchers.status().is(302))
                 .andExpect(MockMvcResultMatchers.redirectedUrl(

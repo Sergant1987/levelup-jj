@@ -1,7 +1,6 @@
 package com.marchenko.medcards.service;
 
-
-import com.marchenko.medcards.config.exceptions.NotFoundException;
+import com.marchenko.medcards.exceptions.NotFoundException;
 import com.marchenko.medcards.models.Doctor;
 import com.marchenko.medcards.models.DoctorForm;
 import com.marchenko.medcards.repository.DoctorRepository;

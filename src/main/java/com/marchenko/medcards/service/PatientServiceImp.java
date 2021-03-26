@@ -1,7 +1,7 @@
 package com.marchenko.medcards.service;
 
 
-import com.marchenko.medcards.config.exceptions.NotFoundException;
+import com.marchenko.medcards.exceptions.NotFoundException;
 import com.marchenko.medcards.models.Patient;
 import com.marchenko.medcards.models.PatientForm;
 import com.marchenko.medcards.repository.PatientRepository;
@@ -48,7 +48,7 @@ public class PatientServiceImp implements PatientService {
     @Override
     public List<Patient> findPatientsByNameAndSurnameAndPhone(String name, String surname, String phone) {
         if (paramIsEmpty(name, surname, phone)) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
         Specification<Patient> specification =
                 Specification.where(new FilterPatient().getSpecificationPatient(name, surname, phone));

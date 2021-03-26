@@ -146,8 +146,6 @@ public class PatientController {
         return new ModelAndView("/patients/reservationsByPatient");
     }
 
-
-    //TODO приделать сортировку
     @GetMapping("/{id}/appointments")
     @PreAuthorize("hasAuthority('PATIENT')")
     public ModelAndView viewAllAppointments(

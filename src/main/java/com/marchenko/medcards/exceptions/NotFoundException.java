@@ -1,4 +1,4 @@
-package com.marchenko.medcards.config.exceptions;
+package com.marchenko.medcards.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

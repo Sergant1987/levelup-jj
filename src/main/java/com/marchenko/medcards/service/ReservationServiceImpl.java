@@ -1,6 +1,6 @@
 package com.marchenko.medcards.service;
 
-import com.marchenko.medcards.config.exceptions.NotFoundException;
+import com.marchenko.medcards.exceptions.NotFoundException;
 import com.marchenko.medcards.models.*;
 import com.marchenko.medcards.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
