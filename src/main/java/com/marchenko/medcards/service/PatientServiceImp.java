@@ -1,12 +1,12 @@
 package com.marchenko.medcards.service;
 
 
+import com.marchenko.medcards.config.exceptions.NotFoundException;
 import com.marchenko.medcards.models.Patient;
 import com.marchenko.medcards.models.PatientForm;
 import com.marchenko.medcards.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +36,8 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public Patient findPatientById(Long id) {
-        return patientRepository.findById(id).get();
+        return patientRepository.findById(id).orElseThrow(
+                ()-> new NotFoundException(String.format("Patient with id=%d doesn't exists",id)));
     }
 
     @Override
@@ -46,7 +47,7 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public List<Patient> findPatientsByNameAndSurnameAndPhone(String name, String surname, String phone) {
-        if (paramIsEmpty(name,surname,phone)) {
+        if (paramIsEmpty(name, surname, phone)) {
             return Collections.EMPTY_LIST;
         }
         Specification<Patient> specification =
