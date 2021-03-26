@@ -6,12 +6,11 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.4.3</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.marchenko.medcards</groupId>
 	<artifactId>medcards</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-<!--	<packaging>war</packaging>-->
 	<name>medcards</name>
 	<description>pet project medCards</description>
 
@@ -90,14 +89,12 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
 			<version>4.6.0</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
@@ -136,11 +133,13 @@
 					</includes>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.6</version>
 			</plugin>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
