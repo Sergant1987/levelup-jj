@@ -1,7 +1,5 @@
 package com.marchenko.medcards.repository;
 
-import com.marchenko.medcards.models.Doctor;
-import com.marchenko.medcards.models.Patient;
 import com.marchenko.medcards.models.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -68,7 +68,9 @@ public class DoctorsController {
     public RedirectView postRegistration(@Valid @ModelAttribute("doctorForm") DoctorForm doctorForm) {
         doctorForm.setPassword(passwordEncoder.encode(doctorForm.getPassword()));
         Doctor doctor = doctorService.create(doctorForm);
-        return new RedirectView(String.format("/doctors/%d", doctor.getId()));
+        return new RedirectView(
+                String.format("/doctors/%d",
+                        doctor.getId()));
     }
 
 
@@ -125,8 +127,7 @@ public class DoctorsController {
     @PreAuthorize("hasAuthority('DOCTOR')")
     public ModelAndView viewFormCreateAppointment(@PathVariable("id") Long id,
                                                   @PathVariable("patient_id") Long patientId,
-                                                  @ModelAttribute("appointmentForm") AppointmentForm appointmentForm,
-                                                  Model model) {
+                                                  @ModelAttribute("appointmentForm") AppointmentForm appointmentForm) {
 
         return new ModelAndView("/doctors/createAppointment");
     }

@@ -2,13 +2,8 @@ package com.marchenko.medcards.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor

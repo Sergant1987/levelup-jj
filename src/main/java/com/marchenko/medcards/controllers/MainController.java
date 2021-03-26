@@ -3,9 +3,7 @@ package com.marchenko.medcards.controllers;
 
 import com.marchenko.medcards.models.Doctor;
 import com.marchenko.medcards.service.DoctorService;
-import com.marchenko.medcards.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
@@ -20,7 +18,7 @@ import java.util.List;
 @RequestMapping()
 public class MainController {
 
-    private DoctorService doctorService;
+    private final DoctorService doctorService;
 
     @Autowired
     public MainController(DoctorService doctorService) {

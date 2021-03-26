@@ -1,16 +1,11 @@
 package com.marchenko.medcards.models;
 
-
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
 import java.time.LocalDate;
 import java.util.Objects;
-
 
 @Entity
 @Table(name = "reservations")

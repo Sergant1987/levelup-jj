@@ -5,7 +5,6 @@ import com.marchenko.medcards.models.Patient;
 import com.marchenko.medcards.service.DoctorService;
 import com.marchenko.medcards.service.PatientService;
 import com.marchenko.medcards.service.TestEntityGenerator;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

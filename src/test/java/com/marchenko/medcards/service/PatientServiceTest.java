@@ -28,7 +28,7 @@ public class PatientServiceTest extends AbstractServiceTest {
     @Test(expected = NullPointerException.class)
     public void createWithNullParam() {
         PatientForm patientForm = new PatientForm();
-        Patient patient = new Patient(patientForm);
+        new Patient(patientForm);
     }
 
     @Test(expected = ConstraintViolationException.class)

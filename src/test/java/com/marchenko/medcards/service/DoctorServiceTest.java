@@ -28,7 +28,7 @@ public class DoctorServiceTest extends AbstractServiceTest {
     @Test(expected = NullPointerException.class)
     public void createWithNullParam() {
         DoctorForm doctorForm = new DoctorForm();
-        Doctor doctor = new Doctor(doctorForm);
+        new Doctor(doctorForm);
     }
 
     @Test(expected = ConstraintViolationException.class)
@@ -43,8 +43,7 @@ public class DoctorServiceTest extends AbstractServiceTest {
         saveDoctorsToDB();
         List<Doctor> doctors=testEntityGenerator.getDoctors();
         Doctor doctorExpect = doctors.get(0);
-        Doctor doctorActual = null;
-        doctorActual = doctorService.findDoctorById(doctorExpect.getId());
+        Doctor doctorActual = doctorService.findDoctorById(doctorExpect.getId());
         assertEquals(doctorExpect, doctorActual);
     }
 
@@ -53,8 +52,7 @@ public class DoctorServiceTest extends AbstractServiceTest {
         saveDoctorsToDB();
         List<Doctor> doctors=testEntityGenerator.getDoctors();
         Doctor doctorExpect = doctors.get(0);
-        Doctor doctorActual = null;
-        doctorActual = doctorService.findDoctorByLogin(doctorExpect.getLogin());
+        Doctor doctorActual = doctorService.findDoctorByLogin(doctorExpect.getLogin());
         assertEquals(doctorExpect, doctorActual);
     }
 
@@ -69,7 +67,6 @@ public class DoctorServiceTest extends AbstractServiceTest {
     @Test
     public void findAllSpecialization() {
         saveDoctorsToDB();
-        List<Doctor> doctors=testEntityGenerator.getDoctors();
         Set<String> specializations = doctorService.findAllSpecialization();
         assertEquals(3, specializations.size());
     }
@@ -77,7 +74,6 @@ public class DoctorServiceTest extends AbstractServiceTest {
     @Test
     public void findDoctorsBySpecialization() {
         saveDoctorsToDB();
-        List<Doctor> doctors=testEntityGenerator.getDoctors();
         Set<Doctor> doctorsExpect = doctorService.findDoctorsBySpecialization("окулист");
         assertEquals(2, doctorsExpect.size());
         doctorsExpect = doctorService.findDoctorsBySpecialization("хирург");

@@ -1,7 +1,6 @@
 package com.marchenko.medcards.models;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public enum TimeReservation {
     EIGHT_ZERO("8-00"),
@@ -21,7 +20,7 @@ public enum TimeReservation {
     SIXTEEN_ZERO("16-00"),
     SIXTEEN_HALF("16-30");
 
-    private String value;
+    private final String value;
 
     TimeReservation(String value) {
         this.value = value;
@@ -43,8 +42,8 @@ public enum TimeReservation {
     }
 
     public static TimeReservation getByValue(String selectedValue){
-        System.out.println(selectedValue);
-        return getAll().stream().filter(v->v.value.equals(selectedValue)).findFirst().get();
+        return getAll().stream().filter(v->v.value.equals(selectedValue)).findFirst()
+                .orElseThrow(()->new RuntimeException(String.format("Значения %s в классе TimeReservation не существует",selectedValue)));
     }
 
 
