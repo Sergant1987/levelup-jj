@@ -31,11 +31,10 @@ public class DoctorsControllerTest {
     @MockBean
     private AppointmentService appointmentService;
 
-
     private final TestEntityGenerator testEntityGenerator = new TestEntityGenerator();
 
     @Test
-    public void index() throws Exception {
+    public void testDoctorIndexPage() throws Exception {
         Doctor doctorExpect = testEntityGenerator.getDoctors().get(0);
         doctorExpect.setId(1L);
 
@@ -52,21 +51,21 @@ public class DoctorsControllerTest {
     }
 
     @Test
-    public void loginPage() throws Exception {
+    public void testDoctorLoginPage() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/doctors/login"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("/doctors/login"));
     }
 
     @Test
-    public void registration() throws Exception {
+    public void testDoctorRegistration() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/doctors/registration"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("/doctors/registration"));
     }
 
     @Test
-    public void postRegistration() throws Exception {
+    public void testDoctorPostRegistration() throws Exception {
         Doctor doctorExpect = testEntityGenerator.getDoctors().get(0);
         doctorExpect.setId(1L);
 
@@ -81,7 +80,7 @@ public class DoctorsControllerTest {
     }
 
     @Test
-    public void viewDoctorMenu() throws Exception {
+    public void testViewDoctorMenu() throws Exception {
         Doctor doctorExpect = testEntityGenerator.getDoctors().get(0);
         doctorExpect.setId(1L);
 
@@ -99,7 +98,7 @@ public class DoctorsControllerTest {
     }
 
     @Test
-    public void viewSchedule() throws Exception {
+    public void testViewSchedule() throws Exception {
         Doctor doctor = testEntityGenerator.getDoctors().get(0);
         doctor.setId(1L);
 
@@ -121,7 +120,7 @@ public class DoctorsControllerTest {
     }
 
     @Test
-    public void selectReservation() throws Exception {
+    public void testSelectReservation() throws Exception {
         Doctor doctor = testEntityGenerator.getDoctors().get(0);
         doctor.setId(1L);
 
@@ -145,7 +144,7 @@ public class DoctorsControllerTest {
     }
 
     @Test
-    public void findPatient() throws Exception {
+    public void testFindPatient() throws Exception {
         Doctor doctorExpect = testEntityGenerator.getDoctors().get(0);
         doctorExpect.setId(1L);
 
@@ -169,7 +168,7 @@ public class DoctorsControllerTest {
     }
 
     @Test
-    public void selectPatient() throws Exception {
+    public void testSelectPatient() throws Exception {
         Doctor doctor = testEntityGenerator.getDoctors().get(0);
         doctor.setId(1L);
         Patient foundPatient = testEntityGenerator.getPatients().get(0);
@@ -186,9 +185,8 @@ public class DoctorsControllerTest {
                         String.format("/doctors/%d/appointments/%d", doctor.getId(), foundPatient.getId())));
     }
 
-
     @Test
-    public void viewFormCreateAppointment() throws Exception {
+    public void testViewFormCreateAppointment() throws Exception {
         Doctor doctor = testEntityGenerator.getDoctors().get(0);
         doctor.setId(1L);
         Patient patient = testEntityGenerator.getPatients().get(0);
@@ -207,9 +205,8 @@ public class DoctorsControllerTest {
                 .andExpect(MockMvcResultMatchers.view().name("/doctors/createAppointment"));
     }
 
-
     @Test
-    public void createAppointment() throws Exception {
+    public void testCreateAppointment() throws Exception {
         Doctor doctor = testEntityGenerator.getDoctors().get(0);
         doctor.setId(1L);
         Patient patient = testEntityGenerator.getPatients().get(0);
@@ -221,7 +218,6 @@ public class DoctorsControllerTest {
         Mockito.when(patientService.findPatientById(patient.getId())).thenReturn(patient);
         Mockito.when(appointmentService.create(patient, appointment.getAppointmentId().getDateOfAppointment(), doctor,
                 new AppointmentForm(appointment.getDiagnosis(), appointment.getDataAppointment()))).thenReturn(appointment);
-
 
         mvc.perform(MockMvcRequestBuilders.post("/doctors/{id}/appointments/{patient_id}", doctor.getId(), patient.getId())
                 .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors

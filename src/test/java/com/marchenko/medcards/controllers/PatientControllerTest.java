@@ -49,10 +49,14 @@ public class PatientControllerTest {
     @MockBean
     private AppointmentService appointmentService;
 
+
+    @Autowired
+    private PatientController patientController;
+
     private final TestEntityGenerator testEntityGenerator = new TestEntityGenerator();
 
     @Test
-    public void index() throws Exception {
+    public void testPatientIndexPage() throws Exception {
         Patient patientExpect = testEntityGenerator.getPatients().get(0);
         patientExpect.setId(1L);
 
@@ -69,21 +73,21 @@ public class PatientControllerTest {
     }
 
     @Test
-    public void login() throws Exception {
+    public void testPatientLoginPage() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/patients/login"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("/patients/login"));
     }
 
     @Test
-    public void registration() throws Exception {
+    public void testPatientRegistration() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/patients/registration"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("/patients/registration"));
     }
 
     @Test
-    public void postRegistration() throws Exception {
+    public void testPatientPostRegistration() throws Exception {
         Patient patientExpect = testEntityGenerator.getPatients().get(0);
         patientExpect.setId(1L);
 
@@ -98,7 +102,7 @@ public class PatientControllerTest {
     }
 
     @Test
-    public void viewPatientMenu() throws Exception {
+    public void testViewPatientMenu() throws Exception {
         Patient patientExpect = testEntityGenerator.getPatients().get(0);
         patientExpect.setId(1L);
 
@@ -116,7 +120,7 @@ public class PatientControllerTest {
     }
 
     @Test
-    public void findDoctors() throws Exception {
+    public void testFindDoctors() throws Exception {
         Patient patient = testEntityGenerator.getPatients().get(0);
         patient.setId(1L);
 
@@ -183,7 +187,7 @@ public class PatientControllerTest {
     }
 
     @Test
-    public void selectDoctor() throws Exception {
+    public void testSelectDoctor() throws Exception {
         Patient patient = testEntityGenerator.getPatients().get(0);
         patient.setId(1L);
 
@@ -202,7 +206,7 @@ public class PatientControllerTest {
     }
 
     @Test
-    public void selectDate() throws Exception{
+    public void testSelectDate() throws Exception{
         Patient patient = testEntityGenerator.getPatients().get(0);
         patient.setId(1L);
 
@@ -245,7 +249,7 @@ public class PatientControllerTest {
     }
 
     @Test
-    public void selectTimeAndPersistReservation() throws Exception {
+    public void testSelectTimeAndPersistReservation() throws Exception {
         Patient patient = testEntityGenerator.getPatients().get(0);
         patient.setId(1L);
 
@@ -276,7 +280,7 @@ public class PatientControllerTest {
 
 
     @Test
-    public void viewAllReservations() throws Exception {
+    public void testViewAllReservations() throws Exception {
         Patient patient = testEntityGenerator.getPatients().get(0);
         patient.setId(1L);
 
@@ -298,20 +302,8 @@ public class PatientControllerTest {
                 .findReservationsByPatientIdWhenDateAfterNow(Mockito.anyLong());
     }
 
-
-    @GetMapping("/{id}/all_reservations")
-    @PreAuthorize("hasAuthority('PATIENT')")
-    public String viewAllReservations(
-            @PathVariable(value = "id") Long id,
-            Model model) {
-        List<Reservation> reservations = reservationService.findReservationsByPatientIdWhenDateAfterNow(id);
-        model.addAttribute("reservations", reservations);
-        return "/patients/reservationsByPatient";
-    }
-
-
     @Test
-    public void viewAllAppointments() throws Exception {
+    public void testViewAllAppointments() throws Exception {
         Patient patient = testEntityGenerator.getPatients().get(0);
         patient.setId(1L);
 
@@ -331,17 +323,13 @@ public class PatientControllerTest {
         Mockito.verify(appointmentService, Mockito.times(1)).findAppointmentsByPatient(Mockito.anyLong());
     }
 
-    @Autowired
-    private PatientController patientController;
-
     @Test
-    public void getSpecializations() {
+    public void testGetSpecializations() {
         Set<String> specializationsExpect = new HashSet<>(Arrays.asList("хирург", "терапевт"));
         specializationsExpect.add("");
         Mockito.when(doctorService.findAllSpecialization()).thenReturn(specializationsExpect);
         Set<String> specializationsActual = patientController.getSpecializations();
         assertEquals(specializationsExpect, specializationsActual);
-
     }
 
 }

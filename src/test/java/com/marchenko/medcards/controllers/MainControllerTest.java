@@ -29,21 +29,21 @@ public class MainControllerTest {
     private DoctorService doctorService;
 
     @Test
-    public void index() throws Exception {
+    public void testMainIndexPage() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("index"));
     }
 
     @Test
-    public void contacts() throws Exception {
+    public void testContactsPage() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/contacts"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("/contacts/contacts"));
     }
 
     @Test
-    public void about() throws Exception {
+    public void testAboutPage() throws Exception {
         List<Doctor> expectDoctors = new ArrayList<>();
         Mockito.when(doctorService.findAllDoctors()).thenReturn(expectDoctors);
 
