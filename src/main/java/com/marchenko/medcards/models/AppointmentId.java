@@ -23,7 +23,7 @@ public class AppointmentId implements Serializable {
 
     @Setter
     @ManyToOne
-    @JoinColumn(name = "patient_id", nullable = false)
+//    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
     public AppointmentId(Patient patient, LocalDateTime dateOfAppointment) {

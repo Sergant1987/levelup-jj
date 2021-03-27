@@ -19,9 +19,8 @@ import java.util.Objects;
 public class Appointment {
 
     @EmbeddedId
-    @AttributeOverrides({
-            @AttributeOverride(name = "dateOfAppointment", column = @Column(name = "date_of_appointment", nullable = false))
-    })
+    @AttributeOverride(name = "dateOfAppointment", column = @Column(name = "date_of_appointment", nullable = false))
+    @JoinColumn(name = "patient_id", nullable = false)
     private AppointmentId appointmentId;
 
     @Setter

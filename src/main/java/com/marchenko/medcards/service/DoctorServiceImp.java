@@ -29,7 +29,7 @@ public class DoctorServiceImp implements DoctorService {
         return doctorRepository.save(new Doctor(form));
     }
 
-  @Override
+    @Override
     public Doctor create(Doctor doctor) {
         return doctorRepository.save(doctor);
     }
@@ -38,7 +38,7 @@ public class DoctorServiceImp implements DoctorService {
     public Doctor findDoctorById(Long id) {
 
         return doctorRepository.findById(id).orElseThrow(
-                ()-> new NotFoundException(String.format("Doctor with id=%d doesn't exists",id)));
+                () -> new NotFoundException(String.format("Doctor with id=%d doesn't exists", id)));
     }
 
     @Override
