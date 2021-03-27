@@ -9,7 +9,7 @@
 <body>
 <header th:insert="blocks/header :: header"></header>
 
-<h1 class="h3 mb-3 fw-normal">Запись к врачу</h1>-->
+<h1 class="h3 mb-3 fw-normal">Запись к врачу</h1>
 <div class="container mt-3 mb-5">
     <form method="get">
         <h3 class="h3 mb-3 fw-normal">Выбор даты</h3>
@@ -44,6 +44,11 @@
         />
     </form>
 </div>
-
+<div th:if="${isLoggedIn}">
+    <form action="/patients/logout" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <input type="submit" value="Logout">
+    </form>
+</div>
 </body>
 </html>

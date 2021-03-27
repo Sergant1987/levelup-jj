@@ -19,6 +19,7 @@
         <h1 class="h3 mb-3 fw-normal">Личный кабинет Пациента</h1>
 
         <div class="form-group">
+            <label class="visually-hidden">Специализация врача
             <select th:name="specialization">
                 <option
                         th:each="specialization : ${specializations}"
@@ -26,11 +27,12 @@
                         th:text="${specialization}">
                 </option>
             </select>
+            </label>
         </div>
 
         <br>
 
-        <label for="doctorSurname" class="visually-hidden">Имя пользователя
+        <label for="doctorSurname" class="visually-hidden">Фамилия врача
             <input type="text" id="doctorSurname" name="doctorSurname" th:value="${doctorSurname}" class="form-control"
                    placeholder="Имя врача"
                    autofocus>
@@ -66,6 +68,11 @@
         </table>
     </form>
 </div>
-
+<div th:if="${isLoggedIn}">
+    <form action="/patients/logout" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <input type="submit" value="Logout">
+    </form>
+</div>
 </body>
 </html>

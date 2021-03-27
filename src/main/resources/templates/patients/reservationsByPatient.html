@@ -21,4 +21,10 @@
     </tbody>
 </table>
 </body>
+<div th:if="${isLoggedIn}">
+    <form action="/patients/logout" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <input type="submit" value="Logout">
+    </form>
+</div>
 </html>
