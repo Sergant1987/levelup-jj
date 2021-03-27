@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -21,11 +22,13 @@ public class Appointment {
     @EmbeddedId
     @AttributeOverride(name = "dateOfAppointment", column = @Column(name = "date_of_appointment", nullable = false))
     @JoinColumn(name = "patient_id", nullable = false)
+    @NotNull
     private AppointmentId appointmentId;
 
     @Setter
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
+    @NotNull
     private Doctor doctor;
 
     @Column(nullable = false, length = 1000)
@@ -33,7 +36,7 @@ public class Appointment {
     @NotBlank
     private String diagnosis;
 
-    @Column(name = "data_appointment", nullable = false, length = 10000)
+    @Column(name = "data_appointment", nullable = false)
     @Setter
     @NotBlank
     private String dataAppointment;

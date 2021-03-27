@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,12 +19,11 @@ import java.util.Objects;
 public class AppointmentId implements Serializable {
 
     @Setter
-    @PastOrPresent
     private LocalDateTime dateOfAppointment;
 
     @Setter
     @ManyToOne
-//    @JoinColumn(name = "patient_id", nullable = false)
+    @NotNull
     private Patient patient;
 
     public AppointmentId(Patient patient, LocalDateTime dateOfAppointment) {

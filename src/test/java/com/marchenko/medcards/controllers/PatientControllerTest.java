@@ -148,7 +148,6 @@ public class PatientControllerTest {
         patient.setId(1L);
 
         Set<Doctor> foundDoctors = new HashSet<>(testEntityGenerator.getDoctors());
-        Doctor findingDoctor = testEntityGenerator.getDoctors().get(0);
         Mockito.when(doctorService.findDoctorsBySpecializationAndSurname(Mockito.anyString(), Mockito.anyString())).thenReturn(foundDoctors);
 
         mvc.perform(MockMvcRequestBuilders.get("/patients/{id}/reservations", 1)
@@ -249,7 +248,6 @@ public class PatientControllerTest {
         )
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("/patients/selectDate"));
-
 
         List<Reservation> reservations = testEntityGenerator.getReservations();
 

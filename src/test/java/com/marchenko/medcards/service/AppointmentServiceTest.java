@@ -3,8 +3,11 @@ package com.marchenko.medcards.service;
 import com.marchenko.medcards.models.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class AppointmentServiceTest extends AbstractServiceTest {
@@ -17,7 +20,31 @@ public class AppointmentServiceTest extends AbstractServiceTest {
         saveDoctorsToDB();
         Appointment appointmentExpect = testEntityGenerator.getAppointments().get(0);
 
-                Appointment appointmentActual = appointmentService.create(appointmentExpect.getAppointmentId().getPatient(),
+        Appointment appointmentActual = appointmentService.create(appointmentExpect.getAppointmentId().getPatient(),
+                appointmentExpect.getAppointmentId().getDateOfAppointment(),
+                appointmentExpect.getDoctor(),
+                new AppointmentForm(appointmentExpect.getDiagnosis(),
+                        appointmentExpect.getDataAppointment()));
+        assertEquals(appointmentExpect, appointmentActual);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testCreateWithPatientNull() {
+        saveDoctorsToDB();
+        Appointment appointmentExpect = testEntityGenerator.getAppointments().get(0);
+        Appointment appointmentActual = appointmentService.create(appointmentExpect.getAppointmentId().getPatient(),
+                appointmentExpect.getAppointmentId().getDateOfAppointment(),
+                appointmentExpect.getDoctor(),
+                new AppointmentForm(appointmentExpect.getDiagnosis(),
+                        appointmentExpect.getDataAppointment()));
+        assertEquals(appointmentExpect, appointmentActual);
+    }
+
+    @Test(expected = InvalidDataAccessApiUsageException.class)
+    public void testCreateWithDoctorNull() {
+        savePatientsToDB();
+        Appointment appointmentExpect = testEntityGenerator.getAppointments().get(0);
+        Appointment appointmentActual = appointmentService.create(appointmentExpect.getAppointmentId().getPatient(),
                 appointmentExpect.getAppointmentId().getDateOfAppointment(),
                 appointmentExpect.getDoctor(),
                 new AppointmentForm(appointmentExpect.getDiagnosis(),

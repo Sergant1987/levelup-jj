@@ -204,7 +204,7 @@ public final class TestEntityGenerator {
     }
 
     private void createAppointments() {
-
+LocalDateTime now=LocalDateTime.now();
         Appointment appointment1 = new Appointment(
                 patients.get(0),
                 LocalDateTime.of(2021, 10, 12, 11, 22),
