@@ -40,7 +40,6 @@ public class AbstractServiceTest {
 
     }
 
-
     protected void saveDoctorsToDB() {
         List<Doctor> doctors = testEntityGenerator.getDoctors();
         dr.saveAll(doctors);

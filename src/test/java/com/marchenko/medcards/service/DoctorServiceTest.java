@@ -17,7 +17,7 @@ public class DoctorServiceTest extends AbstractServiceTest {
    private DoctorService doctorService;
 
     @Test
-    public void createWithValidParam() {
+    public void TestCreateWithValidParam() {
         Doctor doctorExpect=testEntityGenerator.getDoctors().get(0);
         Doctor doctorActual = doctorService.create(doctorExpect.getForm());
         assertEquals(doctorExpect, doctorActual);
@@ -39,7 +39,7 @@ public class DoctorServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findDoctorByIdWithValidParam() {
+    public void testFindDoctorByIdWithValidParam() {
         saveDoctorsToDB();
         List<Doctor> doctors=testEntityGenerator.getDoctors();
         Doctor doctorExpect = doctors.get(0);
@@ -48,7 +48,7 @@ public class DoctorServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findDoctorByLogin() {
+    public void testFindDoctorByLogin() {
         saveDoctorsToDB();
         List<Doctor> doctors=testEntityGenerator.getDoctors();
         Doctor doctorExpect = doctors.get(0);
@@ -57,7 +57,7 @@ public class DoctorServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findAllDoctors() {
+    public void testFindAllDoctors() {
         saveDoctorsToDB();
         List<Doctor> doctors=testEntityGenerator.getDoctors();
         List<Doctor> doctorsExpect = doctorService.findAllDoctors();
@@ -65,14 +65,14 @@ public class DoctorServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findAllSpecialization() {
+    public void testFindAllSpecialization() {
         saveDoctorsToDB();
         Set<String> specializations = doctorService.findAllSpecialization();
         assertEquals(3, specializations.size());
     }
 
     @Test
-    public void findDoctorsBySpecialization() {
+    public void testFindDoctorsBySpecialization() {
         saveDoctorsToDB();
         Set<Doctor> doctorsExpect = doctorService.findDoctorsBySpecialization("окулист");
         assertEquals(2, doctorsExpect.size());
@@ -81,7 +81,7 @@ public class DoctorServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findDoctorsBySurname() {
+    public void testFindDoctorsBySurname() {
         saveDoctorsToDB();
         List<Doctor> doctors=testEntityGenerator.getDoctors();
         Set<Doctor> doctorsExpect = doctorService.findDoctorsBySurname(doctors.get(1).getSurname());
@@ -91,7 +91,7 @@ public class DoctorServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findDoctorsBySpecializationAndName() {
+    public void testFindDoctorsBySpecializationAndName() {
         saveDoctorsToDB();
         List<Doctor> doctors=testEntityGenerator.getDoctors();
         Set<Doctor> doctorsExpect = doctorService.findDoctorsBySpecializationAndSurname(doctors.get(1).getSpecialization(), doctors.get(1).getSurname());

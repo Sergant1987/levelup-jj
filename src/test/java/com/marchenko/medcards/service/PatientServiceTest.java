@@ -39,7 +39,7 @@ public class PatientServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findPatientByIdWithValidParam() {
+    public void testFindPatientByIdWithValidParam() {
         savePatientsToDB();
         Patient patientExpect = testEntityGenerator.getPatients().get(0);
         Patient patientActual = patientService.findPatientById(patientExpect.getId());
@@ -47,7 +47,7 @@ public class PatientServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findPatientByLoginWithValidParam() {
+    public void testFindPatientByLoginWithValidParam() {
         savePatientsToDB();
         Patient patientExpect = testEntityGenerator.getPatients().get(0);
         Patient patientActual = patientService.findPatientByLogin(patientExpect.getLogin());
@@ -55,7 +55,7 @@ public class PatientServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findByNameOrSurnameOrPhone() {
+    public void testFindByNameOrSurnameOrPhone() {
         savePatientsToDB();
         List<Patient> patients = testEntityGenerator.getPatients();
 

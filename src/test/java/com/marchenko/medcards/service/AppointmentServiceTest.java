@@ -12,7 +12,7 @@ public class AppointmentServiceTest extends AbstractServiceTest {
     private AppointmentService appointmentService;
 
     @Test
-    public void createWithValidParam() {
+    public void testCreateWithValidParam() {
         savePatientsToDB();
         saveDoctorsToDB();
         Appointment appointmentExpect = testEntityGenerator.getAppointments().get(0);
@@ -26,7 +26,7 @@ public class AppointmentServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findAppointmentsByPatient() {
+    public void testFindAppointmentsByPatient() {
         saveToDB();
         List<Appointment> appointments = testEntityGenerator.getAppointments();
 

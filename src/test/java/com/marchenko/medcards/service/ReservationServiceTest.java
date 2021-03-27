@@ -24,7 +24,7 @@ public class ReservationServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findById() {
+    public void testFindById() {
         savePatientsToDB();
         saveDoctorsToDB();
         saveReservationsToDB();
@@ -34,7 +34,7 @@ public class ReservationServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findReservationsByDoctorIdAndDate() {
+    public void testFindReservationsByDoctorIdAndDate() {
         savePatientsToDB();
         saveDoctorsToDB();
         saveReservationsToDB();
@@ -49,7 +49,7 @@ public class ReservationServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void findReservationsByPatientAndDateAfterNow() {
+    public void testFindReservationsByPatientAndDateAfterNow() {
         savePatientsToDB();
         saveDoctorsToDB();
         saveReservationsToDB();
