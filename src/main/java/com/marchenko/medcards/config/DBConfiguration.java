@@ -18,7 +18,6 @@ public class DBConfiguration {
     @Profile("test")
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryForTest() {
-
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSourceForTest());
         em.setPackagesToScan("com.marchenko.medcards.models");
