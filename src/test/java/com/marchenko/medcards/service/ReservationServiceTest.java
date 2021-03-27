@@ -3,6 +3,8 @@ package com.marchenko.medcards.service;
 import com.marchenko.medcards.models.*;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -23,7 +25,7 @@ public class ReservationServiceTest extends AbstractServiceTest {
         assertEquals(reservationExpect, reservationActual);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = ConstraintViolationException.class)
     public void testCreateReservationWithPatientIsNull() {
         savePatientsToDB();
         saveDoctorsToDB();
@@ -36,7 +38,7 @@ public class ReservationServiceTest extends AbstractServiceTest {
         assertEquals(reservationExpect, reservationActual);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = ConstraintViolationException.class)
     public void testCreateReservationWithDoctorIsNull() {
         savePatientsToDB();
         saveDoctorsToDB();

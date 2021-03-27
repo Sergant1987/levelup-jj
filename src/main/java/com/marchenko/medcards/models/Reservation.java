@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -18,13 +19,16 @@ public class Reservation {
 
     @JoinColumn(name = "patient_id")
     @ManyToOne
+    @NotNull
     private Patient patient;
 
     @JoinColumn(name = "doctor_id")
     @ManyToOne
+    @NotNull
     private Doctor doctor;
 
     @Column(name = "date_reservation")
+    @NotNull
     private LocalDate date;
 
     @Column(name = "time_reservation")
