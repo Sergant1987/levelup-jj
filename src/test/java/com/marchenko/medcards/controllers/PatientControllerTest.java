@@ -120,7 +120,7 @@ public class PatientControllerTest {
     }
 
     @Test
-    public void testFindDoctors() throws Exception {
+    public void testFindDoctorsWhenParamSpecializationAndDoctorSurnameIsExist() throws Exception {
         Patient patient = testEntityGenerator.getPatients().get(0);
         patient.setId(1L);
 
@@ -140,6 +140,16 @@ public class PatientControllerTest {
                 .andExpect(MockMvcResultMatchers.model().attribute("doctors", foundDoctors))
                 .andExpect(MockMvcResultMatchers.view().name("/patients/selectDoctor"));
         Mockito.verify(doctorService, Mockito.times(1)).findDoctorsBySpecializationAndSurname(Mockito.anyString(), Mockito.anyString());
+    }
+
+    @Test
+    public void testFindDoctorsWhenParamSpecializationAndDoctorSurnameIsEmpty() throws Exception {
+        Patient patient = testEntityGenerator.getPatients().get(0);
+        patient.setId(1L);
+
+        Set<Doctor> foundDoctors = new HashSet<>(testEntityGenerator.getDoctors());
+        Doctor findingDoctor = testEntityGenerator.getDoctors().get(0);
+        Mockito.when(doctorService.findDoctorsBySpecializationAndSurname(Mockito.anyString(), Mockito.anyString())).thenReturn(foundDoctors);
 
         mvc.perform(MockMvcRequestBuilders.get("/patients/{id}/reservations", 1)
                 .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user(patient.getLogin())
@@ -152,8 +162,16 @@ public class PatientControllerTest {
                 .andExpect(MockMvcResultMatchers.model().attribute("doctorSurname", ""))
                 .andExpect(MockMvcResultMatchers.model().attribute("doctors", foundDoctors))
                 .andExpect(MockMvcResultMatchers.view().name("/patients/selectDoctor"));
-        Mockito.verify(doctorService, Mockito.times(2)).findDoctorsBySpecializationAndSurname(Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(doctorService, Mockito.times(1)).findDoctorsBySpecializationAndSurname(Mockito.anyString(), Mockito.anyString());
+    }
 
+    @Test
+    public void testFindDoctorsWhenParamSpecializationIsEmpty() throws Exception {
+        Patient patient = testEntityGenerator.getPatients().get(0);
+        patient.setId(1L);
+
+        Set<Doctor> foundDoctors = new HashSet<>(testEntityGenerator.getDoctors());
+        Doctor findingDoctor = testEntityGenerator.getDoctors().get(0);
         Mockito.when(doctorService.findDoctorsBySurname(Mockito.anyString())).thenReturn(foundDoctors);
 
         mvc.perform(MockMvcRequestBuilders.get("/patients/{id}/reservations", 1)
@@ -168,6 +186,15 @@ public class PatientControllerTest {
                 .andExpect(MockMvcResultMatchers.model().attribute("doctors", foundDoctors))
                 .andExpect(MockMvcResultMatchers.view().name("/patients/selectDoctor"));
         Mockito.verify(doctorService, Mockito.times(1)).findDoctorsBySurname(Mockito.anyString());
+    }
+
+    @Test
+    public void testFindDoctorsWhenParamDoctorSurnameIsEmpty() throws Exception {
+        Patient patient = testEntityGenerator.getPatients().get(0);
+        patient.setId(1L);
+
+        Set<Doctor> foundDoctors = new HashSet<>(testEntityGenerator.getDoctors());
+        Doctor findingDoctor = testEntityGenerator.getDoctors().get(0);
 
         Mockito.when(doctorService.findDoctorsBySpecialization(Mockito.anyString())).thenReturn(foundDoctors);
 
@@ -206,14 +233,14 @@ public class PatientControllerTest {
     }
 
     @Test
-    public void testSelectDate() throws Exception{
+    public void testSelectDate() throws Exception {
         Patient patient = testEntityGenerator.getPatients().get(0);
         patient.setId(1L);
 
         Doctor doctor = testEntityGenerator.getDoctors().get(0);
         doctor.setId(1L);
 
-        mvc.perform(MockMvcRequestBuilders.get("/patients/{id}/reservations/{doctorId}",patient.getId(),doctor.getId())
+        mvc.perform(MockMvcRequestBuilders.get("/patients/{id}/reservations/{doctorId}", patient.getId(), doctor.getId())
                 .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
                         .user(patient.getLogin())
                         .password(patient.getPassword())
@@ -224,27 +251,27 @@ public class PatientControllerTest {
                 .andExpect(MockMvcResultMatchers.view().name("/patients/selectDate"));
 
 
-        List<Reservation> reservations=testEntityGenerator.getReservations();
+        List<Reservation> reservations = testEntityGenerator.getReservations();
 
         List<TimeReservation> noReservationTime =
                 TimeReservation.findNotReservationTime(
                         reservations.stream().map(Reservation::getTime).collect(Collectors.toList()));
 
-        Mockito.when(reservationService.findReservationsByDoctorIdAndDate(doctor.getId(),reservations.get(0).getDate())).thenReturn(reservations);
+        Mockito.when(reservationService.findReservationsByDoctorIdAndDate(doctor.getId(), reservations.get(0).getDate())).thenReturn(reservations);
 
-        mvc.perform(MockMvcRequestBuilders.get("/patients/{id}/reservations/{doctorId}",patient.getId(),doctor.getId())
-        .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
-        .user(patient.getLogin())
-        .password(patient.getPassword())
-        .authorities(patient.getRole().getAuthorities()))
-        .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf())
-        .param("dateOfReservation",reservations.get(0).getDate().toString()))
+        mvc.perform(MockMvcRequestBuilders.get("/patients/{id}/reservations/{doctorId}", patient.getId(), doctor.getId())
+                .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
+                        .user(patient.getLogin())
+                        .password(patient.getPassword())
+                        .authorities(patient.getRole().getAuthorities()))
+                .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf())
+                .param("dateOfReservation", reservations.get(0).getDate().toString()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().attribute("noReservationTime", noReservationTime))
                 .andExpect(MockMvcResultMatchers.view().name("/patients/selectDate"));
 
-        Mockito.verify(reservationService,Mockito.times(1))
-                .findReservationsByDoctorIdAndDate(doctor.getId(),reservations.get(0).getDate());
+        Mockito.verify(reservationService, Mockito.times(1))
+                .findReservationsByDoctorIdAndDate(doctor.getId(), reservations.get(0).getDate());
 
     }
 
