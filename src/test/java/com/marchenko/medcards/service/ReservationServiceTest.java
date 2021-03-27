@@ -11,13 +11,39 @@ public class ReservationServiceTest extends AbstractServiceTest {
     private ReservationService reservationService;
 
     @Test
-    public void create() {
+    public void testCreateReservationWithValidParam() {
         savePatientsToDB();
         saveDoctorsToDB();
         Reservation reservationExpect = testEntityGenerator.getReservations().get(0);
         Reservation reservationActual = reservationService.create(
                 reservationExpect.getPatient(),
                 reservationExpect.getDoctor(),
+                reservationExpect.getDate(),
+                reservationExpect.getTime());
+        assertEquals(reservationExpect, reservationActual);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testCreateReservationWithPatientIsNull() {
+        savePatientsToDB();
+        saveDoctorsToDB();
+        Reservation reservationExpect = testEntityGenerator.getReservations().get(0);
+        Reservation reservationActual = reservationService.create(
+                null,
+                reservationExpect.getDoctor(),
+                reservationExpect.getDate(),
+                reservationExpect.getTime());
+        assertEquals(reservationExpect, reservationActual);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testCreateReservationWithDoctorIsNull() {
+        savePatientsToDB();
+        saveDoctorsToDB();
+        Reservation reservationExpect = testEntityGenerator.getReservations().get(0);
+        Reservation reservationActual = reservationService.create(
+                reservationExpect.getPatient(),
+                null,
                 reservationExpect.getDate(),
                 reservationExpect.getTime());
         assertEquals(reservationExpect, reservationActual);

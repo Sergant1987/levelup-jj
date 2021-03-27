@@ -32,7 +32,7 @@ public class DoctorServiceTest extends AbstractServiceTest {
     }
 
     @Test(expected = ConstraintViolationException.class)
-    public void createWithNotValidParam() {
+    public void createWithDateOfBirthNotValid() {
         DoctorForm doctorForm = new DoctorForm();
         doctorForm.setDateOfBirth(LocalDate.now().toString());
         doctorService.create(doctorForm);
